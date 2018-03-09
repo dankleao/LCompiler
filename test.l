@@ -8,7 +8,11 @@ final MAXITER=10;
 /* Programa Principal */
 
   flag = 'c';
+<<<<<<< HEAD
   flag <- 09Dh;
+=======
+  flag <- 0DDh;
+>>>>>>> master
 
    if( flag = 'd' )
     writeln(flag);

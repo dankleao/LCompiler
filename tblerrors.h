@@ -2,6 +2,7 @@
 // Created by Admin on 04/03/2018.
 //
 
+<<<<<<< HEAD
 #ifndef COMPILERL_TBLERRORS_H
 #define COMPILERL_TBLERRORS_H
 
@@ -31,6 +32,22 @@ enum {
 
 };
 
+=======
+#include <stdio.h>
+#include "def.h"
+
+#ifndef COMPILERL_TBLERRORS_H
+#define COMPILERL_TBLERRORS_H
+
+PUBLIC void error( string msg, string arg ){
+    if( arg == NULL )
+        printf("\n%d: %s\n",clin,msg);
+    else
+        printf("\n%d: %s [%s]\n",clin,msg,arg);
+    exit(1);
+}
+
+>>>>>>> master
 #define ERROR_VAR_LEN error("tamanho do identificador excede o limite [1-255].",NULL)
 #define ERROR_UNRECOGNIZED_SYMBOL error("caractere invalido.",NULL)
 #define ERROR_LEXEME_NOT_FOUND(lexeme) error("lexema nao identificado.",lexeme)

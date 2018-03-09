@@ -18,4 +18,8 @@ int 0;
  i - ( 290 ) * i*i % 1000 / 0 + 0001 + 001 + 01 + 0;
 
  = 2987
+<<<<<<< HEAD
 trabredesedoidodemais2018asdf
+=======
+trabredesedoidodemais2018asdf
+>>>>>>> master

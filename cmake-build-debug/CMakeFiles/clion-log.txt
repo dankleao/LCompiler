@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 "C:\Program Files\JetBrains\CLion 2017.1.2\bin\cmake\bin\cmake.exe" -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - MinGW Makefiles" C:\Users\Daniel\Documents\CompilerL
+=======
+"C:\Program Files\JetBrains\CLion 2017.1.2\bin\cmake\bin\cmake.exe" -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - MinGW Makefiles" C:\Users\Daniel\Downloads\CompilerL
+>>>>>>> master
 -- The C compiler identification is GNU 5.3.0
 -- The CXX compiler identification is GNU 5.3.0
 -- Check for working C compiler: C:/MinGW/bin/gcc.exe
@@ -15,4 +19,8 @@
 -- Detecting CXX compile features - done
 -- Configuring done
 -- Generating done
+<<<<<<< HEAD
 -- Build files have been written to: C:/Users/Daniel/Documents/CompilerL/cmake-build-debug
+=======
+-- Build files have been written to: C:/Users/Daniel/Downloads/CompilerL/cmake-build-debug
+>>>>>>> master

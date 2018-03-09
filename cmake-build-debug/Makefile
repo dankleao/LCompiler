@@ -47,10 +47,17 @@ RM = "C:\Program Files\JetBrains\CLion 2017.1.2\bin\cmake\bin\cmake.exe" -E remo
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
+<<<<<<< HEAD
 CMAKE_SOURCE_DIR = C:\Users\Daniel\Documents\CompilerL
 
 # The top-level build directory on which CMake was run.
 CMAKE_BINARY_DIR = C:\Users\Daniel\Documents\CompilerL\cmake-build-debug
+=======
+CMAKE_SOURCE_DIR = C:\Users\Daniel\Downloads\CompilerL
+
+# The top-level build directory on which CMake was run.
+CMAKE_BINARY_DIR = C:\Users\Daniel\Downloads\CompilerL\cmake-build-debug
+>>>>>>> master
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -79,9 +86,15 @@ rebuild_cache/fast: rebuild_cache
 
 # The main all target
 all: cmake_check_build_system
+<<<<<<< HEAD
 	$(CMAKE_COMMAND) -E cmake_progress_start C:\Users\Daniel\Documents\CompilerL\cmake-build-debug\CMakeFiles C:\Users\Daniel\Documents\CompilerL\cmake-build-debug\CMakeFiles\progress.marks
 	$(MAKE) -f CMakeFiles\Makefile2 all
 	$(CMAKE_COMMAND) -E cmake_progress_start C:\Users\Daniel\Documents\CompilerL\cmake-build-debug\CMakeFiles 0
+=======
+	$(CMAKE_COMMAND) -E cmake_progress_start C:\Users\Daniel\Downloads\CompilerL\cmake-build-debug\CMakeFiles C:\Users\Daniel\Downloads\CompilerL\cmake-build-debug\CMakeFiles\progress.marks
+	$(MAKE) -f CMakeFiles\Makefile2 all
+	$(CMAKE_COMMAND) -E cmake_progress_start C:\Users\Daniel\Downloads\CompilerL\cmake-build-debug\CMakeFiles 0
+>>>>>>> master
 .PHONY : all
 
 # The main clean target

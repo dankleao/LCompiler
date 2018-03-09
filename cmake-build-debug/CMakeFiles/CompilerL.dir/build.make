@@ -42,10 +42,17 @@ RM = "C:\Program Files\JetBrains\CLion 2017.1.2\bin\cmake\bin\cmake.exe" -E remo
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
+<<<<<<< HEAD
 CMAKE_SOURCE_DIR = C:\Users\Daniel\Documents\CompilerL
 
 # The top-level build directory on which CMake was run.
 CMAKE_BINARY_DIR = C:\Users\Daniel\Documents\CompilerL\cmake-build-debug
+=======
+CMAKE_SOURCE_DIR = C:\Users\Daniel\Downloads\CompilerL
+
+# The top-level build directory on which CMake was run.
+CMAKE_BINARY_DIR = C:\Users\Daniel\Downloads\CompilerL\cmake-build-debug
+>>>>>>> master
 
 # Include any dependencies generated for this target.
 include CMakeFiles/CompilerL.dir/depend.make
@@ -58,6 +65,7 @@ include CMakeFiles/CompilerL.dir/flags.make
 
 CMakeFiles/CompilerL.dir/hash_table.c.obj: CMakeFiles/CompilerL.dir/flags.make
 CMakeFiles/CompilerL.dir/hash_table.c.obj: ../hash_table.c
+<<<<<<< HEAD
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\Daniel\Documents\CompilerL\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building C object CMakeFiles/CompilerL.dir/hash_table.c.obj"
 	C:\MinGW\bin\gcc.exe  $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles\CompilerL.dir\hash_table.c.obj   -c C:\Users\Daniel\Documents\CompilerL\hash_table.c
 
@@ -68,6 +76,18 @@ CMakeFiles/CompilerL.dir/hash_table.c.i: cmake_force
 CMakeFiles/CompilerL.dir/hash_table.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/CompilerL.dir/hash_table.c.s"
 	C:\MinGW\bin\gcc.exe  $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S C:\Users\Daniel\Documents\CompilerL\hash_table.c -o CMakeFiles\CompilerL.dir\hash_table.c.s
+=======
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\Daniel\Downloads\CompilerL\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building C object CMakeFiles/CompilerL.dir/hash_table.c.obj"
+	C:\MinGW\bin\gcc.exe  $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles\CompilerL.dir\hash_table.c.obj   -c C:\Users\Daniel\Downloads\CompilerL\hash_table.c
+
+CMakeFiles/CompilerL.dir/hash_table.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/CompilerL.dir/hash_table.c.i"
+	C:\MinGW\bin\gcc.exe  $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E C:\Users\Daniel\Downloads\CompilerL\hash_table.c > CMakeFiles\CompilerL.dir\hash_table.c.i
+
+CMakeFiles/CompilerL.dir/hash_table.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/CompilerL.dir/hash_table.c.s"
+	C:\MinGW\bin\gcc.exe  $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S C:\Users\Daniel\Downloads\CompilerL\hash_table.c -o CMakeFiles\CompilerL.dir\hash_table.c.s
+>>>>>>> master
 
 CMakeFiles/CompilerL.dir/hash_table.c.obj.requires:
 
@@ -82,6 +102,7 @@ CMakeFiles/CompilerL.dir/hash_table.c.obj.provides.build: CMakeFiles/CompilerL.d
 
 CMakeFiles/CompilerL.dir/main.c.obj: CMakeFiles/CompilerL.dir/flags.make
 CMakeFiles/CompilerL.dir/main.c.obj: ../main.c
+<<<<<<< HEAD
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\Daniel\Documents\CompilerL\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building C object CMakeFiles/CompilerL.dir/main.c.obj"
 	C:\MinGW\bin\gcc.exe  $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles\CompilerL.dir\main.c.obj   -c C:\Users\Daniel\Documents\CompilerL\main.c
 
@@ -92,6 +113,18 @@ CMakeFiles/CompilerL.dir/main.c.i: cmake_force
 CMakeFiles/CompilerL.dir/main.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/CompilerL.dir/main.c.s"
 	C:\MinGW\bin\gcc.exe  $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S C:\Users\Daniel\Documents\CompilerL\main.c -o CMakeFiles\CompilerL.dir\main.c.s
+=======
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\Daniel\Downloads\CompilerL\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building C object CMakeFiles/CompilerL.dir/main.c.obj"
+	C:\MinGW\bin\gcc.exe  $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles\CompilerL.dir\main.c.obj   -c C:\Users\Daniel\Downloads\CompilerL\main.c
+
+CMakeFiles/CompilerL.dir/main.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/CompilerL.dir/main.c.i"
+	C:\MinGW\bin\gcc.exe  $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E C:\Users\Daniel\Downloads\CompilerL\main.c > CMakeFiles\CompilerL.dir\main.c.i
+
+CMakeFiles/CompilerL.dir/main.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/CompilerL.dir/main.c.s"
+	C:\MinGW\bin\gcc.exe  $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S C:\Users\Daniel\Downloads\CompilerL\main.c -o CMakeFiles\CompilerL.dir\main.c.s
+>>>>>>> master
 
 CMakeFiles/CompilerL.dir/main.c.obj.requires:
 
@@ -106,6 +139,7 @@ CMakeFiles/CompilerL.dir/main.c.obj.provides.build: CMakeFiles/CompilerL.dir/mai
 
 CMakeFiles/CompilerL.dir/def.c.obj: CMakeFiles/CompilerL.dir/flags.make
 CMakeFiles/CompilerL.dir/def.c.obj: ../def.c
+<<<<<<< HEAD
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\Daniel\Documents\CompilerL\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building C object CMakeFiles/CompilerL.dir/def.c.obj"
 	C:\MinGW\bin\gcc.exe  $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles\CompilerL.dir\def.c.obj   -c C:\Users\Daniel\Documents\CompilerL\def.c
 
@@ -116,6 +150,18 @@ CMakeFiles/CompilerL.dir/def.c.i: cmake_force
 CMakeFiles/CompilerL.dir/def.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/CompilerL.dir/def.c.s"
 	C:\MinGW\bin\gcc.exe  $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S C:\Users\Daniel\Documents\CompilerL\def.c -o CMakeFiles\CompilerL.dir\def.c.s
+=======
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\Daniel\Downloads\CompilerL\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building C object CMakeFiles/CompilerL.dir/def.c.obj"
+	C:\MinGW\bin\gcc.exe  $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles\CompilerL.dir\def.c.obj   -c C:\Users\Daniel\Downloads\CompilerL\def.c
+
+CMakeFiles/CompilerL.dir/def.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/CompilerL.dir/def.c.i"
+	C:\MinGW\bin\gcc.exe  $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E C:\Users\Daniel\Downloads\CompilerL\def.c > CMakeFiles\CompilerL.dir\def.c.i
+
+CMakeFiles/CompilerL.dir/def.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/CompilerL.dir/def.c.s"
+	C:\MinGW\bin\gcc.exe  $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S C:\Users\Daniel\Downloads\CompilerL\def.c -o CMakeFiles\CompilerL.dir\def.c.s
+>>>>>>> master
 
 CMakeFiles/CompilerL.dir/def.c.obj.requires:
 
@@ -144,7 +190,11 @@ CompilerL.exe: CMakeFiles/CompilerL.dir/build.make
 CompilerL.exe: CMakeFiles/CompilerL.dir/linklibs.rsp
 CompilerL.exe: CMakeFiles/CompilerL.dir/objects1.rsp
 CompilerL.exe: CMakeFiles/CompilerL.dir/link.txt
+<<<<<<< HEAD
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=C:\Users\Daniel\Documents\CompilerL\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Linking C executable CompilerL.exe"
+=======
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=C:\Users\Daniel\Downloads\CompilerL\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Linking C executable CompilerL.exe"
+>>>>>>> master
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles\CompilerL.dir\link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
@@ -163,6 +213,10 @@ CMakeFiles/CompilerL.dir/clean:
 .PHONY : CMakeFiles/CompilerL.dir/clean
 
 CMakeFiles/CompilerL.dir/depend:
+<<<<<<< HEAD
 	$(CMAKE_COMMAND) -E cmake_depends "MinGW Makefiles" C:\Users\Daniel\Documents\CompilerL C:\Users\Daniel\Documents\CompilerL C:\Users\Daniel\Documents\CompilerL\cmake-build-debug C:\Users\Daniel\Documents\CompilerL\cmake-build-debug C:\Users\Daniel\Documents\CompilerL\cmake-build-debug\CMakeFiles\CompilerL.dir\DependInfo.cmake --color=$(COLOR)
+=======
+	$(CMAKE_COMMAND) -E cmake_depends "MinGW Makefiles" C:\Users\Daniel\Downloads\CompilerL C:\Users\Daniel\Downloads\CompilerL C:\Users\Daniel\Downloads\CompilerL\cmake-build-debug C:\Users\Daniel\Downloads\CompilerL\cmake-build-debug C:\Users\Daniel\Downloads\CompilerL\cmake-build-debug\CMakeFiles\CompilerL.dir\DependInfo.cmake --color=$(COLOR)
+>>>>>>> master
 .PHONY : CMakeFiles/CompilerL.dir/depend
 
