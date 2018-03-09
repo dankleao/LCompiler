@@ -5,13 +5,8 @@
 #ifndef COMPILERL_LEX_H
 #define COMPILERL_LEX_H
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <windef.h>
-#include <string.h>
-#include <ctype.h>
-
 #include "def.h"
+#include "hash_table.h"
 
 /* Definição dos tokens */
 
@@ -62,28 +57,10 @@ enum {
 #undef TOKS
 };
 
-/* Vars globais */
-
-PUBLIC string buffp;                          //aponta para o inicio da area de carga do programa fonte
-PUBLIC string prog;                           //aponta para posição corrente do programa fonte
-PUBLIC char buffchr[VAR_LEN_MAX+1] = {'\0'};  //armazena o lexema corrente(buffer lexema)
-PUBLIC int buffindex;                         //indice do buffer lxm
-PUBLIC int clin = 1;                          //contador de linhas do programa
-
-#ifndef COMPILERL_HASH_TABLE_H
-#include "hash_table.h"
-#undef COMPILERL_DEF_H
-#endif
-
 /* Tabela de símbolos */
 PUBLIC HashTable* symbolTable;
 
-/* Definição das macros que manipulam a tabela de símbolos */
-//#define addTok(tok) ((Tok*) ((Node*) addHashTable(symbolTable,getKey(tok->lexeme),tok))->obj);
-//#define searchTok(lexeme) (Tok*) (((Node*) searchHashTable(symbolTable,lexeme,tokcmp))->obj);
-
 /* Tok representa um token com seus atributos lexeme( lexema ) e tok_id( identificador numérico ) o qual será salvo na tabela de símbolos */
-
 PUBLIC typedef struct tok{
 
     string lexeme;
@@ -92,7 +69,6 @@ PUBLIC typedef struct tok{
 }Tok;
 
 /* LexReg representa o registro léxico que será entregue ao análisador sintático. */
-
 PUBLIC typedef struct lex_reg{
 
     Tok* tok;
@@ -100,6 +76,42 @@ PUBLIC typedef struct lex_reg{
 
 }LexReg;
 
+/*
+ * Automato finito determinista para reconhecer os lexemas válidos da linguagem com base
+ * em determinadas regras definidas.
+ * @return retorna um registro léxico do token reconhecido para o análisador sintático
+ */
+PUBLIC LexReg* nextTok();
+
+/*
+ * Inicia a execução do analisador léxico passando como argumento de linha de
+ * comando o nome do arquivo do código fonte com extensão ".l"
+ * @param argc número de argumentos
+ * @param argv string(s) representam os argumentos
+ */
+PUBLIC BOOL startLex( string fileName );
+
+/*
+ * Metodos auxiliares para depurar o código
+ */
+
+PUBLIC void printTok(Tok* tok);
+
+PUBLIC void printLexReg(LexReg* lexReg);
+
+PUBLIC void printSymTab();
+
+PRIVATE string strtoktype[] = { "IDENTIFIER","LITERAL","HEX","STRING","NUMBER","KEYWORD","DELIMITER","BOOL_OP","REL_OP","ARITH_OP" };
+
+#ifdef LEX_IMP
+
+/* Vars globais */
+
+PRIVATE string buffp;                                    //aponta para o inicio da area de carga do programa fonte
+PRIVATE string prog;                            //aponta para posição corrente do programa fonte
+PRIVATE char buffchr[VAR_LEN_MAX+1] = {'\0'};  //armazena o lexema corrente(buffer lexema)
+PRIVATE int buffindex;                         //indice do buffer lxm
+PRIVATE int lineCounter = 1;                   //contador de linhas do programa
 
 /*
  * Insere um token na tabela de símbolos
@@ -108,7 +120,7 @@ PUBLIC typedef struct lex_reg{
  * @retorn o endereço do token adicionado na tabela de símbolos
  */
 
-PRIVATE inline Tok* addTok( Tok* tok );
+PRIVATE inline Tok* tokAdd( Tok* tok );
 
 /*
  * Pesquisa um token na tabela de símbolos
@@ -117,29 +129,37 @@ PRIVATE inline Tok* addTok( Tok* tok );
  * @retorn o endereço do token procurado na tabela de símbolos, caso o token não exista retorna NULL
  */
 
-PRIVATE inline Tok* searchTok( string lexeme );
+PRIVATE inline Tok* tokSearch( string lexeme );
 
 /*
  * Aloca um Tok(Token) na memória
  * @return NULL caso o token não seja alocado
  */
 
-PRIVATE inline Tok* allocTok();
+PRIVATE inline Tok* tokAlloc();
 
 /*
  * Aloca um registro léxico na memoria.
  * @return NULL caso o registro não seja alocado.
  */
 
-PRIVATE inline LexReg* allocLexReg();
+PRIVATE inline LexReg* lexRegAlloc();
 
 /*
  * Avalia a extensão do arquivo de código fonte que obrigatoriamente tem que terminar com .l
- * @param file_name nome completamente qualificado do arquivo fonte
+ * @param fileName nome completamente qualificado do arquivo fonte
  * @return TRUE caso a extensão seja válida, senão retorna FALSE
  *
  */
 PRIVATE BOOL evalFileExt(string fileName);
+
+/*
+ * Verifica se arquivo existe
+ * @param fileName nome completamente qualificado do arquivo fonte
+ * @return TRUE caso o arquivo exista, senão retorna FALSE
+ */
+
+PRIVATE BOOL fileExists(string fileName);
 
 /*
  * Preenche o buffer que armazena os lexemas
@@ -187,7 +207,7 @@ PRIVATE void setTok(Tok* tok, string lexeme, int tokId );
 
 /* Categorias dos tokens enumerados  */
 
-enum tok_types {IDENTIFIER = NUM_OF_TOKS ,CHARACTER,HEX,STRING,NUMBER,KEYWORD};
+enum tokTypes {IDENTIFIER = NUM_OF_TOKS ,CHARACTER,HEX,STRING,NUMBER,KEYWORD};
 
 /* Conjunto de estados do AFD
  * Q0 estado inicial
@@ -198,40 +218,14 @@ enum tok_types {IDENTIFIER = NUM_OF_TOKS ,CHARACTER,HEX,STRING,NUMBER,KEYWORD};
 enum state { Q0 = 0, Q1, Q2, Q3, Q4, Q5, Q6, Q7, Q8, Q9, Q10, Q11, Q12, Q13, Q14, Q15, Q16,Q17, F, END };
 
 /*
- * Automato finito determinista para reconhecer os lexemas válidos da linguagem com base
- * em determinadas regras definidas.
- * @return retorna um registro léxico do token reconhecido para o análisador sintático
- */
-PUBLIC LexReg* nextTok();
-
-/*
- * Inicia a execução do analisador léxico passando como argumento de linha de
- * comando o nome do arquivo do código fonte com extensão ".l"
- * @param argc número de argumentos
- * @param argv string(s) representam os argumentos
- */
-PUBLIC int main( int argc, char* argv[] );
-
-/*
  * Compara um lexema com uma cadeia de caracteres qualquer
  * @reg tok token(lexema)
  * @str cadeia de caracteres.
  * @return TRUE caso a cadeia de caracteres é idêntica ao lexema, senão retorna FALSE
  *
  */
-PRIVATE inline BOOL tokcmp( Node* tok , string str );
+PRIVATE inline BOOL compareTok( Node* tok , string str );
 
-/*
- * Metodos auxiliares para depurar o código
- */
-
-PRIVATE string strtoktype[] = { "IDENTIFIER","LITERAL","HEX","STRING","NUMBER","KEYWORD","DELIMITER","BOOL_OP","REL_OP","ARITH_OP" };
-
-PUBLIC void printTok(Tok* tok);
-
-PUBLIC void printLexReg(LexReg* lexReg);
-
-PUBLIC void printSymTab();
-
+#endif //LEX_IMP
 
 #endif //COMPILERL_LEX_H

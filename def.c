@@ -5,7 +5,7 @@
 #include <stdio.h>
 #include "def.h"
 
-PUBLIC string allocString( string str ){
+PUBLIC string strAlloc( string str ){
 
     if(str == NULL)
         return NULL;
@@ -25,7 +25,7 @@ PUBLIC string allocString( string str ){
 
 }
 
-PUBLIC BOOL iscontained( char*str, char chr ){
+PUBLIC BOOL strChr( char*str, char chr ){
     while( *str ){
         if( chr == *str++ )
             return TRUE;

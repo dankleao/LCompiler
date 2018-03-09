@@ -8,7 +8,7 @@ final MAXITER=10;
 /* Programa Principal */
 
   flag = 'c';
-  flag <- 0DDh;
+  flag <- 09Dh;
 
    if( flag = 'd' )
     writeln(flag);

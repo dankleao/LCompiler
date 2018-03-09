@@ -8,28 +8,28 @@
 		<Option virtualFolders="CMake Files\;"/>
 		<Build>
 			<Target title="all">
-				<Option working_dir="C:/Users/Daniel/Downloads/CompilerL/cmake-build-debug"/>
+				<Option working_dir="C:/Users/Daniel/Documents/CompilerL/cmake-build-debug"/>
 				<Option type="4"/>
 				<MakeCommands>
-					<Build command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/Daniel/Downloads/CompilerL/cmake-build-debug/Makefile&quot;  VERBOSE=1 all"/>
-					<CompileFile command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/Daniel/Downloads/CompilerL/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/Daniel/Downloads/CompilerL/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/Daniel/Downloads/CompilerL/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/Daniel/Documents/CompilerL/cmake-build-debug/Makefile&quot;  VERBOSE=1 all"/>
+					<CompileFile command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/Daniel/Documents/CompilerL/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/Daniel/Documents/CompilerL/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/Daniel/Documents/CompilerL/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="edit_cache">
-				<Option working_dir="C:/Users/Daniel/Downloads/CompilerL/cmake-build-debug"/>
+				<Option working_dir="C:/Users/Daniel/Documents/CompilerL/cmake-build-debug"/>
 				<Option type="4"/>
 				<MakeCommands>
-					<Build command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/Daniel/Downloads/CompilerL/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
-					<CompileFile command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/Daniel/Downloads/CompilerL/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/Daniel/Downloads/CompilerL/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/Daniel/Downloads/CompilerL/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/Daniel/Documents/CompilerL/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
+					<CompileFile command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/Daniel/Documents/CompilerL/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/Daniel/Documents/CompilerL/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/Daniel/Documents/CompilerL/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="CompilerL">
-				<Option output="C:/Users/Daniel/Downloads/CompilerL/cmake-build-debug/CompilerL.exe" prefix_auto="0" extension_auto="0"/>
-				<Option working_dir="C:/Users/Daniel/Downloads/CompilerL/cmake-build-debug"/>
+				<Option output="C:/Users/Daniel/Documents/CompilerL/cmake-build-debug/CompilerL.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Users/Daniel/Documents/CompilerL/cmake-build-debug"/>
 				<Option object_output="./"/>
 				<Option type="1"/>
 				<Option compiler="gcc"/>
@@ -43,15 +43,15 @@
 					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/5.3.0/../../../../mingw32/include"/>
 				</Compiler>
 				<MakeCommands>
-					<Build command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/Daniel/Downloads/CompilerL/cmake-build-debug/Makefile&quot;  VERBOSE=1 CompilerL"/>
-					<CompileFile command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/Daniel/Downloads/CompilerL/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/Daniel/Downloads/CompilerL/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/Daniel/Downloads/CompilerL/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/Daniel/Documents/CompilerL/cmake-build-debug/Makefile&quot;  VERBOSE=1 CompilerL"/>
+					<CompileFile command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/Daniel/Documents/CompilerL/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/Daniel/Documents/CompilerL/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/Daniel/Documents/CompilerL/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="CompilerL/fast">
-				<Option output="C:/Users/Daniel/Downloads/CompilerL/cmake-build-debug/CompilerL.exe" prefix_auto="0" extension_auto="0"/>
-				<Option working_dir="C:/Users/Daniel/Downloads/CompilerL/cmake-build-debug"/>
+				<Option output="C:/Users/Daniel/Documents/CompilerL/cmake-build-debug/CompilerL.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Users/Daniel/Documents/CompilerL/cmake-build-debug"/>
 				<Option object_output="./"/>
 				<Option type="1"/>
 				<Option compiler="gcc"/>
@@ -65,45 +65,45 @@
 					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/5.3.0/../../../../mingw32/include"/>
 				</Compiler>
 				<MakeCommands>
-					<Build command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/Daniel/Downloads/CompilerL/cmake-build-debug/Makefile&quot;  VERBOSE=1 CompilerL/fast"/>
-					<CompileFile command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/Daniel/Downloads/CompilerL/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/Daniel/Downloads/CompilerL/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/Daniel/Downloads/CompilerL/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/Daniel/Documents/CompilerL/cmake-build-debug/Makefile&quot;  VERBOSE=1 CompilerL/fast"/>
+					<CompileFile command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/Daniel/Documents/CompilerL/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/Daniel/Documents/CompilerL/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/Daniel/Documents/CompilerL/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="rebuild_cache">
-				<Option working_dir="C:/Users/Daniel/Downloads/CompilerL/cmake-build-debug"/>
+				<Option working_dir="C:/Users/Daniel/Documents/CompilerL/cmake-build-debug"/>
 				<Option type="4"/>
 				<MakeCommands>
-					<Build command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/Daniel/Downloads/CompilerL/cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
-					<CompileFile command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/Daniel/Downloads/CompilerL/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/Daniel/Downloads/CompilerL/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/Daniel/Downloads/CompilerL/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/Daniel/Documents/CompilerL/cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
+					<CompileFile command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/Daniel/Documents/CompilerL/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/Daniel/Documents/CompilerL/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/Daniel/Documents/CompilerL/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 		</Build>
-		<Unit filename="C:/Users/Daniel/Downloads/CompilerL/def.c">
+		<Unit filename="C:/Users/Daniel/Documents/CompilerL/def.c">
 			<Option target="CompilerL"/>
 		</Unit>
-		<Unit filename="C:/Users/Daniel/Downloads/CompilerL/def.h">
+		<Unit filename="C:/Users/Daniel/Documents/CompilerL/def.h">
 			<Option target="CompilerL"/>
 		</Unit>
-		<Unit filename="C:/Users/Daniel/Downloads/CompilerL/hash_table.c">
+		<Unit filename="C:/Users/Daniel/Documents/CompilerL/hash_table.c">
 			<Option target="CompilerL"/>
 		</Unit>
-		<Unit filename="C:/Users/Daniel/Downloads/CompilerL/hash_table.h">
+		<Unit filename="C:/Users/Daniel/Documents/CompilerL/hash_table.h">
 			<Option target="CompilerL"/>
 		</Unit>
-		<Unit filename="C:/Users/Daniel/Downloads/CompilerL/lex.h">
+		<Unit filename="C:/Users/Daniel/Documents/CompilerL/lex.h">
 			<Option target="CompilerL"/>
 		</Unit>
-		<Unit filename="C:/Users/Daniel/Downloads/CompilerL/main.c">
+		<Unit filename="C:/Users/Daniel/Documents/CompilerL/main.c">
 			<Option target="CompilerL"/>
 		</Unit>
-		<Unit filename="C:/Users/Daniel/Downloads/CompilerL/tblerrors.h">
+		<Unit filename="C:/Users/Daniel/Documents/CompilerL/tblerrors.h">
 			<Option target="CompilerL"/>
 		</Unit>
-		<Unit filename="C:/Users/Daniel/Downloads/CompilerL/CMakeLists.txt">
+		<Unit filename="C:/Users/Daniel/Documents/CompilerL/CMakeLists.txt">
 			<Option virtualFolder="CMake Files\"/>
 		</Unit>
 	</Project>
