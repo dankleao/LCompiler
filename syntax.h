@@ -7,8 +7,6 @@
 
 #include "lex.h"
 
-extern int lineCounter;
-
 PRIVATE LexReg* currLexReg;
 
 PRIVATE inline LexReg* getLexReg();
@@ -21,29 +19,64 @@ PRIVATE inline int getTokClass();
 
 PRIVATE inline void setLexReg( LexReg* lexReg );
 
-PRIVATE void joinTok( int tokIdExpected );
 /*
- * Program -> {declaration}* {cmdBlock}*
+ * Casa token
  */
-PRIVATE void PROGRAM();
+PRIVATE void matchTok( int tokIdExpected );
 
 /*
- *  declaration -> ( final id = const | ( int | char ) var )
+ * Program -> {declaration}* {block}*
  */
-PRIVATE void DECLARATION();
+PRIVATE void program();
 
 /*
- *  V -> id [ <- ( const | "[" EXP "]" ) ] [ , V ]
+ *  declaration -> ( final id = [+-] const | ( int | char ) vars );
  */
-PRIVATE void VARS();
+PRIVATE void declaration();
 
-PRIVATE void CMD_BLOCK();
-PRIVATE void CMD_IF();
-PRIVATE void CMD_FOR();
-PRIVATE void BLOCK_BODY();
-PRIVATE void EXP();
-PRIVATE void EXPS();
-PRIVATE void T();
-PRIVATE void F();
+/*
+ *  vars -> id [ <- exp | "[" exp "]" ) ] [ , vars ]
+ */
+PRIVATE void vars();
+
+/*
+ * block -> cmdIf | cmdFor | read(id); | write( exp [ {, exp} ] ); | writeln( exp [ {, exp} ] ); | id [ "[" exp "]" ] <- exp )
+ */
+PRIVATE void block();
+
+/*
+ * cmdIf -> if exp then body [ else body ]
+ */
+PRIVATE void cmdIf();
+
+/*
+ * cmdFor ->  for id <- exp to exp [ step const ] do body
+ */
+PRIVATE void cmdFor();
+
+/*
+ *  body -> ( begin( {block}* | ; ) end ) | ( block | ; )
+ */
+PRIVATE void body();
+
+/*
+ * expression -> term[ ( < | > | <= | >= | <> ) term ]
+ */
+PRIVATE void expression();
+
+/*
+ * term -> [+-] factor { (+ | - | or ) factor }
+ */
+PRIVATE void term();
+
+/*
+ * factor -> element { ( * | / | % | and ) element }
+ */
+PRIVATE void factor();
+
+/*
+ * element -> "(" expression ")" | not f | const | id [ "[" expression "]" ]
+ */
+PRIVATE void element();
 
 #endif //COMPILERL_SYNTAX_H

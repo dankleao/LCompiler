@@ -255,7 +255,7 @@ PUBLIC LexReg* nextTok(){
                 state = F;
                 break;
             case Q9:
-                while ( isalnum(*(++prog)) || strChr("()[]%&@;,!?*/-+_-<>=:{}'^ ",*prog) ){
+                while ( isalnum(*(++prog)) || strChr("()[]|\\%&@;,!?*/-+_-<>=:{}'^ ",*prog) ){
                     fillBuff(*prog );
                 }
                 if( *prog == '\"'){
@@ -277,7 +277,7 @@ PUBLIC LexReg* nextTok(){
                 }
                 break;
             case Q11:
-                if( isalnum(*(++prog)) || strChr("()[]%&@;,!?*/-+_-<>=:{}\'^\"\n$ ",*prog) ){
+                if( isalnum(*(++prog)) || strChr("()[]|\\%&@;,!?*/-+_-<>=:{}\'^\"\n$ ",*prog) ){
                     fillBuff(*prog);
                     state = Q12;
                 }
@@ -315,7 +315,6 @@ PUBLIC LexReg* nextTok(){
                 }//detecta erro lexíco de comentário sem fechamento
                 else if( *prog == '\0' ){
                     compilerror(ERR_EOF_NOT_EXPECTED,NULL);
-                    //ERROR_EOF_NOT_EXPECTED(lineCounter);
                 }
                 else {
                     state = Q14;

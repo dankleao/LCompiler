@@ -11,12 +11,12 @@ final MAXITER = 10;
   flag <- 09Dh;
 
    if (n = 10) then
-        writeln(10);
+        writeln(n);
    else
         if( MAXITER ) then begin
             for n <- 0 to MAXITER step 1 do
                 writeln(10);
-                readln(id);
+            readln(id);
         end
 
    a[a] <- 1000;

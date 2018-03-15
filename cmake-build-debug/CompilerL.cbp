@@ -88,10 +88,10 @@
 		<Unit filename="C:/Users/Daniel/Downloads/CompilerL/def.h">
 			<Option target="CompilerL"/>
 		</Unit>
-		<Unit filename="C:/Users/Daniel/Downloads/CompilerL/excpt.c">
+		<Unit filename="C:/Users/Daniel/Downloads/CompilerL/errors.c">
 			<Option target="CompilerL"/>
 		</Unit>
-		<Unit filename="C:/Users/Daniel/Downloads/CompilerL/excpt.h">
+		<Unit filename="C:/Users/Daniel/Downloads/CompilerL/errors.h">
 			<Option target="CompilerL"/>
 		</Unit>
 		<Unit filename="C:/Users/Daniel/Downloads/CompilerL/hash_table.c">
@@ -110,9 +110,6 @@
 			<Option target="CompilerL"/>
 		</Unit>
 		<Unit filename="C:/Users/Daniel/Downloads/CompilerL/syntax.h">
-			<Option target="CompilerL"/>
-		</Unit>
-		<Unit filename="C:/Users/Daniel/Downloads/CompilerL/test.c">
 			<Option target="CompilerL"/>
 		</Unit>
 		<Unit filename="C:/Users/Daniel/Downloads/CompilerL/CMakeLists.txt">

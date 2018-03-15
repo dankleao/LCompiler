@@ -24,7 +24,7 @@ PRIVATE inline void setLexReg( LexReg* lexReg ){
     currLexReg = lexReg;
 }
 
-PRIVATE void joinTok( int tokIdExpected ){
+PRIVATE void matchTok( int tokIdExpected ){
 
     if( getLexReg() == NULL )
         compilerror(ERR_EOF_NOT_EXPECTED,NULL);
@@ -38,7 +38,7 @@ PRIVATE void joinTok( int tokIdExpected ){
     }
 }
 
-PRIVATE void PROGRAM(){
+PRIVATE void program(){
 
     setLexReg(nextTok());
 
@@ -46,14 +46,14 @@ PRIVATE void PROGRAM(){
         compilerror(ERR_EMPTY_FILE,NULL);
     }
 
-    DECLARATION();
+    declaration();
 
     while ( getLexReg() != NULL  ){
-        CMD_BLOCK();
+        block();
     }
 }
 
-PRIVATE void DECLARATION(){
+PRIVATE void declaration(){
 
     do{
 
@@ -61,18 +61,22 @@ PRIVATE void DECLARATION(){
         if( getTokID() == TOK_FINAL ){
 
             printf("Constant\n");
-            joinTok(TOK_FINAL);
-            joinTok(IDENTIFIER);
-            joinTok(TOK_EQ);
-            joinTok(CONSTANT);
-            joinTok(TOK_SEMICOLON);
+            matchTok(TOK_FINAL);
+            matchTok(IDENTIFIER);
+            matchTok(TOK_EQ);
+
+            if( getTokID() == TOK_PLUS || getTokID() == TOK_MINUS )
+                matchTok(getTokID());
+
+            matchTok(CONSTANT);
+            matchTok(TOK_SEMICOLON);
 
         } else if( getTokID() == TOK_INT || getTokID() == TOK_CHAR ){
 
             printf("Vars\n");
-            joinTok(getTokID());
-            VARS();
-            joinTok(TOK_SEMICOLON);
+            matchTok(getTokID());
+            vars();
+            matchTok(TOK_SEMICOLON);
 
         } else{
             return;
@@ -81,97 +85,92 @@ PRIVATE void DECLARATION(){
     }while ( getTokID() == TOK_FINAL || getTokID() == TOK_INT || getTokID() == TOK_CHAR );
 }
 
-PRIVATE void VARS(){
+PRIVATE void vars(){
 
-    joinTok(IDENTIFIER);
+    matchTok(IDENTIFIER);
 
     if( getTokID() == TOK_ASSIGN ){
 
-        printf(" = ");
-        joinTok(TOK_ASSIGN);
-        joinTok(CONSTANT);
+        printf(" <- ");
+        matchTok(TOK_ASSIGN);
+        expression();
 
     } else if( getTokID() == TOK_L_BRACE ) {
 
         printf("[const]\n");
-        joinTok(TOK_L_BRACE);
-        EXP();
-        joinTok(TOK_R_BRACE);
+        matchTok(TOK_L_BRACE);
+        expression();
+        matchTok(TOK_R_BRACE);
     }
 
     if( getTokID() == TOK_COMMA ){
         printf(", Vars\n");
-        joinTok(TOK_COMMA);
-        VARS();
+        matchTok(TOK_COMMA);
+        vars();
     }
 }
 
-PRIVATE void CMD_BLOCK(){
+PRIVATE void block(){
 
     printf("CMD BLOCK\n");
 
     if( getTokID() == TOK_IF ){
 
         printf("Tok if\n");
-        joinTok(TOK_IF);
-        CMD_IF();
+        matchTok(TOK_IF);
+        cmdIf();
 
     } else if( getTokID() == TOK_FOR ){
 
         printf("Tok for\n");
-        joinTok(TOK_FOR);
-        CMD_FOR();
+        matchTok(TOK_FOR);
+        cmdFor();
 
     } else if( getTokID() ==  TOK_READLN ){
 
         printf("Tok readln\n");
-        joinTok(TOK_READLN);
-        joinTok(TOK_L_PAREN);
-        joinTok(IDENTIFIER);
-        joinTok(TOK_R_PAREN);
-        joinTok(TOK_SEMICOLON);
+        matchTok(TOK_READLN);
+        matchTok(TOK_L_PAREN);
+        matchTok(IDENTIFIER);
+        matchTok(TOK_R_PAREN);
+        matchTok(TOK_SEMICOLON);
 
     } else if( getTokID() == TOK_WRITE || getTokID() == TOK_WRITELN ){
 
         printf("Write or Writeln\n");
-        joinTok(getTokID());
+        matchTok(getTokID());
 
-        joinTok(TOK_L_PAREN);
+        matchTok(TOK_L_PAREN);
 
-        joinTok(CONSTANT);
+        expression();
+
+        //matchTok(CONSTANT);
 
         while( getTokID() == TOK_COMMA ){
-            joinTok(TOK_COMMA);
-            joinTok(CONSTANT);
+            matchTok(TOK_COMMA);
+            expression();
         }
 
-        joinTok(TOK_R_PAREN);
-        joinTok(TOK_SEMICOLON);
+        matchTok(TOK_R_PAREN);
+        matchTok(TOK_SEMICOLON);
 
         printf("end write or writeln\n");
 
     } else if( getTokID() == IDENTIFIER ){
 
-        joinTok(IDENTIFIER);
+        matchTok(IDENTIFIER);
 
          if( getTokID() == TOK_L_BRACE ){
-            joinTok(TOK_L_BRACE);
-            EXP();
-            joinTok(TOK_R_BRACE);
+             matchTok(TOK_L_BRACE);
+             expression();
+             matchTok(TOK_R_BRACE);
         }
 
-        joinTok(TOK_ASSIGN);
+        matchTok(TOK_ASSIGN);
 
-        if( getTokID() == CONSTANT ){
-            joinTok(CONSTANT);
-        } else if( getTokID() == IDENTIFIER ){
-            joinTok(IDENTIFIER);
-            joinTok(TOK_L_BRACE);
-            EXP();
-            joinTok(TOK_R_BRACE);
-        }
+        expression();
 
-        joinTok(TOK_SEMICOLON);
+        matchTok(TOK_SEMICOLON);
 
     } else{
 
@@ -179,125 +178,124 @@ PRIVATE void CMD_BLOCK(){
     }
 }
 
-PRIVATE void CMD_IF(){
+PRIVATE void cmdIf(){
 
-    EXP();
-    joinTok(TOK_THEN);
-    BLOCK_BODY();
+    expression();
+    matchTok(TOK_THEN);
+    body();
 
     if( getTokID() == TOK_ELSE ){
-        joinTok(TOK_ELSE);
-        BLOCK_BODY();
+        matchTok(TOK_ELSE);
+        body();
     }
-
 }
 
-PRIVATE void CMD_FOR(){
+PRIVATE void cmdFor(){
 
-    joinTok(IDENTIFIER);
-    joinTok(TOK_ASSIGN);
-    EXP();
-    joinTok(TOK_TO);
-    EXP();
+    matchTok(IDENTIFIER);
+    matchTok(TOK_ASSIGN);
+    expression();
+    matchTok(TOK_TO);
+    expression();
 
     if( getTokID() == TOK_STEP ){
-        joinTok(TOK_STEP);
-        joinTok(CONSTANT);
+        matchTok(TOK_STEP);
+        matchTok(CONSTANT);
     }
 
-    joinTok(TOK_DO);
+    matchTok(TOK_DO);
 
-    BLOCK_BODY();
+    body();
 
 }
 
-PRIVATE void BLOCK_BODY(){
+PRIVATE void body(){
 
-    printf("Block Body\n");
+    printf("Body\n");
     if( getTokID() == TOK_BEGIN ){
 
         printf("Begin\n");
-        joinTok(TOK_BEGIN);
+        matchTok(TOK_BEGIN);
         if( getTokID() == TOK_SEMICOLON )
-            joinTok(TOK_SEMICOLON);
+            matchTok(TOK_SEMICOLON);
         else{
 
             do{
-                CMD_BLOCK();
+                block();
             }while (getTokID() != TOK_END );
 
         }
 
-        joinTok(TOK_END);
+        matchTok(TOK_END);
 
         printf("End\n");
 
     } else  {
 
         if( getTokID() == TOK_SEMICOLON )
-            joinTok(TOK_SEMICOLON);
+            matchTok(TOK_SEMICOLON);
         else
-            CMD_BLOCK();
+            block();
     }
 }
 
-PRIVATE void EXP(){
+PRIVATE void expression(){
 
-    EXPS();
+    term();
     if( getTokID() == TOK_EQ || getTokID() == TOK_NE || getTokID() == TOK_GE || getTokID() == TOK_GT || getTokID() == TOK_LE || getTokID() == TOK_LT ){
-        joinTok(getTokID());
-        EXPS();
+        matchTok(getTokID());
+        term();
     }
 }
 
-PRIVATE void EXPS(){
+PRIVATE void term(){
 
     if( getTokID() == TOK_PLUS || getTokID() == TOK_MINUS )
-        joinTok(getTokID());
+        matchTok(getTokID());
 
-    T();
+    factor();
 
     while ( getTokID() == TOK_PLUS || getTokID() == TOK_MINUS || getTokID() == TOK_OR ){
-        joinTok(getTokID());
-        T();
+        matchTok(getTokID());
+        factor();
     }
 }
 
-PRIVATE void T(){
+PRIVATE void factor(){
 
-    F();
+    element();
     while ( getTokID() == TOK_TIMES || getTokID() == TOK_OVER || getTokID() == TOK_MOD || getTokID() == TOK_AND ){
-        joinTok(getTokID());
-        F();
+        matchTok(getTokID());
+        element();
     }
 }
 
-PRIVATE void F(){
+PRIVATE void element(){
 
     if( getTokID() == TOK_L_PAREN ){
 
-        joinTok(TOK_L_PAREN);
-        EXP();
-        joinTok(TOK_R_PAREN);
+        matchTok(TOK_L_PAREN);
+        expression();
+        matchTok(TOK_R_PAREN);
 
     } else if( getTokID() == TOK_NOT  ){
 
-        joinTok(TOK_NOT);
-        F();
+        matchTok(TOK_NOT);
+        element();
 
     } else if( getTokID() == CONSTANT){
 
-        joinTok(CONSTANT);
+        matchTok(CONSTANT);
 
     } else if( getTokID() == IDENTIFIER ){
 
-        joinTok(IDENTIFIER);
+        matchTok(IDENTIFIER);
 
         if( getTokID() == TOK_L_BRACE ){
 
-            joinTok(TOK_L_BRACE);
-            EXP();
-            joinTok(TOK_R_BRACE);
+            matchTok(TOK_L_BRACE);
+            expression();
+            matchTok(TOK_R_BRACE);
         }
     } else{
         //Invalid expression
@@ -313,7 +311,7 @@ int main( int argc, char* argv[] ){
 
     //inicializa o analisador sintatico
     printf("Program\n");
-    PROGRAM();
+    program();
 
     return 0;
 }

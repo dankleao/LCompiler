@@ -30,7 +30,3 @@
 
 # Debug files
 *.dSYM/
-
-main\.c
-
-tblerrors\.h

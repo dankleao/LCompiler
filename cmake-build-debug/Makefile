@@ -149,32 +149,32 @@ def.c.s:
 	$(MAKE) -f CMakeFiles\CompilerL.dir\build.make CMakeFiles/CompilerL.dir/def.c.s
 .PHONY : def.c.s
 
-excpt.obj: excpt.c.obj
+errors.obj: errors.c.obj
 
-.PHONY : excpt.obj
+.PHONY : errors.obj
 
 # target to build an object file
-excpt.c.obj:
-	$(MAKE) -f CMakeFiles\CompilerL.dir\build.make CMakeFiles/CompilerL.dir/excpt.c.obj
-.PHONY : excpt.c.obj
+errors.c.obj:
+	$(MAKE) -f CMakeFiles\CompilerL.dir\build.make CMakeFiles/CompilerL.dir/errors.c.obj
+.PHONY : errors.c.obj
 
-excpt.i: excpt.c.i
+errors.i: errors.c.i
 
-.PHONY : excpt.i
+.PHONY : errors.i
 
 # target to preprocess a source file
-excpt.c.i:
-	$(MAKE) -f CMakeFiles\CompilerL.dir\build.make CMakeFiles/CompilerL.dir/excpt.c.i
-.PHONY : excpt.c.i
+errors.c.i:
+	$(MAKE) -f CMakeFiles\CompilerL.dir\build.make CMakeFiles/CompilerL.dir/errors.c.i
+.PHONY : errors.c.i
 
-excpt.s: excpt.c.s
+errors.s: errors.c.s
 
-.PHONY : excpt.s
+.PHONY : errors.s
 
 # target to generate assembly for a file
-excpt.c.s:
-	$(MAKE) -f CMakeFiles\CompilerL.dir\build.make CMakeFiles/CompilerL.dir/excpt.c.s
-.PHONY : excpt.c.s
+errors.c.s:
+	$(MAKE) -f CMakeFiles\CompilerL.dir\build.make CMakeFiles/CompilerL.dir/errors.c.s
+.PHONY : errors.c.s
 
 hash_table.obj: hash_table.c.obj
 
@@ -257,33 +257,6 @@ syntax.c.s:
 	$(MAKE) -f CMakeFiles\CompilerL.dir\build.make CMakeFiles/CompilerL.dir/syntax.c.s
 .PHONY : syntax.c.s
 
-test.obj: test.c.obj
-
-.PHONY : test.obj
-
-# target to build an object file
-test.c.obj:
-	$(MAKE) -f CMakeFiles\CompilerL.dir\build.make CMakeFiles/CompilerL.dir/test.c.obj
-.PHONY : test.c.obj
-
-test.i: test.c.i
-
-.PHONY : test.i
-
-# target to preprocess a source file
-test.c.i:
-	$(MAKE) -f CMakeFiles\CompilerL.dir\build.make CMakeFiles/CompilerL.dir/test.c.i
-.PHONY : test.c.i
-
-test.s: test.c.s
-
-.PHONY : test.s
-
-# target to generate assembly for a file
-test.c.s:
-	$(MAKE) -f CMakeFiles\CompilerL.dir\build.make CMakeFiles/CompilerL.dir/test.c.s
-.PHONY : test.c.s
-
 # Help Target
 help:
 	@echo The following are some of the valid targets for this Makefile:
@@ -296,9 +269,9 @@ help:
 	@echo ... def.obj
 	@echo ... def.i
 	@echo ... def.s
-	@echo ... excpt.obj
-	@echo ... excpt.i
-	@echo ... excpt.s
+	@echo ... errors.obj
+	@echo ... errors.i
+	@echo ... errors.s
 	@echo ... hash_table.obj
 	@echo ... hash_table.i
 	@echo ... hash_table.s
@@ -308,9 +281,6 @@ help:
 	@echo ... syntax.obj
 	@echo ... syntax.i
 	@echo ... syntax.s
-	@echo ... test.obj
-	@echo ... test.i
-	@echo ... test.s
 .PHONY : help
 
 
