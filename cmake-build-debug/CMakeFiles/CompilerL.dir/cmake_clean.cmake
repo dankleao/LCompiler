@@ -1,7 +1,10 @@
 file(REMOVE_RECURSE
   "CMakeFiles/CompilerL.dir/hash_table.c.obj"
-  "CMakeFiles/CompilerL.dir/main.c.obj"
   "CMakeFiles/CompilerL.dir/def.c.obj"
+  "CMakeFiles/CompilerL.dir/syntax.c.obj"
+  "CMakeFiles/CompilerL.dir/lex.c.obj"
+  "CMakeFiles/CompilerL.dir/test.c.obj"
+  "CMakeFiles/CompilerL.dir/excpt.c.obj"
   "CompilerL.pdb"
   "CompilerL.exe"
   "CompilerL.exe.manifest"

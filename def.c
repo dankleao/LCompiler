@@ -2,14 +2,9 @@
 // Created by Daniel on 01/03/2018.
 //
 
-#include <stdio.h>
 #include "def.h"
 
-<<<<<<< HEAD
 PUBLIC string strAlloc( string str ){
-=======
-PUBLIC string allocString( string str ){
->>>>>>> master
 
     if(str == NULL)
         return NULL;
@@ -29,11 +24,7 @@ PUBLIC string allocString( string str ){
 
 }
 
-<<<<<<< HEAD
 PUBLIC BOOL strChr( char*str, char chr ){
-=======
-PUBLIC BOOL iscontained( char*str, char chr ){
->>>>>>> master
     while( *str ){
         if( chr == *str++ )
             return TRUE;

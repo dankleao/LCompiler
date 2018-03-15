@@ -47,17 +47,10 @@ RM = "C:\Program Files\JetBrains\CLion 2017.1.2\bin\cmake\bin\cmake.exe" -E remo
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-<<<<<<< HEAD
-CMAKE_SOURCE_DIR = C:\Users\Daniel\Documents\CompilerL
-
-# The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = C:\Users\Daniel\Documents\CompilerL\cmake-build-debug
-=======
 CMAKE_SOURCE_DIR = C:\Users\Daniel\Downloads\CompilerL
 
 # The top-level build directory on which CMake was run.
 CMAKE_BINARY_DIR = C:\Users\Daniel\Downloads\CompilerL\cmake-build-debug
->>>>>>> master
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -86,15 +79,9 @@ rebuild_cache/fast: rebuild_cache
 
 # The main all target
 all: cmake_check_build_system
-<<<<<<< HEAD
-	$(CMAKE_COMMAND) -E cmake_progress_start C:\Users\Daniel\Documents\CompilerL\cmake-build-debug\CMakeFiles C:\Users\Daniel\Documents\CompilerL\cmake-build-debug\CMakeFiles\progress.marks
-	$(MAKE) -f CMakeFiles\Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start C:\Users\Daniel\Documents\CompilerL\cmake-build-debug\CMakeFiles 0
-=======
 	$(CMAKE_COMMAND) -E cmake_progress_start C:\Users\Daniel\Downloads\CompilerL\cmake-build-debug\CMakeFiles C:\Users\Daniel\Downloads\CompilerL\cmake-build-debug\CMakeFiles\progress.marks
 	$(MAKE) -f CMakeFiles\Makefile2 all
 	$(CMAKE_COMMAND) -E cmake_progress_start C:\Users\Daniel\Downloads\CompilerL\cmake-build-debug\CMakeFiles 0
->>>>>>> master
 .PHONY : all
 
 # The main clean target
@@ -162,6 +149,33 @@ def.c.s:
 	$(MAKE) -f CMakeFiles\CompilerL.dir\build.make CMakeFiles/CompilerL.dir/def.c.s
 .PHONY : def.c.s
 
+excpt.obj: excpt.c.obj
+
+.PHONY : excpt.obj
+
+# target to build an object file
+excpt.c.obj:
+	$(MAKE) -f CMakeFiles\CompilerL.dir\build.make CMakeFiles/CompilerL.dir/excpt.c.obj
+.PHONY : excpt.c.obj
+
+excpt.i: excpt.c.i
+
+.PHONY : excpt.i
+
+# target to preprocess a source file
+excpt.c.i:
+	$(MAKE) -f CMakeFiles\CompilerL.dir\build.make CMakeFiles/CompilerL.dir/excpt.c.i
+.PHONY : excpt.c.i
+
+excpt.s: excpt.c.s
+
+.PHONY : excpt.s
+
+# target to generate assembly for a file
+excpt.c.s:
+	$(MAKE) -f CMakeFiles\CompilerL.dir\build.make CMakeFiles/CompilerL.dir/excpt.c.s
+.PHONY : excpt.c.s
+
 hash_table.obj: hash_table.c.obj
 
 .PHONY : hash_table.obj
@@ -189,32 +203,86 @@ hash_table.c.s:
 	$(MAKE) -f CMakeFiles\CompilerL.dir\build.make CMakeFiles/CompilerL.dir/hash_table.c.s
 .PHONY : hash_table.c.s
 
-main.obj: main.c.obj
+lex.obj: lex.c.obj
 
-.PHONY : main.obj
+.PHONY : lex.obj
 
 # target to build an object file
-main.c.obj:
-	$(MAKE) -f CMakeFiles\CompilerL.dir\build.make CMakeFiles/CompilerL.dir/main.c.obj
-.PHONY : main.c.obj
+lex.c.obj:
+	$(MAKE) -f CMakeFiles\CompilerL.dir\build.make CMakeFiles/CompilerL.dir/lex.c.obj
+.PHONY : lex.c.obj
 
-main.i: main.c.i
+lex.i: lex.c.i
 
-.PHONY : main.i
+.PHONY : lex.i
 
 # target to preprocess a source file
-main.c.i:
-	$(MAKE) -f CMakeFiles\CompilerL.dir\build.make CMakeFiles/CompilerL.dir/main.c.i
-.PHONY : main.c.i
+lex.c.i:
+	$(MAKE) -f CMakeFiles\CompilerL.dir\build.make CMakeFiles/CompilerL.dir/lex.c.i
+.PHONY : lex.c.i
 
-main.s: main.c.s
+lex.s: lex.c.s
 
-.PHONY : main.s
+.PHONY : lex.s
 
 # target to generate assembly for a file
-main.c.s:
-	$(MAKE) -f CMakeFiles\CompilerL.dir\build.make CMakeFiles/CompilerL.dir/main.c.s
-.PHONY : main.c.s
+lex.c.s:
+	$(MAKE) -f CMakeFiles\CompilerL.dir\build.make CMakeFiles/CompilerL.dir/lex.c.s
+.PHONY : lex.c.s
+
+syntax.obj: syntax.c.obj
+
+.PHONY : syntax.obj
+
+# target to build an object file
+syntax.c.obj:
+	$(MAKE) -f CMakeFiles\CompilerL.dir\build.make CMakeFiles/CompilerL.dir/syntax.c.obj
+.PHONY : syntax.c.obj
+
+syntax.i: syntax.c.i
+
+.PHONY : syntax.i
+
+# target to preprocess a source file
+syntax.c.i:
+	$(MAKE) -f CMakeFiles\CompilerL.dir\build.make CMakeFiles/CompilerL.dir/syntax.c.i
+.PHONY : syntax.c.i
+
+syntax.s: syntax.c.s
+
+.PHONY : syntax.s
+
+# target to generate assembly for a file
+syntax.c.s:
+	$(MAKE) -f CMakeFiles\CompilerL.dir\build.make CMakeFiles/CompilerL.dir/syntax.c.s
+.PHONY : syntax.c.s
+
+test.obj: test.c.obj
+
+.PHONY : test.obj
+
+# target to build an object file
+test.c.obj:
+	$(MAKE) -f CMakeFiles\CompilerL.dir\build.make CMakeFiles/CompilerL.dir/test.c.obj
+.PHONY : test.c.obj
+
+test.i: test.c.i
+
+.PHONY : test.i
+
+# target to preprocess a source file
+test.c.i:
+	$(MAKE) -f CMakeFiles\CompilerL.dir\build.make CMakeFiles/CompilerL.dir/test.c.i
+.PHONY : test.c.i
+
+test.s: test.c.s
+
+.PHONY : test.s
+
+# target to generate assembly for a file
+test.c.s:
+	$(MAKE) -f CMakeFiles\CompilerL.dir\build.make CMakeFiles/CompilerL.dir/test.c.s
+.PHONY : test.c.s
 
 # Help Target
 help:
@@ -228,12 +296,21 @@ help:
 	@echo ... def.obj
 	@echo ... def.i
 	@echo ... def.s
+	@echo ... excpt.obj
+	@echo ... excpt.i
+	@echo ... excpt.s
 	@echo ... hash_table.obj
 	@echo ... hash_table.i
 	@echo ... hash_table.s
-	@echo ... main.obj
-	@echo ... main.i
-	@echo ... main.s
+	@echo ... lex.obj
+	@echo ... lex.i
+	@echo ... lex.s
+	@echo ... syntax.obj
+	@echo ... syntax.i
+	@echo ... syntax.s
+	@echo ... test.obj
+	@echo ... test.i
+	@echo ... test.s
 .PHONY : help
 
 

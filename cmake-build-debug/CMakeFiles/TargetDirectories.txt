@@ -1,9 +1,3 @@
-<<<<<<< HEAD
-C:/Users/Daniel/Documents/CompilerL/cmake-build-debug/CMakeFiles/edit_cache.dir
-C:/Users/Daniel/Documents/CompilerL/cmake-build-debug/CMakeFiles/CompilerL.dir
-C:/Users/Daniel/Documents/CompilerL/cmake-build-debug/CMakeFiles/rebuild_cache.dir
-=======
 C:/Users/Daniel/Downloads/CompilerL/cmake-build-debug/CMakeFiles/edit_cache.dir
 C:/Users/Daniel/Downloads/CompilerL/cmake-build-debug/CMakeFiles/CompilerL.dir
 C:/Users/Daniel/Downloads/CompilerL/cmake-build-debug/CMakeFiles/rebuild_cache.dir
->>>>>>> master

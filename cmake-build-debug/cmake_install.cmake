@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-# Install script for directory: C:/Users/Daniel/Documents/CompilerL
-=======
 # Install script for directory: C:/Users/Daniel/Downloads/CompilerL
->>>>>>> master
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -39,9 +35,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-<<<<<<< HEAD
-file(WRITE "C:/Users/Daniel/Documents/CompilerL/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
-=======
 file(WRITE "C:/Users/Daniel/Downloads/CompilerL/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
->>>>>>> master
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

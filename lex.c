@@ -3,12 +3,9 @@
 //
 
 
-#include <unistd.h>
-
 #define LEX_IMP //Habilita a visualização dos metodos privados
 
 #include "lex.h"
-#include "tblerrors.h"
 
 /*
  * Métodos privados
@@ -43,7 +40,7 @@ PRIVATE BOOL evalFileExt(string fileName){
     return ( fileName[length-1] == 'l' && fileName[length-2] == '.' ? TRUE : FALSE );
 }
 
-PRIVATE BOOL fileExists(string fileName){
+PRIVATE inline BOOL fileExists(string fileName){
     return (access( fileName, F_OK ) != -1 ? TRUE : FALSE);
 }
 
@@ -51,7 +48,7 @@ PRIVATE void fillBuff(char chr){
     if( buffindex < VAR_LEN_MAX ){
         buffchr[buffindex++] = chr;
     } else{
-        ERROR_VAR_LEN;
+        compilerror(ERR_VAR_LEN,NULL);
     }
 }
 
@@ -68,7 +65,7 @@ PRIVATE inline void ignoreWs(){
 
 PRIVATE void setTok(Tok* tok, string lexeme, int tokId ){
     tok->lexeme = strAlloc(lexeme);
-    tok->tokId = tokId;
+    tok->id = tokId;
 }
 
 PRIVATE inline BOOL compareTok( Node* tok , string str ){
@@ -163,7 +160,9 @@ PUBLIC LexReg* nextTok(){
                     return NULL;
                 }//Estado de erro do automato
                 else{
-                    ERROR_UNRECOGNIZED_SYMBOL;
+                    fillBuff(*prog);
+                    closeBuff();
+                    compilerror(ERR_UNRECOGNIZED_SYMBOL,buffchr);
                 }
                 break;
             case Q1:
@@ -175,7 +174,7 @@ PUBLIC LexReg* nextTok(){
                 }
                 else{
                     closeBuff();
-                    ERROR_LEXEME_NOT_FOUND(buffchr);
+                    compilerror(ERR_LEXEME_NOT_FOUND,buffchr);
                 }
                 break;
             case Q2:
@@ -204,7 +203,7 @@ PUBLIC LexReg* nextTok(){
                 }else{
                     while ( ! isspace(*prog) ) fillBuff(*prog++);
                     closeBuff();
-                    ERROR_INVALID_HEX_CONST(buffchr);
+                    compilerror(ERR_INVALID_HEX_CONST,buffchr);
                 }
                 break;
             case Q5:
@@ -231,7 +230,7 @@ PUBLIC LexReg* nextTok(){
                     fillBuff(*prog++);
                     while ( ! isspace(*prog) ) fillBuff(*prog++);
                     closeBuff();
-                    ERROR_INVALID_HEX_CONST(buffchr);
+                    compilerror(ERR_INVALID_HEX_CONST,buffchr);
                 }
                 break;
             case Q7:
@@ -263,15 +262,15 @@ PUBLIC LexReg* nextTok(){
                     state = Q10;
                 }
                 else if( *prog == '$' || *prog == '\n'  ){
-                    ERROR_UNRECOGNIZED_SYMBOL;
+                    compilerror(ERR_UNRECOGNIZED_SYMBOL,buffchr);
                 }
                 else{
-                    ERROR_UNRECOGNIZED_SYMBOL;
+                    compilerror(ERR_UNRECOGNIZED_SYMBOL,buffchr);
                 }
                 break;
             case Q10:
                 if( *(++prog) == '\"' ){
-                    ERROR_UNRECOGNIZED_SYMBOL;
+                    compilerror(ERR_UNRECOGNIZED_SYMBOL,buffchr);
                 } else{
                     tokType = STRING;
                     state = F;
@@ -283,7 +282,7 @@ PUBLIC LexReg* nextTok(){
                     state = Q12;
                 }
                 else{
-                    ERROR_UNRECOGNIZED_SYMBOL;
+                    compilerror(ERR_UNRECOGNIZED_SYMBOL,buffchr);
                 }
                 break;
             case Q12:
@@ -293,7 +292,7 @@ PUBLIC LexReg* nextTok(){
                     state = F;
                 }
                 else{
-                    ERROR_UNRECOGNIZED_SYMBOL;
+                    compilerror(ERR_INVALID_CHARACTER,NULL);
                 }
                 break;
             case Q13:
@@ -315,7 +314,8 @@ PUBLIC LexReg* nextTok(){
                     state = Q0;
                 }//detecta erro lexíco de comentário sem fechamento
                 else if( *prog == '\0' ){
-                    ERROR_EOF_NOT_EXPECTED;
+                    compilerror(ERR_EOF_NOT_EXPECTED,NULL);
+                    //ERROR_EOF_NOT_EXPECTED(lineCounter);
                 }
                 else {
                     state = Q14;
@@ -361,11 +361,14 @@ PUBLIC LexReg* nextTok(){
                         tokAdd(tok);
 
                     } else {
-                        setTok(tok,buffchr,tokType);
+                        setTok(tok,buffchr,CONSTANT);
                     }
                 }
-                lexReg->pos = lineCounter;
+
+                //lexReg->pos = lineCounter;
                 lexReg->tok = tok;
+
+                //printTok(lexReg->tok);
 
                 state = END;
                 break;
@@ -384,14 +387,12 @@ PUBLIC BOOL startLex( string fileName ){
 
     //Verifica a extensão do código-fonte
     if( !evalFileExt(fileName) || !fileExists(fileName) ){
-        printf("lex: error: Arquivo %s nao encontrado!\n",fileName);
-        exit(1);
+        compilerror(ERR_FILE_NOT_FOUND,NULL);
     }
 
     //Reserva espaço para carregar o programa
     if( ( buffp = (char*) malloc(sizeof(char)*PROGRAM_LEN_MAX ) ) == NULL ){
-        printf("lex: error: Não foi possível carregar o programa!\n");
-        exit(1);
+        compilerror(ERR_COULD_NOT_LOAD_PROGRAM,NULL);
     }
 
     //carrega o programa para memória principal
@@ -411,24 +412,25 @@ PUBLIC BOOL startLex( string fileName ){
         tokAdd(tok);
     }
 
+    //inicializa o contador de linhas
+    lineCounter = 1;
+
     return TRUE;
 
 }
 
 PUBLIC void printTok(Tok* tok){
     if( tok != NULL )
-        printf("\n\tTok( \n\t\taddr: %p\n\t\tlexeme: \"%s\" ; size: %d\n\t",tok,tok->lexeme,strlen(tok->lexeme));
+        printf("\n\tTok( \n\t\taddr: %p\n\t\tlexeme: \"%s\" ; size: %d\n\t\t id: %d\n\t",tok,tok->lexeme,strlen(tok->lexeme),tok->id);
     else
         printf("\n\tTok( \n\t\t null \n\t");
 }
 
 PUBLIC void printLexReg(LexReg* lexReg){
-
     if( lexReg != NULL ){
-
-        printf("\nLex register{ \tLine: %d\n",lineCounter);
+        printf("\nLex register{\n\tline: %d",lineCounter);
         printTok(lexReg->tok);
-        printf("\ttype: %s\n\t);\n}\n",strtoktype[ lexReg->tok->tokId >= TOK_FINAL && lexReg->tok->tokId < NUM_OF_TOKS ? KEYWORD - NUM_OF_TOKS : lexReg->tok->tokId - NUM_OF_TOKS ] );
+        printf("\ttype: %s\n\t);\n}\n",strTokType[ lexReg->tok->id >= TOK_FINAL && lexReg->tok->id < NUM_OF_TOKS ? KEYWORD - NUM_OF_TOKS : lexReg->tok->id - NUM_OF_TOKS ] );
     }
 }
 

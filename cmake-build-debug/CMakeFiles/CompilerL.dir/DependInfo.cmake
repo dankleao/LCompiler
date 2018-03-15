@@ -4,15 +4,12 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_C
-<<<<<<< HEAD
-  "C:/Users/Daniel/Documents/CompilerL/def.c" "C:/Users/Daniel/Documents/CompilerL/cmake-build-debug/CMakeFiles/CompilerL.dir/def.c.obj"
-  "C:/Users/Daniel/Documents/CompilerL/hash_table.c" "C:/Users/Daniel/Documents/CompilerL/cmake-build-debug/CMakeFiles/CompilerL.dir/hash_table.c.obj"
-  "C:/Users/Daniel/Documents/CompilerL/main.c" "C:/Users/Daniel/Documents/CompilerL/cmake-build-debug/CMakeFiles/CompilerL.dir/main.c.obj"
-=======
   "C:/Users/Daniel/Downloads/CompilerL/def.c" "C:/Users/Daniel/Downloads/CompilerL/cmake-build-debug/CMakeFiles/CompilerL.dir/def.c.obj"
+  "C:/Users/Daniel/Downloads/CompilerL/excpt.c" "C:/Users/Daniel/Downloads/CompilerL/cmake-build-debug/CMakeFiles/CompilerL.dir/excpt.c.obj"
   "C:/Users/Daniel/Downloads/CompilerL/hash_table.c" "C:/Users/Daniel/Downloads/CompilerL/cmake-build-debug/CMakeFiles/CompilerL.dir/hash_table.c.obj"
-  "C:/Users/Daniel/Downloads/CompilerL/main.c" "C:/Users/Daniel/Downloads/CompilerL/cmake-build-debug/CMakeFiles/CompilerL.dir/main.c.obj"
->>>>>>> master
+  "C:/Users/Daniel/Downloads/CompilerL/lex.c" "C:/Users/Daniel/Downloads/CompilerL/cmake-build-debug/CMakeFiles/CompilerL.dir/lex.c.obj"
+  "C:/Users/Daniel/Downloads/CompilerL/syntax.c" "C:/Users/Daniel/Downloads/CompilerL/cmake-build-debug/CMakeFiles/CompilerL.dir/syntax.c.obj"
+  "C:/Users/Daniel/Downloads/CompilerL/test.c" "C:/Users/Daniel/Downloads/CompilerL/cmake-build-debug/CMakeFiles/CompilerL.dir/test.c.obj"
   )
 set(CMAKE_C_COMPILER_ID "GNU")
 

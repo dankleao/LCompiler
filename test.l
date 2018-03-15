@@ -1,28 +1,41 @@
 /* Exemplo de Programa na linguagem L */
 
 int n;
-char nome[40];
+char nome[50];
 char flag;
-final MAXITER=10;
+final MAXITER = 10;
 
 /* Programa Principal */
 
-  flag = 'c';
-<<<<<<< HEAD
+  flag <- 'A';
   flag <- 09Dh;
-=======
-  flag <- 0DDh;
->>>>>>> master
 
-   if( flag = 'd' )
-    writeln(flag);
+   if (n = 10) then
+        writeln(10);
    else
-    writeln("Nao encontrado!");
+        if( MAXITER ) then begin
+            for n <- 0 to MAXITER step 1 do
+                writeln(10);
+                readln(id);
+        end
+
+   a[a] <- 1000;
+
+   a[b[10/10]] <- d[(5*10)];
+
+   for i <- 0DDh to (10*9) step 10 do begin
+        readln(a);
+   end
 
 /* Programa Principal */
 
      write("Digite seu nome: ");
      readln(nome);
-     for n=1 to MAXITER do begin
-       writeln("Ola",nome);
+
+     for n <- 1 to MAXITER do begin
+       if(1) then begin
+            if(0) then ;
+       end
+       readln(id);
+       writeln("Ola","hello",'c');
      end

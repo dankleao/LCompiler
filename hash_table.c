@@ -2,7 +2,6 @@
 // Created by Daniel on 28/02/2018.
 //
 
-<<<<<<< HEAD
 #define HASH_TABLE_IMPL //Habilita a visualização das métodos privadas
 
 #include "hash_table.h"
@@ -51,16 +50,6 @@ PRIVATE int getKey2(string str, int weights[]){
  * Métodos públicos
  */
 PUBLIC Node* hashTableAdd(HashTable* hash, int key, void* obj){
-=======
-#include "hash_table.h"
-
-PUBLIC Node* addHashTable(HashTable* hash, int key, void* obj){
-
-    /*
-    if( hash->count >= hash->size )
-        return NULL;
-     */
->>>>>>> master
 
     Node* newNode;
     if( ( newNode = (Node*) malloc(sizeof(Node)) ) == NULL )
@@ -89,59 +78,7 @@ PUBLIC Node* addHashTable(HashTable* hash, int key, void* obj){
     return newNode;
 }
 
-<<<<<<< HEAD
 PUBLIC HashTable* hashTableCreate(int size){
-=======
-PUBLIC Node* searchHashTable(HashTable* hash, string str, BOOL (*cmp) (Node*, string) ){
-
-    int pos = fxHash(getKey(str),hash->size);
-
-    if(  hash->node[pos] == NULL )
-        return NULL;
-
-    Node* sNode = hash->node[pos];
-
-    do{
-
-        if( (*cmp)( sNode ,str) ){
-            return sNode;
-        }
-
-    }while( ( (sNode = sNode->prox), sNode != NULL ) );
-
-    return NULL;
-}
-
-PUBLIC void printHashTable( HashTable* hash ){
-
-    printf("\n****** SHOW HASH *******\n");
-
-    printf("hash: %p\n", hash );
-    printf("node**: %p\n", hash->node );
-
-    int i;
-    struct node* sNode = NULL;
-    for( i = 0; i < hash->size; ++i ) {
-
-        sNode = hash->node[i];
-
-        if( sNode != NULL ){
-
-            printf("node*: %p",sNode->obj );
-
-            while ( sNode->prox != NULL ){
-                printf(" -> node*: %p", sNode->prox->obj );
-                sNode = sNode->prox;
-            }
-            printf("\n");
-        } else{
-            printf("node*: %p\n",sNode);
-        }
-    }
-}
-
-PUBLIC HashTable* createHashTable(int size){
->>>>>>> master
 
     int i;
 
@@ -169,7 +106,6 @@ PUBLIC HashTable* createHashTable(int size){
     return hashTable;
 }
 
-<<<<<<< HEAD
 PUBLIC Node* hashTableSearch(HashTable* hash, string str, BOOL (*cmp) (Node*, string) ){
 
     int pos = fxHash(getKey(str),hash->size);
@@ -192,20 +128,6 @@ PUBLIC Node* hashTableSearch(HashTable* hash, string str, BOOL (*cmp) (Node*, st
 
 PUBLIC int getKey(char* string){
     return getKey2(string,weights);
-=======
-PRIVATE void generateWeights(){
-
-    int i;
-    weights = (int*) malloc( VAR_LEN_MAX * sizeof(int) );
-
-    if( weights != NULL ){
-
-        srand(time(NULL));
-
-        for( i = 0; i < VAR_LEN_MAX; ++i)
-            weights[i] = rand() % TAB_ASC2_SIZE;
-    }
->>>>>>> master
 }
 
 PUBLIC void printWeights( ){
@@ -218,7 +140,6 @@ PUBLIC void printWeights( ){
     }
 }
 
-<<<<<<< HEAD
 PUBLIC void printHashTable( HashTable* hash ){
 
     printf("\n****** SHOW HASH *******\n");
@@ -247,31 +168,3 @@ PUBLIC void printHashTable( HashTable* hash ){
     }
 }
 
-=======
-PUBLIC inline int fxHash( int key, int table_size ){
-    //printf("h( %d ) = %d\n", key, key % table_size);
-    return  key % (table_size);
-}
-
-PUBLIC int getKey(char* string){
-    return getKey2(string,weights);
-}
-
-PUBLIC int getKey2(string str, int weights[]){
-
-    //printf("string: %s\n",str);
-
-    int key = 0;
-    int length = strlen(str);
-
-    int i;
-    int j;
-    for (i = 0; i < length ; ++i) {
-        key += ((int) str[i]) * weights[i];
-        j = ((int) str[i]) * weights[i];
-        //printf("%d = %d * %d\n", j, (int)str[i], weights[i]);
-
-    }
-    return key;
-}
->>>>>>> master
