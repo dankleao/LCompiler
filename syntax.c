@@ -144,8 +144,6 @@ PRIVATE void block(){
 
         expression();
 
-        //matchTok(CONSTANT);
-
         while( getTokID() == TOK_COMMA ){
             matchTok(TOK_COMMA);
             expression();
@@ -200,13 +198,16 @@ PRIVATE void cmdFor(){
 
     if( getTokID() == TOK_STEP ){
         matchTok(TOK_STEP);
+
+        if( getTokID() == TOK_PLUS || getTokID() == TOK_MINUS )
+            matchTok(getTokID());
+
         matchTok(CONSTANT);
     }
 
     matchTok(TOK_DO);
 
     body();
-
 }
 
 PRIVATE void body(){
@@ -304,7 +305,6 @@ PRIVATE void element(){
 }
 
 int main( int argc, char* argv[] ){
-
 
     //inicializa o analisador lex
     startLex(argv[1]);

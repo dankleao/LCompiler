@@ -216,9 +216,9 @@ PRIVATE void setTok(Tok* tok, string lexeme, int tokId );
 
 /* Conjunto de estados do AFD
  * Q0 estado inicial
- * Q1 - Q8 estados intermediários
+ * Q1 - Q17 estados intermediários
  * F estado final
- * DFA_ERROR estado de erro
+ * END estado auxilar para finalizar a varredura
  * */
 enum state { Q0 = 0, Q1, Q2, Q3, Q4, Q5, Q6, Q7, Q8, Q9, Q10, Q11, Q12, Q13, Q14, Q15, Q16,Q17, F, END };
 

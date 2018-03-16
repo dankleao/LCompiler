@@ -9,6 +9,9 @@
 
 #define ERR( errid, errdesc ) errid,
 
+/*
+ * Define um lista de erros que podem surgim em um processo de compilação
+ */
 #define ERR_LIST \
         ERR(ERR_VAR_LEN,"tamanho do identificador excede o limite permitido.") \
         ERR(ERR_UNRECOGNIZED_SYMBOL,"caracter não reconhecido.") \
@@ -36,13 +39,19 @@ enum {
 
 #define ERR(errid,errdesc) errdesc,
 
+//Armazena a lista de erros em uma tabela
 PRIVATE string err_list[NUM_OF_ERRORS] = { ERR_LIST };
 
 #undef ERR
 #undef ERR_LIST
 
-extern int lineCounter;
+extern int lineCounter;//conta a posição corrente no código fonte
 
+/*
+ *  Exibe uma mensagem de erro formatada
+ *  @param err_id numero do erro
+ *  @param arg lexema que levou ao erro(opcional, arg = NULL).
+ */
 PUBLIC void compilerror(int err_id,string arg);
 
 #endif //COMPILERL_LEXCPT_H

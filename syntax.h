@@ -7,12 +7,30 @@
 
 #include "lex.h"
 
+// Registro lexico corrente obtido da tabela de símbolos
 PRIVATE LexReg* currLexReg;
 
+/*
+ * Funções que manipulam o registro léxico corrente obtido.
+ */
+
+/*
+ * Obtém o endereço do registro léxico
+ * @return endereço do registro léxico caso exista, senão retorna NULL
+ */
 PRIVATE inline LexReg* getLexReg();
 
+/*
+ * Obtém o id do token
+ * @return o valor do id do token caso exista, senão retorna -1
+ */
 PRIVATE inline int getTokID();
 
+
+/*
+ * Obtém o lexema
+ * @return uma string que representa o lexema caso exista, senão retorna NULL
+ */
 PRIVATE inline string getLexeme();
 
 PRIVATE inline int getTokClass();
@@ -25,12 +43,17 @@ PRIVATE inline void setLexReg( LexReg* lexReg );
 PRIVATE void matchTok( int tokIdExpected );
 
 /*
+ * Funções que representam as produções da gramática da linguagem L
+ * A função program é o ponto de partida da gramática
+ */
+
+/*
  * Program -> {declaration}* {block}*
  */
 PRIVATE void program();
 
 /*
- *  declaration -> ( final id = [+-] const | ( int | char ) vars );
+ *  declaration -> ( final id = [ + | - ] const | ( int | char ) vars );
  */
 PRIVATE void declaration();
 
@@ -50,7 +73,7 @@ PRIVATE void block();
 PRIVATE void cmdIf();
 
 /*
- * cmdFor ->  for id <- exp to exp [ step const ] do body
+ * cmdFor ->  for id <- exp to exp [ step [ + | - ]const ] do body
  */
 PRIVATE void cmdFor();
 

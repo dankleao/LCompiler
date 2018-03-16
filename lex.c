@@ -348,28 +348,35 @@ PUBLIC LexReg* nextTok(){
                 //Cria um registro lexico
                 lexReg = lexRegAlloc();
 
+                //armazena o endereço do token da tabela de simbolos caso exista, senão instancia um novo.
                 Tok* tok;
+
                 //Verifica se o lexema reconhecido é esta presente na tabela de símbolos
                 if( (tok = tokSearch(buffchr)) == NULL ){
 
-                    //lexReg->tok = tokAlloc();
                     tok = tokAlloc();
 
                     if( tokType == IDENTIFIER ){
-                        setTok(tok,buffchr,tokType);
+
+                        setTok(tok,buffchr,IDENTIFIER);
                         tokAdd(tok);
 
                     } else {
                         setTok(tok,buffchr,CONSTANT);
                     }
+                }//Verifica se o token obtido da tabela de símbolos é um identificador ou uma palavra-reservada
+                else{
+
+                    //TOK_FINAL é o primeiro token na lista de tokens da linguagem
+                    if( tok->id >= TOK_FINAL && tok->id < NUM_OF_TOKS )
+                        lexReg->tokClass = KEYWORD;
+                    else
+                        lexReg->tokClass = IDENTIFIER;
                 }
 
-                //lexReg->pos = lineCounter;
+                //Armazena o token no registro léxico
                 lexReg->tok = tok;
-
-                //printTok(lexReg->tok);
-
-                state = END;
+                state = END;//fim da varredura, o token foi encontrado com sucesso!
                 break;
         }
     }

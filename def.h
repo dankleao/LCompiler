@@ -31,12 +31,12 @@
 
 #define CONCAT(a,b) a##b
 
-//Define o tipo string
+//Define char pointer como tipo string
 typedef char* string;
 
 /*
  * Clona uma string
- * @param str string que será clanada
+ * @param str string que será clonada
  * @return nova string
  */
 PUBLIC string strAlloc( string str );
