@@ -1,36 +1,32 @@
 //
-// Created by Daniel on 28/02/2018.
+// Created by Daniel on 22/03/2018.
 //
 
-#ifndef COMPILERL_HASH_TABLE_H
-#define COMPILERL_HASH_TABLE_H
+#ifndef LCOMPILER_HASH_TABLE_H
+#define LCOMPILER_HASH_TABLE_H
 
-#ifdef HASH_TABLE_IMPL
-
-#include "def.h"
-#include <mem.h>
+#include <stdio.h>
+#include <stdlib.h>
 #include <time.h>
+#include "def.h"
+#include "config.h"
 
 PRIVATE int* weights;
 
 PRIVATE inline int fxHash( int key, int table_size );
 PRIVATE void generateWeights();
-PRIVATE int getKey2(char* string, int weights[]);
-
-#endif
 
 /*
- * Tipo de dados abstrato <b>Node</b> armazena o endereço do objeto a ser armazenado na tabela e
- * aponta para seu vizinho na mesma posição da tabela caso exista.
+ * Nó da tabela hash
  */
-
 typedef struct node{
     void* obj;          //objeto a ser armazenado na tabela
-    struct node* prox;  //lista dinâmica que armazena os objetos que possuem a mesma chave
+    struct node* prox;  //endereço do proximo elemento
 }Node;
 
 /*
- * Tipo de dados abstrato <b>HashTable</b> representa uma tabela hash com n(tamanho fixo) apontadores do tipo Node.
+ *  Tabela hash de tamanho N(tamanho fixo) apontadores do tipo Node com
+ * cada Node representando uma lista encadeada.
  */
 typedef struct hash_table{
     int count;              //armazena a quantidade de elementos da tabela hash
@@ -41,14 +37,11 @@ typedef struct hash_table{
 /*
  * Funções que manipulam os tipos de dados Node e HashTable
  */
-
 PUBLIC Node* hashTableAdd(HashTable* hashTable, int key, void* obj);
 PUBLIC HashTable* hashTableCreate(int size);
-PUBLIC Node* hashTableSearch(HashTable* hash, string str, BOOL (*cmp) (Node*, string) );
+PUBLIC Node* hashTableSearch(HashTable* hash, string str, bool (*cmp) (Node*, string) );
 PUBLIC int getKey(char* string);
 PUBLIC void printHashTable( HashTable* hash );
 PUBLIC void printWeights();
 
-#undef COMPILERL_DEF_H
-
-#endif //COMPILERL_HASH_TABLE_H
+#endif //LCOMPILER_HASH_TABLE_H

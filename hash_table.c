@@ -1,8 +1,6 @@
 //
-// Created by Daniel on 28/02/2018.
+// Created by Daniel on 22/03/2018.
 //
-
-#define HASH_TABLE_IMPL //Habilita a visualização das métodos privadas
 
 #include "hash_table.h"
 
@@ -10,7 +8,6 @@
  * Métodos privados
  */
 PRIVATE inline int fxHash( int key, int table_size ){
-    //printf("h( %d ) = %d\n", key, key % table_size);
     return  key % (table_size);
 }
 
@@ -26,24 +23,6 @@ PRIVATE void generateWeights(){
         for( i = 0; i < VAR_LEN_MAX; ++i)
             weights[i] = rand() % TAB_ASC2_SIZE;
     }
-}
-
-PRIVATE int getKey2(string str, int weights[]){
-
-    //printf("string: %s\n",str);
-
-    int key = 0;
-    int length = strlen(str);
-
-    int i;
-    int j;
-    for (i = 0; i < length ; ++i) {
-        key += ((int) str[i]) * weights[i];
-        j = ((int) str[i]) * weights[i];
-        //printf("%d = %d * %d\n", j, (int)str[i], weights[i]);
-
-    }
-    return key;
 }
 
 /*
@@ -106,7 +85,7 @@ PUBLIC HashTable* hashTableCreate(int size){
     return hashTable;
 }
 
-PUBLIC Node* hashTableSearch(HashTable* hash, string str, BOOL (*cmp) (Node*, string) ){
+PUBLIC Node* hashTableSearch(HashTable* hash, string str, bool (*cmp) (Node*, string) ){
 
     int pos = fxHash(getKey(str),hash->size);
 
@@ -126,8 +105,16 @@ PUBLIC Node* hashTableSearch(HashTable* hash, string str, BOOL (*cmp) (Node*, st
     return NULL;
 }
 
-PUBLIC int getKey(char* string){
-    return getKey2(string,weights);
+PUBLIC int getKey(char* str){
+
+    int key = 0;
+    int length = strlen(str);
+
+    int i;
+    for (i = 0; i < length ; ++i) {
+        key += ((int) str[i]) * weights[i];
+    }
+    return key;
 }
 
 PUBLIC void printWeights( ){
@@ -167,4 +154,3 @@ PUBLIC void printHashTable( HashTable* hash ){
         }
     }
 }
-

@@ -1,50 +1,22 @@
 //
-// Created by Daniel on 28/02/2018.
+// Created by Daniel on 22/03/2018.
 //
-
-
-#define LEX_IMP //Habilita a visualização dos metodos privados
 
 #include "lex.h"
 
-/*
- * Métodos privados
- */
-
-PRIVATE inline Tok* tokAdd( Tok* tok ){
-    return (Tok*) hashTableAdd(symbolTable,getKey(tok->lexeme),tok)->obj;
-}
-
-PRIVATE inline Tok* tokSearch( string lexeme ){
-    Node* node;
-    if( (node = hashTableSearch(symbolTable,lexeme,compareTok) ) != NULL )
-        return (Tok*) node->obj;
-    else
-        return NULL;
-}
-
-PRIVATE inline Tok* tokAlloc(){
-    return (Tok*) malloc(sizeof(Tok));
-}
-
-PRIVATE inline LexReg* lexRegAlloc(){
-    return (LexReg*) malloc(sizeof(LexReg));
-}
-
-PRIVATE BOOL evalFileExt(string fileName){
+PRIVATE bool evalFileExt(string fileName){
 
     int length = strlen(fileName);
     if( length < 3 )
         return FALSE;
-
     return ( fileName[length-1] == 'l' && fileName[length-2] == '.' ? TRUE : FALSE );
 }
 
-PRIVATE inline BOOL fileExists(string fileName){
+PRIVATE inline bool fileExists(string fileName){
     return (access( fileName, F_OK ) != -1 ? TRUE : FALSE);
 }
 
-PRIVATE void fillBuff(char chr){
+PRIVATE inline void fillBuff(char chr){
     if( buffindex < VAR_LEN_MAX ){
         buffchr[buffindex++] = chr;
     } else{
@@ -63,16 +35,7 @@ PRIVATE inline void ignoreWs(){
     }
 }
 
-PRIVATE void setTok(Tok* tok, string lexeme, int tokId ){
-    tok->lexeme = strAlloc(lexeme);
-    tok->id = tokId;
-}
-
-PRIVATE inline BOOL compareTok( Node* tok , string str ){
-    return ( ! strcmp( strAlloc( ((Tok*)tok->obj)->lexeme ) ,str) ? TRUE : FALSE );
-}
-
-PRIVATE BOOL loadProgram( string buff, string fileName ){
+PRIVATE bool loadProgram( string buff, string fileName ){
 
     FILE * fp;
 
@@ -85,7 +48,7 @@ PRIVATE BOOL loadProgram( string buff, string fileName ){
     int i = 0;
     while( ! feof(fp) && i < PROGRAM_LEN_MAX ){
         buff[i] = chr;
-        printf("%c",buff[i]);
+        //printf("%c",buff[i]);
         ++i;
         chr = (char) getc(fp);
     }
@@ -99,15 +62,10 @@ PRIVATE BOOL loadProgram( string buff, string fileName ){
     return TRUE;
 }
 
-/*
- * Métodos públicos
- */
-
-PUBLIC LexReg* nextTok(){
-
+PUBLIC Symbol* nextSymbol(){
     //auxilia a criação do registro lexico
-    LexReg* lexReg = NULL;
-    int tokType = IDENTIFIER;
+    Symbol* symbol = NULL;
+    int symbolType = IDENTIFIER;
 
     buffindex = 0;//zera contador do buffer do lexema
 
@@ -162,7 +120,7 @@ PUBLIC LexReg* nextTok(){
                 else{
                     fillBuff(*prog);
                     closeBuff();
-                    compilerror(ERR_UNRECOGNIZED_SYMBOL,buffchr);
+                    compilerror(ERR_UNRECOGNIZED_SYMBOL,NULL);
                 }
                 break;
             case Q1:
@@ -192,7 +150,7 @@ PUBLIC LexReg* nextTok(){
                     state = Q5;
                 }
                 else{
-                    tokType = NUMBER;
+                    symbolType = NUMBER;
                     state = F;
                 }
                 break;
@@ -215,7 +173,7 @@ PUBLIC LexReg* nextTok(){
                     state = Q7;
                 }
                 else{
-                    tokType = NUMBER;
+                    symbolType = NUMBER;
                     state = F;
                 }
                 break;
@@ -223,7 +181,7 @@ PUBLIC LexReg* nextTok(){
                 fillBuff(*prog);
                 if( *(++prog) == 'h' ){
                     fillBuff(*prog);
-                    tokType = HEX;
+                    symbolType = HEX;
                     ++prog;
                     state = F;
                 } else{
@@ -239,11 +197,11 @@ PUBLIC LexReg* nextTok(){
                     state = Q8;
                 } else if( *prog == 'h' ){
                     fillBuff(*prog);
-                    tokType = HEX;
+                    symbolType = HEX;
                     ++prog;
                     state = F;
                 } else{
-                    tokType = NUMBER;
+                    symbolType = NUMBER;
                     state = F;
                 }
                 break;
@@ -251,7 +209,7 @@ PUBLIC LexReg* nextTok(){
                 do{
                     fillBuff(*prog);
                 }while ( isdigit(*(++prog)) );
-                tokType = NUMBER;
+                symbolType = NUMBER;
                 state = F;
                 break;
             case Q9:
@@ -262,17 +220,17 @@ PUBLIC LexReg* nextTok(){
                     state = Q10;
                 }
                 else if( *prog == '$' || *prog == '\n'  ){
-                    compilerror(ERR_UNRECOGNIZED_SYMBOL,buffchr);
+                    compilerror(ERR_UNRECOGNIZED_SYMBOL,NULL);
                 }
                 else{
-                    compilerror(ERR_UNRECOGNIZED_SYMBOL,buffchr);
+                    compilerror(ERR_UNRECOGNIZED_SYMBOL,NULL);
                 }
                 break;
             case Q10:
                 if( *(++prog) == '\"' ){
-                    compilerror(ERR_UNRECOGNIZED_SYMBOL,buffchr);
+                    compilerror(ERR_UNRECOGNIZED_SYMBOL,NULL);
                 } else{
-                    tokType = STRING;
+                    symbolType = STRING;
                     state = F;
                 }
                 break;
@@ -282,17 +240,17 @@ PUBLIC LexReg* nextTok(){
                     state = Q12;
                 }
                 else{
-                    compilerror(ERR_UNRECOGNIZED_SYMBOL,buffchr);
+                    compilerror(ERR_UNRECOGNIZED_SYMBOL,NULL);
                 }
                 break;
             case Q12:
                 if( *(++prog) == '\'' ){
-                    tokType = CHARACTER;
+                    symbolType = CHR;
                     ++prog;
                     state = F;
                 }
                 else{
-                    compilerror(ERR_INVALID_CHARACTER,NULL);
+                    compilerror(ERR_UNTERMINETED_CHARACTER_LITERAL,NULL);
                 }
                 break;
             case Q13:
@@ -326,7 +284,7 @@ PUBLIC LexReg* nextTok(){
                     fillBuff(*prog);
                 }
                 else if( *prog == '-' ){
-                    tokType = KEYWORD;
+                    symbolType = KEYWORD;
                     fillBuff(*prog);
                 }
                 else if( *prog == '=' ){
@@ -340,51 +298,44 @@ PUBLIC LexReg* nextTok(){
                     fillBuff(*prog++);
                 state = F;
                 break;
-            //Estado Final
+                //Estado Final
             default:
                 //Delimita o fim do lexema
                 closeBuff();
 
-                //Cria um registro lexico
-                lexReg = lexRegAlloc();
-
-                //armazena o endereço do token da tabela de simbolos caso exista, senão instancia um novo.
-                Tok* tok;
-
                 //Verifica se o lexema reconhecido é esta presente na tabela de símbolos
-                if( (tok = tokSearch(buffchr)) == NULL ){
+                if( (symbol = symbolSearch(buffchr)) == NULL ){
 
-                    tok = tokAlloc();
+                    symbol = symbolAlloc();
+                    symbol->lexeme = strAlloc(buffchr);
 
-                    if( tokType == IDENTIFIER ){
-
-                        setTok(tok,buffchr,IDENTIFIER);
-                        tokAdd(tok);
-
+                    if( symbolType == IDENTIFIER ){
+                        symbol->tok = IDENTIFIER;
+                        symbol->class = EMPTY_CLASS;
+                        symbol->dataType = EMPTY_DATA_TYPE;
+                        symbol->lenght = 0;
+                        symbol->addr = 0;
+                        symbolAdd(symbol);
                     } else {
-                        setTok(tok,buffchr,CONSTANT);
+                        symbol->tok = CONSTANT;
+                        symbol->typeConst = symbolType;
                     }
-                }//Verifica se o token obtido da tabela de símbolos é um identificador ou uma palavra-reservada
-                else{
+                } else{
 
-                    //TOK_FINAL é o primeiro token na lista de tokens da linguagem
-                    if( tok->id >= TOK_FINAL && tok->id < NUM_OF_TOKS )
-                        lexReg->tokClass = KEYWORD;
-                    else
-                        lexReg->tokClass = IDENTIFIER;
+                    if( symbol->tok >= TOK_FINAL && symbol->tok < NUM_OF_TOKS )
+                        symbol->typeConst = KEYWORD;
+
                 }
 
-                //Armazena o token no registro léxico
-                lexReg->tok = tok;
-                state = END;//fim da varredura, o token foi encontrado com sucesso!
+                state = END;//fim da varredura, lexema pertence a linguagem!
                 break;
         }
     }
 
-    return lexReg;
+    return symbol;
 }
 
-PUBLIC BOOL startLex( string fileName ){
+PUBLIC bool startLex( string fileName ){
 
     //Representação string dos tokens da linguagem
     string tokstr [] = {"final","int","char","for","if","else","do","and","or","not","to",
@@ -410,12 +361,13 @@ PUBLIC BOOL startLex( string fileName ){
     symbolTable = hashTableCreate(SYMBOL_TABLE_SIZE);
 
     //Carrega as palavras reservadas na tabela de símbolos.
-    Tok* tok;
+    Symbol* symbol;
     int tok_id;
     for( tok_id = 0; tok_id < NUM_OF_TOKS; ++tok_id ){
-        tok = tokAlloc();
-        setTok(tok,tokstr[tok_id],tok_id);
-        tokAdd(tok);
+        symbol = symbolAlloc();
+        symbol->lexeme = tokstr[tok_id];
+        symbol->tok = tok_id;
+        symbolAdd(symbol);
     }
 
     //inicializa o contador de linhas
@@ -425,23 +377,45 @@ PUBLIC BOOL startLex( string fileName ){
 
 }
 
-PUBLIC void printTok(Tok* tok){
-    if( tok != NULL )
-        printf("\n\tTok( \n\t\taddr: %p\n\t\tlexeme: \"%s\" ; size: %d\n\t\t id: %d\n\t",tok,tok->lexeme,strlen(tok->lexeme),tok->id);
-    else
-        printf("\n\tTok( \n\t\t null \n\t");
-}
+PUBLIC void printSymbol(Symbol* symbol){
 
-PUBLIC void printLexReg(LexReg* lexReg){
-    if( lexReg != NULL ){
-        printf("\nLex register{\n\tline: %d",lineCounter);
-        printTok(lexReg->tok);
-        printf("\ttype: %s\n\t);\n}\n",strTokType[ lexReg->tok->id >= TOK_FINAL && lexReg->tok->id < NUM_OF_TOKS ? KEYWORD - NUM_OF_TOKS : lexReg->tok->id - NUM_OF_TOKS ] );
+    string cType[] = { "IDENTIFIER","CONSTANT","CHR","HEX","NUMBER","STRING","KEYWORD"};
+
+    if( symbol != NULL ) {
+        if ( symbol->tok == IDENTIFIER ) {
+            printf("\n\tTok( "
+                           "\n\t\t addr: %p"
+                           "\n\t\t lexeme: \"%s\" ; size: %d"
+                           "\n\t\t tok: %d"
+                           "\n\t\t class: %d"
+                           "\n\t\t data type: %d"
+                           "\n\t\t addr: %d\n\t);",
+                   symbol,
+                   symbol->lexeme,
+                   strlen(symbol->lexeme),
+                   symbol->tok,
+                   symbol->class,
+                   symbol->dataType,
+                   symbol->addr);
+
+        } else {
+            printf("\n\tTok( "
+                           "\n\t\t addr: %p"
+                           "\n\t\t lexeme: \"%s\" ; size: %d"
+                           "\n\t\t tok: %d"
+                           "\n\t\t constType: %s\n\t);",
+                   symbol,
+                   symbol->lexeme,
+                   strlen(symbol->lexeme),
+                   symbol->tok,
+                   cType[symbol->typeConst-IDENTIFIER]);
+        }
+    }else{
+        printf("\n\tTok( null );\n");
     }
 }
 
-PUBLIC void printSymTab(){
-
+PUBLIC void printSymbolTable(){
     printf("\n\n****** SHOW SYMBOL TABLE *******\n");
 
     printf("Number elements: %d\n",symbolTable->count);
@@ -456,10 +430,10 @@ PUBLIC void printSymTab(){
 
         if( sNode != NULL ){
 
-            printf("node*: %p { lexeme: %s }", sNode->obj, ((Tok*) sNode->obj)->lexeme );
+            printf("node*: %p { lexeme: %s }", sNode->obj, ((Symbol*) sNode->obj)->lexeme );
 
             while ( sNode->prox != NULL ){
-                printf(" -> node*: %p { lexeme: %s }", sNode->prox->obj, ((Tok*) sNode->prox->obj)->lexeme );
+                printf(" -> node*: %p { lexeme: %s }", sNode->prox->obj, ((Symbol*) sNode->prox->obj)->lexeme );
                 sNode = sNode->prox;
             }
             printf("\n");
@@ -468,4 +442,3 @@ PUBLIC void printSymTab(){
         }
     }
 }
-
