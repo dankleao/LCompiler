@@ -127,10 +127,10 @@ PUBLIC Symbol* nextSymbol(){
                 do{
                     fillBuff(*prog);
                 }while ( *(++prog) == '_' );
+
                 if( isalnum(*prog) ) {
                     state = Q2;
-                }
-                else{
+                } else{
                     closeBuff();
                     compilerror(ERR_LEXEME_NOT_FOUND,buffchr);
                 }
@@ -145,11 +145,9 @@ PUBLIC Symbol* nextSymbol(){
                 fillBuff(*prog);
                 if( *(++prog) >= 'A' && *prog <= 'F' ){
                     state = Q4;
-                }
-                else if( isdigit(*prog) ){
+                } else if( isdigit(*prog) ){
                     state = Q5;
-                }
-                else{
+                } else{
                     symbolType = NUMBER;
                     state = F;
                 }
@@ -168,11 +166,9 @@ PUBLIC Symbol* nextSymbol(){
                 fillBuff(*prog);
                 if( *(++prog) >= 'A' && *prog <= 'F' ){
                     state = Q6;
-                }
-                else if( isdigit(*prog) ){
+                } else if( isdigit(*prog) ){
                     state = Q7;
-                }
-                else{
+                } else{
                     symbolType = NUMBER;
                     state = F;
                 }
@@ -213,16 +209,17 @@ PUBLIC Symbol* nextSymbol(){
                 state = F;
                 break;
             case Q9:
-                while ( isalnum(*(++prog)) || strChr("()[]|\\%&@;,!?*/-+_-<>=:{}'^ ",*prog) ){
+                while ( isalnum(*(++prog)) || strChr("()[]|\\%&@;,.!?*/-+_-<>=:{}\'^ ",*prog) ){
                     fillBuff(*prog );
                 }
+
                 if( *prog == '\"'){
                     state = Q10;
-                }
-                else if( *prog == '$' || *prog == '\n'  ){
+                } else if( *prog == '$' ){
                     compilerror(ERR_UNRECOGNIZED_SYMBOL,NULL);
-                }
-                else{
+                } else if ( isspace(*prog) ){
+                    compilerror(ERR_UNTERMINETED_STRING_LITERAL,NULL);
+                } else{
                     compilerror(ERR_UNRECOGNIZED_SYMBOL,NULL);
                 }
                 break;
@@ -235,7 +232,7 @@ PUBLIC Symbol* nextSymbol(){
                 }
                 break;
             case Q11:
-                if( isalnum(*(++prog)) || strChr("()[]|\\%&@;,!?*/-+_-<>=:{}\'^\"\n$ ",*prog) ){
+                if( isalnum(*(++prog)) || strChr("()[]|\\%&@;,.!?*/-+_-<>=:{}\'^\"$ ",*prog) ){
                     fillBuff(*prog);
                     state = Q12;
                 }
@@ -250,7 +247,17 @@ PUBLIC Symbol* nextSymbol(){
                     state = F;
                 }
                 else{
-                    compilerror(ERR_UNTERMINETED_CHARACTER_LITERAL,NULL);
+
+                    if( *(prog - 1) == '\'' )
+                        compilerror(ERR_EMPYT_CHARACTER_CONST,NULL);
+                    else{
+
+                        while( *prog != '\n' && *(++prog) != '\'' );
+                        if( *prog == '\n' )
+                            compilerror(ERR_UNTERMINETED_CHARACTER_LITERAL,NULL);
+                        else
+                            compilerror(ERR_MULTI_CHARACTER_CONST,NULL);
+                    }
                 }
                 break;
             case Q13:
@@ -284,7 +291,6 @@ PUBLIC Symbol* nextSymbol(){
                     fillBuff(*prog);
                 }
                 else if( *prog == '-' ){
-                    symbolType = KEYWORD;
                     fillBuff(*prog);
                 }
                 else if( *prog == '=' ){
@@ -303,28 +309,31 @@ PUBLIC Symbol* nextSymbol(){
                 //Delimita o fim do lexema
                 closeBuff();
 
-                //Verifica se o lexema reconhecido é esta presente na tabela de símbolos
-                if( (symbol = symbolSearch(buffchr)) == NULL ){
+                if( symbolType == IDENTIFIER ){
+
+                    if( (symbol = symbolSearch(buffchr)) == NULL ){
+
+                        symbol = symbolAlloc();
+                        symbol->lexeme = strAlloc(buffchr);
+                        symbol->tok = IDENTIFIER;
+                        symbol->class = NULL_CLASS;
+                        symbol->dataType = NULL_DATA_TYPE;
+                        symbol->arraySize = 0;
+                        symbol->addr = 0;
+                        symbolAdd(symbol);
+
+                    }else{
+
+                        if( symbol->tok >= TOK_FINAL && symbol->tok < NUM_OF_TOKS )
+                            symbol->typeConst = KEYWORD;
+                    }
+
+                } else{
 
                     symbol = symbolAlloc();
                     symbol->lexeme = strAlloc(buffchr);
-
-                    if( symbolType == IDENTIFIER ){
-                        symbol->tok = IDENTIFIER;
-                        symbol->class = EMPTY_CLASS;
-                        symbol->dataType = EMPTY_DATA_TYPE;
-                        symbol->lenght = 0;
-                        symbol->addr = 0;
-                        symbolAdd(symbol);
-                    } else {
-                        symbol->tok = CONSTANT;
-                        symbol->typeConst = symbolType;
-                    }
-                } else{
-
-                    if( symbol->tok >= TOK_FINAL && symbol->tok < NUM_OF_TOKS )
-                        symbol->typeConst = KEYWORD;
-
+                    symbol->tok = CONSTANT;
+                    symbol->typeConst = symbolType;
                 }
 
                 state = END;//fim da varredura, lexema pertence a linguagem!
@@ -389,6 +398,7 @@ PUBLIC void printSymbol(Symbol* symbol){
                            "\n\t\t tok: %d"
                            "\n\t\t class: %d"
                            "\n\t\t data type: %d"
+                           "\n\t\t arraySize: %d"
                            "\n\t\t addr: %d\n\t);",
                    symbol,
                    symbol->lexeme,
@@ -396,6 +406,7 @@ PUBLIC void printSymbol(Symbol* symbol){
                    symbol->tok,
                    symbol->class,
                    symbol->dataType,
+                   symbol->arraySize,
                    symbol->addr);
 
         } else {

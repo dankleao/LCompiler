@@ -1,14 +1,20 @@
 /* Exemplo de Programa na linguagem L */
 
-int n;
-char nome[50];
-char flag;
+int n <- 9;
+char nome[20];
+int i,p <- "nome";
+char flag <- 0FFh;
 final MAXITER = 10;
 
 /* Programa Principal */
 
   flag <- 'A';
   flag <- 09Dh;
+  flag <- "Para;";
+  flag <- ' ';
+  flag <- "asfdasdf.";
+  flag <- 'a';
+
 
    if (n = 10) then
         writeln(n);
@@ -33,8 +39,8 @@ final MAXITER = 10;
      readln(nome);
 
      for n <- 1 to MAXITER do begin
-       if(1) then begin
-            if(0) then ;
+       if(n < 10) then begin
+            if(i <> p) then ;
        end
        readln(id);
        writeln("Ola","hello",'c');

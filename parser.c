@@ -4,26 +4,34 @@
 
 #include "parser.h"
 
+PRIVATE inline int getTok(){
+    return ( currentSymbol == NULL ? NULL_TOK : currentSymbol->tok );
+}
+
+PRIVATE inline string getLexeme(){
+    return ( currentSymbol == NULL ? "" : currentSymbol->lexeme );
+}
+
 PRIVATE inline void matchTok( int tokExpected ){
 
-    if( GET_TOK == tokExpected ){
+    if( getTok() == tokExpected ){
         //printSymbol(GET_SYMBOL);
-        SET_SYMBOL;
-        //printf("tokId: %d\n",GET_TOK);
+        currentSymbol = nextSymbol();
+        //printf("tokId: %d\n",getTok());
     } else{
 
-        if( GET_TOK == NULL_TOK )
+        if( getTok() == NULL_TOK )
             compilerror(ERR_EOF_NOT_EXPECTED,NULL);
         else
-            compilerror(ERR_TOK_NOT_EXPECTED,GET_LEXEME);
+            compilerror(ERR_TOK_NOT_EXPECTED,getLexeme());
 
     }
 }
 
 PRIVATE void program(){
-    SET_SYMBOL;
+    currentSymbol = nextSymbol();
     declaration();
-    while (GET_SYMBOL != NULL ){
+    while (currentSymbol != NULL ){
         cmdBlock();
     }
 }
@@ -32,22 +40,22 @@ PRIVATE void declaration(){
 
     do{
         //printf("Declaration\n");
-        if( GET_TOK == TOK_FINAL ){
+        if( getTok() == TOK_FINAL ){
 
             //printf("Constant\n");
             matchTok(TOK_FINAL);
             matchTok(IDENTIFIER);
             matchTok(TOK_EQ);
 
-            if( GET_TOK == TOK_PLUS || GET_TOK == TOK_MINUS )
-                matchTok(GET_TOK);
+            if( getTok() == TOK_PLUS || getTok() == TOK_MINUS )
+                matchTok(getTok());
 
             matchTok(CONSTANT);
 
-        } else if( GET_TOK == TOK_INT || GET_TOK == TOK_CHAR ){
+        } else if( getTok() == TOK_INT || getTok() == TOK_CHAR ){
 
             //printf("Vars\n");
-            matchTok(GET_TOK);
+            matchTok(getTok());
             vars();
 
         } else{
@@ -56,28 +64,31 @@ PRIVATE void declaration(){
 
         matchTok(TOK_SEMICOLON);
 
-    }while ( GET_TOK == TOK_FINAL || GET_TOK == TOK_INT || GET_TOK == TOK_CHAR );
+    }while ( getTok() == TOK_FINAL || getTok() == TOK_INT || getTok() == TOK_CHAR );
 }
 
 PRIVATE void vars(){
 
     matchTok(IDENTIFIER);
 
-    if( GET_TOK == TOK_ASSIGN ){
+    if( getTok() == TOK_ASSIGN ){
 
         //printf(" <- ");
         matchTok(TOK_ASSIGN);
-        expression();
+        if( getTok() == TOK_PLUS || getTok() == TOK_MINUS )
+            matchTok(getTok());
 
-    } else if( GET_TOK == TOK_L_BRACE ) {
+        matchTok(CONSTANT);
+
+    } else if( getTok() == TOK_L_BRACE ) {
 
         //printf("[const]\n");
         matchTok(TOK_L_BRACE);
-        expression();
+        matchTok(CONSTANT);
         matchTok(TOK_R_BRACE);
     }
 
-    if( GET_TOK == TOK_COMMA ){
+    if( getTok() == TOK_COMMA ){
         //printf(", Vars\n");
         matchTok(TOK_COMMA);
         vars();
@@ -87,19 +98,19 @@ PRIVATE void vars(){
 PRIVATE void cmdBlock(){
     //printf("CMD BLOCK\n");
 
-    if( GET_TOK == TOK_IF ){
+    if( getTok() == TOK_IF ){
 
         //printf("Tok if\n");
         matchTok(TOK_IF);
         cmdIf();
 
-    } else if( GET_TOK == TOK_FOR ){
+    } else if( getTok() == TOK_FOR ){
 
         //printf("Tok for\n");
         matchTok(TOK_FOR);
         cmdFor();
 
-    } else if( GET_TOK ==  TOK_READLN ){
+    } else if( getTok() ==  TOK_READLN ){
 
         //printf("Tok readln\n");
         matchTok(TOK_READLN);
@@ -108,16 +119,16 @@ PRIVATE void cmdBlock(){
         matchTok(TOK_R_PAREN);
         matchTok(TOK_SEMICOLON);
 
-    } else if( GET_TOK == TOK_WRITE || GET_TOK == TOK_WRITELN ){
+    } else if( getTok() == TOK_WRITE || getTok() == TOK_WRITELN ){
 
         //printf("Write or Writeln\n");
-        matchTok(GET_TOK);
+        matchTok(getTok());
 
         matchTok(TOK_L_PAREN);
 
         expression();
 
-        while( GET_TOK == TOK_COMMA ){
+        while( getTok() == TOK_COMMA ){
             matchTok(TOK_COMMA);
             expression();
         }
@@ -127,11 +138,11 @@ PRIVATE void cmdBlock(){
 
         //printf("end write or writeln\n");
 
-    } else if( GET_TOK == IDENTIFIER ){
+    } else if( getTok() == IDENTIFIER ){
 
         matchTok(IDENTIFIER);
 
-        if( GET_TOK == TOK_L_BRACE ){
+        if( getTok() == TOK_L_BRACE ){
             matchTok(TOK_L_BRACE);
             expression();
             matchTok(TOK_R_BRACE);
@@ -152,7 +163,7 @@ PRIVATE void cmdIf(){
     matchTok(TOK_THEN);
     cmdBody();
 
-    if( GET_TOK == TOK_ELSE ){
+    if( getTok() == TOK_ELSE ){
         matchTok(TOK_ELSE);
         cmdBody();
     }
@@ -166,11 +177,11 @@ PRIVATE void cmdFor(){
     matchTok(TOK_TO);
     expression();
 
-    if( GET_TOK == TOK_STEP ){
+    if( getTok() == TOK_STEP ){
         matchTok(TOK_STEP);
 
-        if( GET_TOK == TOK_PLUS || GET_TOK == TOK_MINUS )
-            matchTok(GET_TOK);
+        if( getTok() == TOK_PLUS || getTok() == TOK_MINUS )
+            matchTok(getTok());
 
         matchTok(CONSTANT);
     }
@@ -183,19 +194,14 @@ PRIVATE void cmdFor(){
 PRIVATE void cmdBody(){
 
     //printf("Body\n");
-    if( GET_TOK == TOK_BEGIN ){
+    if( getTok() == TOK_BEGIN ){
 
         //printf("Begin\n");
         matchTok(TOK_BEGIN);
-        if( GET_TOK == TOK_SEMICOLON ){
-            matchTok(TOK_SEMICOLON);
-        }
-        else{
 
-            do{
-                cmdBlock();
-            }while (GET_TOK != TOK_END );
-        }
+        do{
+            cmdBlock();
+        }while (getTok() != TOK_END );
 
         matchTok(TOK_END);
         //printf("End\n");
@@ -207,75 +213,75 @@ PRIVATE void cmdBody(){
 
 PRIVATE void expression(){
     term();
-    if( GET_TOK == TOK_EQ || GET_TOK == TOK_NE || GET_TOK == TOK_GE || GET_TOK == TOK_GT || GET_TOK == TOK_LE || GET_TOK == TOK_LT ){
-        matchTok(GET_TOK);
+    if( getTok() == TOK_EQ || getTok() == TOK_NE || getTok() == TOK_GE || getTok() == TOK_GT || getTok() == TOK_LE || getTok() == TOK_LT ){
+        matchTok(getTok());
         term();
     }
 }
 
 PRIVATE void term(){
 
-    if( GET_TOK == TOK_PLUS || GET_TOK == TOK_MINUS )
-        matchTok(GET_TOK);
+    if( getTok() == TOK_PLUS || getTok() == TOK_MINUS )
+        matchTok(getTok());
 
     factor();
 
-    while ( GET_TOK == TOK_PLUS || GET_TOK == TOK_MINUS ||GET_TOK == TOK_OR ){
-        matchTok(GET_TOK);
+    while ( getTok() == TOK_PLUS || getTok() == TOK_MINUS ||getTok() == TOK_OR ){
+        matchTok(getTok());
         factor();
     }
 }
 
 PRIVATE void factor(){
-    element();
-    while ( GET_TOK == TOK_TIMES || GET_TOK == TOK_OVER || GET_TOK == TOK_MOD || GET_TOK == TOK_AND ){
-        matchTok(GET_TOK);
-        element();
+    e();
+    while ( getTok() == TOK_TIMES || getTok() == TOK_OVER || getTok() == TOK_MOD || getTok() == TOK_AND ){
+        matchTok(getTok());
+        e();
     }
 }
 
-PRIVATE void element(){
+PRIVATE void e(){
 
-    if( GET_TOK == TOK_L_PAREN ){
+    if( getTok() == TOK_L_PAREN ){
 
         matchTok(TOK_L_PAREN);
         expression();
         matchTok(TOK_R_PAREN);
 
-    } else if( GET_TOK == TOK_NOT  ){
+    } else if( getTok() == TOK_NOT  ){
 
         matchTok(TOK_NOT);
-        element();
+        e();
 
-    } else if( GET_TOK == CONSTANT){
+    } else if( getTok() == CONSTANT){
 
         matchTok(CONSTANT);
 
-    } else if( GET_TOK == IDENTIFIER ){
+    } else{
 
         matchTok(IDENTIFIER);
 
-        if( GET_TOK == TOK_L_BRACE ){
+        if( getTok() == TOK_L_BRACE ){
 
             matchTok(TOK_L_BRACE);
             expression();
             matchTok(TOK_R_BRACE);
         }
-    } else{
-
-        //Invalid expression
-        compilerror(ERR_INVALID_EXPRESSION,NULL);
     }
 }
 
 int main( int argc, char* argv[] ){
 
+    if( argc < 2 || argc > 3 )
+        compilerror(ERR_BAD_ARGUMENTS,NULL);
+
     //inicializa o analisador lex
     startLex(argv[1]);
 
     //inicializa o analisador sintatico
-    //printf("Program\n");
     program();
+
+    //printSymbolTable();
 
     return 0;
 }

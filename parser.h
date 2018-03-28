@@ -7,17 +7,13 @@
 
 #include "lex.h"
 
-PRIVATE Symbol* currentSymbol;
 
 #define NULL_TOK (-1)
-#define SET_SYMBOL currentSymbol = nextSymbol()
-#define GET_SYMBOL currentSymbol
-#define GET_TOK (GET_SYMBOL == NULL ? NULL_TOK : GET_SYMBOL->tok )
-#define GET_LEXEME GET_SYMBOL->lexeme
-#define GET_CLASS GET_SYMBOL->class
-#define GET_DATA_TYPE GET_SYMBOL->dataType
-#define GET_MEM_ADDR GET_SYMBOL->addr
 
+PRIVATE Symbol* currentSymbol;
+
+PRIVATE inline string getLexeme();
+PRIVATE inline int getTok();
 
 PRIVATE inline void matchTok( int tokExpected );
 
@@ -31,6 +27,6 @@ PRIVATE void cmdBody();
 PRIVATE void expression();
 PRIVATE void term();
 PRIVATE void factor();
-PRIVATE void element();
+PRIVATE void e();
 
 #endif //LCOMPILER_PARSER_H

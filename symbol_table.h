@@ -10,8 +10,8 @@
 
 PUBLIC HashTable* symbolTable;
 
-typedef enum class{ EMPTY_CLASS = -1, VAR_CLASS, CONST_CLASS }class;
-typedef enum data_type { EMPTY_DATA_TYPE = -1, CHARACTER, INTEGER }dataType;
+typedef enum class{ NULL_CLASS = -1, VAR_CLASS, CONST_CLASS }class;
+typedef enum data_type { NULL_DATA_TYPE = -1, CHARACTER, INTEGER }dataType;
 typedef unsigned int memoryAddress;
 
 typedef struct symbol{
@@ -21,7 +21,7 @@ typedef struct symbol{
         struct{
             class class;
             dataType dataType;
-            int lenght;
+            int arraySize;
             memoryAddress addr;
         };
         int typeConst;

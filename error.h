@@ -14,11 +14,19 @@
  * Define um lista de erros que podem surgim em um processo de compilação
  */
 #define ERR_LIST \
+        ERR(ERR_BAD_ARGUMENTS,"numero de argumentos invalido. Ex: lc nome_fonte.l nome_executavel.asm ") \
+        ERR(ERR_UNDECLARED_IDENTIFIER,"identificador nao declarado.") \
+        ERR(ERR_DUPLICATE_ID_FOUND,"identificador duplicado identificado.") \
+        ERR(ERR_MULTI_CHARACTER_CONST,"multiplos caracteres no literal caracter.") \
+        ERR(ERR_INCOMPATIBLE_TYPE,"tipos incompatíveis." ) \
+        ERR(ERR_CLASS_ID_INCOMPATIBILITY,"classe de identificador incompativel.") \
+        ERR(ERR_ARRAY_SIZE_EXCEEDED,"tamanho do vetor excede o maximo permitido.") \
         ERR(ERR_VAR_LEN,"tamanho do identificador excede o limite permitido.") \
         ERR(ERR_UNRECOGNIZED_SYMBOL,"caracter nao reconhecido.") \
         ERR(ERR_LEXEME_NOT_FOUND,"lexema nao identificado.") \
         ERR(ERR_TOK_NOT_EXPECTED,"token nao esperado.") \
         ERR(ERR_INVALID_HEX_CONST,"constante hexadecimal invalida.") \
+        ERR(ERR_EMPYT_CHARACTER_CONST,"constante alfanumerica vazia.") \
         ERR(ERR_EOF_NOT_EXPECTED,"fim de arquivo nao esperado.") \
         ERR(ERR_EMPTY_FILE,"arquivo vazio.") \
         ERR(ERR_INVALID_DECL,"declaração invalida.") \
