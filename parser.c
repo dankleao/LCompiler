@@ -12,19 +12,36 @@ PRIVATE inline string getLexeme(){
     return ( currentSymbol == NULL ? "" : currentSymbol->lexeme );
 }
 
+PRIVATE inline bool withinLimitOfInteger(int value){
+    return ( value >= LOWER_LIMIT_INTEGER && value <= UPPER_LIMIT_INTEGER ? TRUE : FALSE );
+}
+
+PRIVATE inline void checkUniqueness(class classId){
+    if( oldSymbol->classId != NULL_CLASS )
+        compilerror(ERR_DUPLICATE_ID_FOUND, oldSymbol->lexeme );
+    oldSymbol->classId = classId;
+}
+
+PRIVATE inline void checkVarDeclaration(){
+    if( oldSymbol->classId == NULL_CLASS )
+        compilerror(ERR_UNDECLARED_IDENTIFIER,oldSymbol->lexeme);
+}
+
+PRIVATE inline void checkClassCompatibility(){
+    if( oldSymbol->classId == CONST_CLASS )
+        compilerror(ERR_CLASS_ID_INCOMPATIBILITY,oldSymbol->lexeme);
+}
+
 PRIVATE inline void matchTok( int tokExpected ){
 
     if( getTok() == tokExpected ){
-        //printSymbol(GET_SYMBOL);
+        oldSymbol = currentSymbol;
         currentSymbol = nextSymbol();
-        //printf("tokId: %d\n",getTok());
     } else{
-
         if( getTok() == NULL_TOK )
             compilerror(ERR_EOF_NOT_EXPECTED,NULL);
         else
             compilerror(ERR_TOK_NOT_EXPECTED,getLexeme());
-
     }
 }
 
@@ -38,25 +55,51 @@ PRIVATE void program(){
 
 PRIVATE void declaration(){
 
+    //Declarações
+
     do{
-        //printf("Declaration\n");
+
+        //Definição de constantes
         if( getTok() == TOK_FINAL ){
 
             //printf("Constant\n");
             matchTok(TOK_FINAL);
             matchTok(IDENTIFIER);
+
+            //Verificaão de unicidade entre identificadores de constantes
+            checkUniqueness(CONST_CLASS);
+
             matchTok(TOK_EQ);
 
             if( getTok() == TOK_PLUS || getTok() == TOK_MINUS )
                 matchTok(getTok());
 
+            static int value;
+            if( oldSymbol->tok == TOK_MINUS )
+                value = -1;
+            else
+                value = 1;
+
             matchTok(CONSTANT);
 
-        } else if( getTok() == TOK_INT || getTok() == TOK_CHAR ){
+            //Amarração
+            if( oldSymbol->typeConst == CHR || oldSymbol->typeConst == HEX ){
+                oldSymbol->dataType = CHARACTER;
+            } else if( oldSymbol->typeConst == NUMBER ){
+                oldSymbol->dataType = INTEGER;
+                value = atoi(oldSymbol->lexeme) * value;
+                if( ! withinLimitOfInteger(value) )
+                    compilerror(ERR_OVERFLOW_INTEGER_CONVERSION,NULL);
+            } else{
+                compilerror(ERR_INCOMPATIBLE_TYPE,NULL);
+            }
+
+        }//Definição das variáveis
+        else if( getTok() == TOK_INT || getTok() == TOK_CHAR ){
 
             //printf("Vars\n");
             matchTok(getTok());
-            vars();
+            vars(oldSymbol->tok);
 
         } else{
             return;
@@ -67,59 +110,108 @@ PRIVATE void declaration(){
     }while ( getTok() == TOK_FINAL || getTok() == TOK_INT || getTok() == TOK_CHAR );
 }
 
-PRIVATE void vars(){
+PRIVATE void vars(int dtype){
 
     matchTok(IDENTIFIER);
 
+    //Verificação de unicidade entre variáveis
+    checkUniqueness(VAR_CLASS);
+
+    Symbol* identifier = oldSymbol;
+
+    //Amarração
+    if( dtype == TOK_CHAR )
+        identifier->dataType = CHARACTER;
+    else if( dtype == TOK_INT )
+        identifier->dataType = INTEGER;
+
+    //Definição de variáveis escalares
     if( getTok() == TOK_ASSIGN ){
 
-        //printf(" <- ");
         matchTok(TOK_ASSIGN);
+
         if( getTok() == TOK_PLUS || getTok() == TOK_MINUS )
             matchTok(getTok());
 
+        int value;
+        if( oldSymbol->tok == TOK_MINUS )
+            value = -1;
+        else
+            value = 1;
+
         matchTok(CONSTANT);
 
-    } else if( getTok() == TOK_L_BRACE ) {
+        if( oldSymbol->typeConst == CHR || oldSymbol->typeConst == HEX ){
+            if( identifier->dataType != CHARACTER )
+                compilerror(ERR_INCOMPATIBLE_TYPE,NULL);
+        }else if( oldSymbol->typeConst == NUMBER ){
+            if( identifier->dataType != INTEGER )
+                compilerror(ERR_INCOMPATIBLE_TYPE,NULL);
+            value = atoi(oldSymbol->lexeme) * value;
+            if( ! withinLimitOfInteger(value) )
+                compilerror(ERR_OVERFLOW_INTEGER_CONVERSION,NULL);
+        } else{
+            compilerror(ERR_INCOMPATIBLE_TYPE,NULL);
+        }
+
+    }//Definição de vetores unidimensionais
+    else if( getTok() == TOK_L_BRACE ) {
 
         //printf("[const]\n");
         matchTok(TOK_L_BRACE);
         matchTok(CONSTANT);
+
+        int size = atoi(oldSymbol->lexeme);
+        if( size > ARRAY_SIZE_MAX )
+            compilerror(ERR_ARRAY_SIZE_EXCEEDED,NULL);
+
+        identifier->arraySize = size;
+
         matchTok(TOK_R_BRACE);
     }
 
+    //Lista de declarações de variáveis
     if( getTok() == TOK_COMMA ){
         //printf(", Vars\n");
         matchTok(TOK_COMMA);
-        vars();
+        vars(dtype);
     }
 }
 
 PRIVATE void cmdBlock(){
-    //printf("CMD BLOCK\n");
 
+    //Comando IF
     if( getTok() == TOK_IF ){
 
-        //printf("Tok if\n");
         matchTok(TOK_IF);
         cmdIf();
 
-    } else if( getTok() == TOK_FOR ){
+    }//Comando FOR
+    else if( getTok() == TOK_FOR ){
 
-        //printf("Tok for\n");
         matchTok(TOK_FOR);
         cmdFor();
 
-    } else if( getTok() ==  TOK_READLN ){
+    }//Comando Readln
+    else if( getTok() ==  TOK_READLN ){
 
-        //printf("Tok readln\n");
         matchTok(TOK_READLN);
         matchTok(TOK_L_PAREN);
         matchTok(IDENTIFIER);
+
+        checkVarDeclaration();
+
+        if( getTok() == TOK_L_BRACE ){
+            matchTok(TOK_L_BRACE);
+            expression();
+            matchTok(TOK_R_BRACE);
+        }
+
         matchTok(TOK_R_PAREN);
         matchTok(TOK_SEMICOLON);
 
-    } else if( getTok() == TOK_WRITE || getTok() == TOK_WRITELN ){
+    }//Comando Write e Writeln
+    else if( getTok() == TOK_WRITE || getTok() == TOK_WRITELN ){
 
         //printf("Write or Writeln\n");
         matchTok(getTok());
@@ -138,9 +230,14 @@ PRIVATE void cmdBlock(){
 
         //printf("end write or writeln\n");
 
-    } else if( getTok() == IDENTIFIER ){
+    }// Atribuições
+    else if( getTok() == IDENTIFIER ){
 
         matchTok(IDENTIFIER);
+
+        checkVarDeclaration();
+
+        checkClassCompatibility();
 
         if( getTok() == TOK_L_BRACE ){
             matchTok(TOK_L_BRACE);
@@ -152,7 +249,8 @@ PRIVATE void cmdBlock(){
         expression();
         matchTok(TOK_SEMICOLON);
 
-    } else{
+    }//Delimitador de comandos ";"
+    else{
         matchTok(TOK_SEMICOLON);
     }
 }
@@ -172,6 +270,9 @@ PRIVATE void cmdIf(){
 PRIVATE void cmdFor(){
 
     matchTok(IDENTIFIER);
+
+    checkVarDeclaration();
+
     matchTok(TOK_ASSIGN);
     expression();
     matchTok(TOK_TO);
@@ -193,10 +294,8 @@ PRIVATE void cmdFor(){
 
 PRIVATE void cmdBody(){
 
-    //printf("Body\n");
     if( getTok() == TOK_BEGIN ){
 
-        //printf("Begin\n");
         matchTok(TOK_BEGIN);
 
         do{
@@ -204,7 +303,6 @@ PRIVATE void cmdBody(){
         }while (getTok() != TOK_END );
 
         matchTok(TOK_END);
-        //printf("End\n");
 
     } else{
         cmdBlock();
@@ -212,6 +310,7 @@ PRIVATE void cmdBody(){
 }
 
 PRIVATE void expression(){
+
     term();
     if( getTok() == TOK_EQ || getTok() == TOK_NE || getTok() == TOK_GE || getTok() == TOK_GT || getTok() == TOK_LE || getTok() == TOK_LT ){
         matchTok(getTok());
@@ -251,6 +350,7 @@ PRIVATE void e(){
     } else if( getTok() == TOK_NOT  ){
 
         matchTok(TOK_NOT);
+
         e();
 
     } else if( getTok() == CONSTANT){
@@ -260,6 +360,8 @@ PRIVATE void e(){
     } else{
 
         matchTok(IDENTIFIER);
+
+        checkVarDeclaration();
 
         if( getTok() == TOK_L_BRACE ){
 
@@ -272,6 +374,7 @@ PRIVATE void e(){
 
 int main( int argc, char* argv[] ){
 
+    //Verifica o número de argumentos para compilar
     if( argc < 2 || argc > 3 )
         compilerror(ERR_BAD_ARGUMENTS,NULL);
 

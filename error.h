@@ -18,11 +18,12 @@
         ERR(ERR_UNDECLARED_IDENTIFIER,"identificador nao declarado.") \
         ERR(ERR_DUPLICATE_ID_FOUND,"identificador duplicado identificado.") \
         ERR(ERR_MULTI_CHARACTER_CONST,"multiplos caracteres no literal caracter.") \
-        ERR(ERR_INCOMPATIBLE_TYPE,"tipos incompatíveis." ) \
+        ERR(ERR_INCOMPATIBLE_TYPE,"tipos incompativeis." ) \
         ERR(ERR_CLASS_ID_INCOMPATIBILITY,"classe de identificador incompativel.") \
         ERR(ERR_ARRAY_SIZE_EXCEEDED,"tamanho do vetor excede o maximo permitido.") \
         ERR(ERR_VAR_LEN,"tamanho do identificador excede o limite permitido.") \
         ERR(ERR_UNRECOGNIZED_SYMBOL,"caracter nao reconhecido.") \
+        ERR(ERR_OVERFLOW_INTEGER_CONVERSION,"estouro na conversao da constante inteira.") \
         ERR(ERR_LEXEME_NOT_FOUND,"lexema nao identificado.") \
         ERR(ERR_TOK_NOT_EXPECTED,"token nao esperado.") \
         ERR(ERR_INVALID_HEX_CONST,"constante hexadecimal invalida.") \

@@ -300,7 +300,8 @@ PUBLIC Symbol* nextSymbol(){
                 state = F;
                 break;
             case Q17:
-                if( *(++prog) == '=')
+                fillBuff(*prog);
+                if( *(++prog) == '=' )
                     fillBuff(*prog++);
                 state = F;
                 break;
@@ -316,7 +317,7 @@ PUBLIC Symbol* nextSymbol(){
                         symbol = symbolAlloc();
                         symbol->lexeme = strAlloc(buffchr);
                         symbol->tok = IDENTIFIER;
-                        symbol->class = NULL_CLASS;
+                        symbol->classId = NULL_CLASS;
                         symbol->dataType = NULL_DATA_TYPE;
                         symbol->arraySize = 0;
                         symbol->addr = 0;
@@ -371,11 +372,11 @@ PUBLIC bool startLex( string fileName ){
 
     //Carrega as palavras reservadas na tabela de símbolos.
     Symbol* symbol;
-    int tok_id;
-    for( tok_id = 0; tok_id < NUM_OF_TOKS; ++tok_id ){
+    int i;
+    for( i = 0; i < NUM_OF_TOKS; ++i ){
         symbol = symbolAlloc();
-        symbol->lexeme = tokstr[tok_id];
-        symbol->tok = tok_id;
+        symbol->lexeme = tokstr[i];
+        symbol->tok = i;
         symbolAdd(symbol);
     }
 
@@ -404,7 +405,7 @@ PUBLIC void printSymbol(Symbol* symbol){
                    symbol->lexeme,
                    strlen(symbol->lexeme),
                    symbol->tok,
-                   symbol->class,
+                   symbol->classId,
                    symbol->dataType,
                    symbol->arraySize,
                    symbol->addr);

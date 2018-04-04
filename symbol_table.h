@@ -19,7 +19,7 @@ typedef struct symbol{
     int tok;
     union{
         struct{
-            class class;
+            class classId;
             dataType dataType;
             int arraySize;
             memoryAddress addr;

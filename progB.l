@@ -2,17 +2,13 @@
 
 int n <- 9;
 char nome[20];
-int i,p <- 990;
-int id <- -32768;
-int a,b,d;
+int i,p <- 10;
 char flag <- 0FFh;
 final MAXITER = 10;
-final k = 'k';
-final x = 0DDh;
-int vet[4096];
-
 
 /* Programa Principal */
+
+  flag <- MAXITER;
 
   flag <- 'A';
   flag <- 09Dh;
