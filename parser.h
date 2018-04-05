@@ -40,7 +40,7 @@ PRIVATE inline void matchTok( int tokExpected );
 
 PRIVATE void program();
 PRIVATE void declaration();
-PRIVATE void vars( int );
+PRIVATE void vars();
 PRIVATE void cmdBlock();
 PRIVATE void cmdIf();
 PRIVATE void cmdFor();

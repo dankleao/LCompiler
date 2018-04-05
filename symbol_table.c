@@ -17,6 +17,7 @@ PUBLIC Symbol* symbolAlloc(){
 }
 
 PUBLIC Symbol* symbolSearch(string lexeme){
+
     Node* node;
     if( (node = hashTableSearch(symbolTable,lexeme,compareSymbol) ) != NULL )
         return (Symbol*) node->obj;

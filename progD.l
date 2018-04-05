@@ -9,6 +9,10 @@ int n[3], max, i;
     readln(n);
   end
 
+    max <- ( 8*9/10-10+300 );
+    max <- not ( 'c' <> 0AAh );
+    max <- id[(10%id[0])];
+
   if n[0] > n[1] then begin
     if n[0] > n[2] then
         max<-n[0];

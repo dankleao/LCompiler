@@ -10,8 +10,19 @@
 
 PUBLIC HashTable* symbolTable;
 
-typedef enum class{ NULL_CLASS = -1, VAR_CLASS, CONST_CLASS }class;
-typedef enum data_type { NULL_DATA_TYPE = -1, CHARACTER, INTEGER }dataType;
+typedef enum class{
+    NULL_CLASS = -1,
+    VAR_CLASS,
+    CONST_CLASS
+}class;
+
+typedef enum data_type {
+    NULL_DATA_TYPE = -1,
+    BOOLEAN_DATA_TYPE,
+    CHARACTER_DATA_TYPE,
+    INTEGER_DATA_TYPE
+}dataType;
+
 typedef unsigned int memoryAddress;
 
 typedef struct symbol{
