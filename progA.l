@@ -30,6 +30,22 @@ int vet[4096];
             readln(id);
         end
 
+   if a = 'c' or b = 'd' then;
+   if a = 'c' and b = 'd' then;
+   if a = 'c' or b = 100 then;
+   if a = 0AAh or b = 100 then;
+   if n > a then;
+   if n < a then;
+   if n >= a then;
+   if n <= a then;
+   if n <> a then;
+   if not a then begin ; end
+
+   a <- 20-10;
+   a <- 20/10;
+   a <- 20*10;
+   a <- 20%10;
+
    a[a] <- 1000;
 
    a[b[10/10]] <- d[(5*10)];

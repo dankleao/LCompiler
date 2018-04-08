@@ -1,12 +1,11 @@
 //
-// Created by Daniel on 22/03/2018.
+// Created by Daniel on 06/04/2018.
 //
 
 #ifndef LCOMPILER_LEX_H
 #define LCOMPILER_LEX_H
 
 /* Definição dos tokens */
-
 #include <ctype.h>
 #include <io.h>
 #include "def.h"
@@ -53,13 +52,12 @@
         TOK_R_BRACE
 
 #define OTHERS \
-        IDENTIFIER, \
-        CONSTANT, \
-        CHR, \
-        HEX, \
-        NUMBER, \
-        STRING, \
-        KEYWORD
+        TOK_IDENTIFIER, \
+        TOK_CONSTANT, \
+        CHARACTER_CONST, \
+        HEX_CONST, \
+        NUMBER_CONST, \
+        STRING_CONST, \
 
 /* Enumeração dos tokens */
 enum {
@@ -75,21 +73,18 @@ enum {
 /*
  *  Variáveis que auxiliam na varredura do código-fonte
  */
-PRIVATE string buffp;                           //aponta para o inicio da area de carga do programa fonte
 PRIVATE string prog;                            //aponta para posição corrente do programa fonte
-PRIVATE char buffchr[VAR_LEN_MAX+1] = {'\0'};   //armazena o lexema corrente(buffer lexema)
-PRIVATE int buffindex;                          //indice do buffer
+PRIVATE string lexemeBegin;                     //aponta para a primeira posição de uma novo lexema
 PUBLIC int lineCounter;                         //contador de linhas do programa
-
 
 /* Conjunto de estados do AFD
  * Q0 estado inicial
  * Q1 - Q17 estados intermediários
  * F estado final
  * END estado auxilar para finalizar a varredura
- * */
-enum state { Q0 = 0, Q1, Q2, Q3, Q4, Q5, Q6, Q7, Q8, Q9, Q10, Q11, Q12, Q13, Q14, Q15, Q16, Q17, F, END };
-
+ *
+ */
+PUBLIC enum state { Q0 = 0, Q1, Q2, Q3, Q4, Q5, Q6, Q7, Q8, Q9, Q10, Q11, Q12, Q13, Q14, Q15, Q16, Q17, F, END };
 
 /*
  * Automato finito determinista para reconhecer os lexemas válidos da linguagem com base
@@ -105,6 +100,12 @@ PUBLIC Symbol* nextSymbol();
  * @param argv string(s) representam os argumentos
  */
 PUBLIC bool startLex( string fileName );
+
+/*
+ * Obtém o lexema corrente
+ * @return lexema apontado por lexemeBegin
+ */
+PRIVATE string buildLexeme();
 
 /*
  * Avalia a extensão do arquivo de código fonte que obrigatoriamente tem que terminar com .l
@@ -123,18 +124,6 @@ PRIVATE bool evalFileExt(string fileName);
 PRIVATE inline bool fileExists(string fileName);
 
 /*
- * Preenche o buffer que armazena os lexemas
- * @param chr caracter para adicionar no buffer
- */
-
-PRIVATE inline void fillBuff(char chr);
-
-/*
- * Delimita o fim do buffer
- */
-PRIVATE inline void closeBuff();
-
-/*
  * Ignora espaços em branco
  *
  * */
@@ -148,9 +137,16 @@ PRIVATE inline void ignoreWs();
  */
 PRIVATE bool loadProgram( string buff, string fileName );
 
-
+/*
+ * Imprime um símbolo
+ * @para symbol símbolo que será impresso
+ */
 PUBLIC void printSymbol(Symbol* symbol);
-PUBLIC void printSymbolTable();
 
+/*
+ * Imprime a tabela de símbolos
+ *
+ */
+PUBLIC void printSymbolTable();
 
 #endif //LCOMPILER_LEX_H

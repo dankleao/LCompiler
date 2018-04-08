@@ -56,28 +56,28 @@ include CMakeFiles/LCompiler.dir/progress.make
 # Include the compile flags for this target's objects.
 include CMakeFiles/LCompiler.dir/flags.make
 
-CMakeFiles/LCompiler.dir/hash_table.c.obj: CMakeFiles/LCompiler.dir/flags.make
-CMakeFiles/LCompiler.dir/hash_table.c.obj: ../hash_table.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\Daniel\CLionProjects\LCompiler\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building C object CMakeFiles/LCompiler.dir/hash_table.c.obj"
-	C:\MinGW\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles\LCompiler.dir\hash_table.c.obj   -c C:\Users\Daniel\CLionProjects\LCompiler\hash_table.c
+CMakeFiles/LCompiler.dir/lex.c.obj: CMakeFiles/LCompiler.dir/flags.make
+CMakeFiles/LCompiler.dir/lex.c.obj: ../lex.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\Daniel\CLionProjects\LCompiler\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building C object CMakeFiles/LCompiler.dir/lex.c.obj"
+	C:\MinGW\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles\LCompiler.dir\lex.c.obj   -c C:\Users\Daniel\CLionProjects\LCompiler\lex.c
 
-CMakeFiles/LCompiler.dir/hash_table.c.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/LCompiler.dir/hash_table.c.i"
-	C:\MinGW\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E C:\Users\Daniel\CLionProjects\LCompiler\hash_table.c > CMakeFiles\LCompiler.dir\hash_table.c.i
+CMakeFiles/LCompiler.dir/lex.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/LCompiler.dir/lex.c.i"
+	C:\MinGW\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E C:\Users\Daniel\CLionProjects\LCompiler\lex.c > CMakeFiles\LCompiler.dir\lex.c.i
 
-CMakeFiles/LCompiler.dir/hash_table.c.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/LCompiler.dir/hash_table.c.s"
-	C:\MinGW\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S C:\Users\Daniel\CLionProjects\LCompiler\hash_table.c -o CMakeFiles\LCompiler.dir\hash_table.c.s
+CMakeFiles/LCompiler.dir/lex.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/LCompiler.dir/lex.c.s"
+	C:\MinGW\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S C:\Users\Daniel\CLionProjects\LCompiler\lex.c -o CMakeFiles\LCompiler.dir\lex.c.s
 
-CMakeFiles/LCompiler.dir/hash_table.c.obj.requires:
+CMakeFiles/LCompiler.dir/lex.c.obj.requires:
 
-.PHONY : CMakeFiles/LCompiler.dir/hash_table.c.obj.requires
+.PHONY : CMakeFiles/LCompiler.dir/lex.c.obj.requires
 
-CMakeFiles/LCompiler.dir/hash_table.c.obj.provides: CMakeFiles/LCompiler.dir/hash_table.c.obj.requires
-	$(MAKE) -f CMakeFiles\LCompiler.dir\build.make CMakeFiles/LCompiler.dir/hash_table.c.obj.provides.build
-.PHONY : CMakeFiles/LCompiler.dir/hash_table.c.obj.provides
+CMakeFiles/LCompiler.dir/lex.c.obj.provides: CMakeFiles/LCompiler.dir/lex.c.obj.requires
+	$(MAKE) -f CMakeFiles\LCompiler.dir\build.make CMakeFiles/LCompiler.dir/lex.c.obj.provides.build
+.PHONY : CMakeFiles/LCompiler.dir/lex.c.obj.provides
 
-CMakeFiles/LCompiler.dir/hash_table.c.obj.provides.build: CMakeFiles/LCompiler.dir/hash_table.c.obj
+CMakeFiles/LCompiler.dir/lex.c.obj.provides.build: CMakeFiles/LCompiler.dir/lex.c.obj
 
 
 CMakeFiles/LCompiler.dir/def.c.obj: CMakeFiles/LCompiler.dir/flags.make
@@ -128,28 +128,28 @@ CMakeFiles/LCompiler.dir/error.c.obj.provides: CMakeFiles/LCompiler.dir/error.c.
 CMakeFiles/LCompiler.dir/error.c.obj.provides.build: CMakeFiles/LCompiler.dir/error.c.obj
 
 
-CMakeFiles/LCompiler.dir/lex.c.obj: CMakeFiles/LCompiler.dir/flags.make
-CMakeFiles/LCompiler.dir/lex.c.obj: ../lex.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\Daniel\CLionProjects\LCompiler\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building C object CMakeFiles/LCompiler.dir/lex.c.obj"
-	C:\MinGW\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles\LCompiler.dir\lex.c.obj   -c C:\Users\Daniel\CLionProjects\LCompiler\lex.c
+CMakeFiles/LCompiler.dir/hash_table.c.obj: CMakeFiles/LCompiler.dir/flags.make
+CMakeFiles/LCompiler.dir/hash_table.c.obj: ../hash_table.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\Daniel\CLionProjects\LCompiler\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building C object CMakeFiles/LCompiler.dir/hash_table.c.obj"
+	C:\MinGW\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles\LCompiler.dir\hash_table.c.obj   -c C:\Users\Daniel\CLionProjects\LCompiler\hash_table.c
 
-CMakeFiles/LCompiler.dir/lex.c.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/LCompiler.dir/lex.c.i"
-	C:\MinGW\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E C:\Users\Daniel\CLionProjects\LCompiler\lex.c > CMakeFiles\LCompiler.dir\lex.c.i
+CMakeFiles/LCompiler.dir/hash_table.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/LCompiler.dir/hash_table.c.i"
+	C:\MinGW\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E C:\Users\Daniel\CLionProjects\LCompiler\hash_table.c > CMakeFiles\LCompiler.dir\hash_table.c.i
 
-CMakeFiles/LCompiler.dir/lex.c.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/LCompiler.dir/lex.c.s"
-	C:\MinGW\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S C:\Users\Daniel\CLionProjects\LCompiler\lex.c -o CMakeFiles\LCompiler.dir\lex.c.s
+CMakeFiles/LCompiler.dir/hash_table.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/LCompiler.dir/hash_table.c.s"
+	C:\MinGW\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S C:\Users\Daniel\CLionProjects\LCompiler\hash_table.c -o CMakeFiles\LCompiler.dir\hash_table.c.s
 
-CMakeFiles/LCompiler.dir/lex.c.obj.requires:
+CMakeFiles/LCompiler.dir/hash_table.c.obj.requires:
 
-.PHONY : CMakeFiles/LCompiler.dir/lex.c.obj.requires
+.PHONY : CMakeFiles/LCompiler.dir/hash_table.c.obj.requires
 
-CMakeFiles/LCompiler.dir/lex.c.obj.provides: CMakeFiles/LCompiler.dir/lex.c.obj.requires
-	$(MAKE) -f CMakeFiles\LCompiler.dir\build.make CMakeFiles/LCompiler.dir/lex.c.obj.provides.build
-.PHONY : CMakeFiles/LCompiler.dir/lex.c.obj.provides
+CMakeFiles/LCompiler.dir/hash_table.c.obj.provides: CMakeFiles/LCompiler.dir/hash_table.c.obj.requires
+	$(MAKE) -f CMakeFiles\LCompiler.dir\build.make CMakeFiles/LCompiler.dir/hash_table.c.obj.provides.build
+.PHONY : CMakeFiles/LCompiler.dir/hash_table.c.obj.provides
 
-CMakeFiles/LCompiler.dir/lex.c.obj.provides.build: CMakeFiles/LCompiler.dir/lex.c.obj
+CMakeFiles/LCompiler.dir/hash_table.c.obj.provides.build: CMakeFiles/LCompiler.dir/hash_table.c.obj
 
 
 CMakeFiles/LCompiler.dir/symbol_table.c.obj: CMakeFiles/LCompiler.dir/flags.make
@@ -202,20 +202,20 @@ CMakeFiles/LCompiler.dir/parser.c.obj.provides.build: CMakeFiles/LCompiler.dir/p
 
 # Object files for target LCompiler
 LCompiler_OBJECTS = \
-"CMakeFiles/LCompiler.dir/hash_table.c.obj" \
+"CMakeFiles/LCompiler.dir/lex.c.obj" \
 "CMakeFiles/LCompiler.dir/def.c.obj" \
 "CMakeFiles/LCompiler.dir/error.c.obj" \
-"CMakeFiles/LCompiler.dir/lex.c.obj" \
+"CMakeFiles/LCompiler.dir/hash_table.c.obj" \
 "CMakeFiles/LCompiler.dir/symbol_table.c.obj" \
 "CMakeFiles/LCompiler.dir/parser.c.obj"
 
 # External object files for target LCompiler
 LCompiler_EXTERNAL_OBJECTS =
 
-LCompiler.exe: CMakeFiles/LCompiler.dir/hash_table.c.obj
+LCompiler.exe: CMakeFiles/LCompiler.dir/lex.c.obj
 LCompiler.exe: CMakeFiles/LCompiler.dir/def.c.obj
 LCompiler.exe: CMakeFiles/LCompiler.dir/error.c.obj
-LCompiler.exe: CMakeFiles/LCompiler.dir/lex.c.obj
+LCompiler.exe: CMakeFiles/LCompiler.dir/hash_table.c.obj
 LCompiler.exe: CMakeFiles/LCompiler.dir/symbol_table.c.obj
 LCompiler.exe: CMakeFiles/LCompiler.dir/parser.c.obj
 LCompiler.exe: CMakeFiles/LCompiler.dir/build.make
@@ -230,10 +230,10 @@ CMakeFiles/LCompiler.dir/build: LCompiler.exe
 
 .PHONY : CMakeFiles/LCompiler.dir/build
 
-CMakeFiles/LCompiler.dir/requires: CMakeFiles/LCompiler.dir/hash_table.c.obj.requires
+CMakeFiles/LCompiler.dir/requires: CMakeFiles/LCompiler.dir/lex.c.obj.requires
 CMakeFiles/LCompiler.dir/requires: CMakeFiles/LCompiler.dir/def.c.obj.requires
 CMakeFiles/LCompiler.dir/requires: CMakeFiles/LCompiler.dir/error.c.obj.requires
-CMakeFiles/LCompiler.dir/requires: CMakeFiles/LCompiler.dir/lex.c.obj.requires
+CMakeFiles/LCompiler.dir/requires: CMakeFiles/LCompiler.dir/hash_table.c.obj.requires
 CMakeFiles/LCompiler.dir/requires: CMakeFiles/LCompiler.dir/symbol_table.c.obj.requires
 CMakeFiles/LCompiler.dir/requires: CMakeFiles/LCompiler.dir/parser.c.obj.requires
 

@@ -1,5 +1,5 @@
 //
-// Created by Daniel on 22/03/2018.
+// Created by Daniel on 06/04/2018.
 //
 
 #ifndef LCOMPILER_DEF_H
@@ -34,6 +34,6 @@ PUBLIC string strAlloc( string str );
  * @param chr símbolo
  * @return TRUE se a primeira ocorrêcia da caracter aparecer na string, senão retorna FALSE.
  */
-PUBLIC bool strChr( char*str, char chr );
+PUBLIC bool strChr( string str, char chr );
 
 #endif //LCOMPILER_DEF_H

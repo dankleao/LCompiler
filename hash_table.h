@@ -1,9 +1,10 @@
 //
-// Created by Daniel on 22/03/2018.
+// Created by Daniel on 06/04/2018.
 //
 
 #ifndef LCOMPILER_HASH_TABLE_H
 #define LCOMPILER_HASH_TABLE_H
+
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -44,4 +45,5 @@ PUBLIC int getKey(char* string);
 PUBLIC void printHashTable( HashTable* hash );
 PUBLIC void printWeights();
 
-#endif //LCOMPILER_HASH_TABLE_H
+
+#endif //LCOMP_HASH_TABLE_H

@@ -1,8 +1,9 @@
 //
-// Created by Daniel on 22/03/2018.
+// Created by Daniel on 06/04/2018.
 //
 
 #include "lex.h"
+#include "symbol_table.h"
 
 PRIVATE bool evalFileExt(string fileName){
 
@@ -16,23 +17,31 @@ PRIVATE inline bool fileExists(string fileName){
     return (access( fileName, F_OK ) != -1 ? TRUE : FALSE);
 }
 
-PRIVATE inline void fillBuff(char chr){
-    if( buffindex < VAR_LEN_MAX ){
-        buffchr[buffindex++] = chr;
-    } else{
-        compilerror(ERR_VAR_LEN,NULL);
-    }
-}
-
-PRIVATE inline void closeBuff(){
-    buffchr[buffindex] = '\0';
-}
-
 PRIVATE inline void ignoreWs(){
     while ( isspace(*prog) && *prog ){
         if( *prog == '\n' ) ++lineCounter;
         ++prog;
     }
+}
+
+PRIVATE string buildLexeme(){
+
+    int length = 0;
+    string lexeme = lexemeBegin;
+    while( lexeme != prog ){
+        ++length;
+        ++lexeme;
+    }
+
+    lexeme = (string) malloc( sizeof(char) * (length + 1) );
+
+    int i = 0;
+    for( i = 0; i < length; ++i )
+        lexeme[i] = lexemeBegin[i];
+    lexeme[i] = '\0';
+
+    return lexeme;
+
 }
 
 PRIVATE bool loadProgram( string buff, string fileName ){
@@ -55,19 +64,16 @@ PRIVATE bool loadProgram( string buff, string fileName ){
 
     buff[i] = '\0';
 
-    prog = buff;//Atribui a primeira posição do arquivo fonte
-
     fclose(fp);
 
     return TRUE;
 }
 
 PUBLIC Symbol* nextSymbol(){
-    //auxilia a criação do registro lexico
-    Symbol* symbol = NULL;
-    int symbolType = IDENTIFIER;
 
-    buffindex = 0;//zera contador do buffer do lexema
+    Symbol* symbol = NULL;
+    int symbolType = TOK_IDENTIFIER;
+    string currentLexeme = NULL;
 
     //Verifica se arquivo chegou ao fim
     if( *prog == '\0' )
@@ -75,13 +81,15 @@ PUBLIC Symbol* nextSymbol(){
 
     int state = Q0;//inicia o automato sempre para o estado inicial na chamada da função
 
-    while( state != END ){
+    while ( state != END ){
 
         switch ( state ){
 
             case Q0:
 
                 ignoreWs();//Ignora espaços em branco
+
+                lexemeBegin = prog;
 
                 //Reconhece palavra-reservada ou identificador -  teste ok!
                 if( *prog == '_' ){
@@ -109,110 +117,83 @@ PUBLIC Symbol* nextSymbol(){
                 } else if( *prog == '>' ){
                     state = Q17;
                 }//Reconhece um op.aritmético, delimitadores e op.igualdade
-                else if( strChr("+-*%[](),;=",*prog) ){
-                    fillBuff(*prog);
-                    ++prog;
-                    state = F;
-                }//Fim de arquivo
-                else if(*prog == '\0'){
+                else if( *prog == '\0' ){
                     return NULL;
+                }//Fim de arquivo
+                else if( strChr("+-*%[](),;=",*prog++) ){
+                    state = F;
                 }//Estado de erro do automato
                 else{
-                    fillBuff(*prog);
-                    closeBuff();
                     compilerror(ERR_UNRECOGNIZED_SYMBOL,NULL);
                 }
-                break;
+                break;//Fim Q0
             case Q1:
-                do{
-                    fillBuff(*prog);
-                }while ( *(++prog) == '_' );
-
+                while ( *(++prog) == '_' );
                 if( isalnum(*prog) ) {
                     state = Q2;
                 } else{
-                    closeBuff();
-                    compilerror(ERR_LEXEME_NOT_FOUND,buffchr);
+                    compilerror(ERR_LEXEME_NOT_FOUND,buildLexeme());
                 }
                 break;
             case Q2:
-                do{
-                    fillBuff(*prog);
-                }while ( isalnum(*(++prog)) || *prog == '_' );
-                state = F;
-                break;
+               while ( isalnum(*(++prog)) || *prog == '_' );
+               state = F;
+               break;
             case Q3:
-                fillBuff(*prog);
                 if( *(++prog) >= 'A' && *prog <= 'F' ){
                     state = Q4;
                 } else if( isdigit(*prog) ){
                     state = Q5;
                 } else{
-                    symbolType = NUMBER;
+                    symbolType = NUMBER_CONST;
                     state = F;
                 }
                 break;
             case Q4:
-                fillBuff(*prog);
                 if( (*(++prog) >= 'A' && *prog <= 'F') || isdigit(*prog) ){
                     state = Q6;
                 }else{
-                    while ( ! isspace(*prog) ) fillBuff(*prog++);
-                    closeBuff();
-                    compilerror(ERR_INVALID_HEX_CONST,buffchr);
+                    compilerror(ERR_INVALID_HEX_CONST,NULL);
                 }
                 break;
             case Q5:
-                fillBuff(*prog);
                 if( *(++prog) >= 'A' && *prog <= 'F' ){
                     state = Q6;
                 } else if( isdigit(*prog) ){
                     state = Q7;
                 } else{
-                    symbolType = NUMBER;
+                    symbolType = NUMBER_CONST;
                     state = F;
                 }
                 break;
             case Q6:
-                fillBuff(*prog);
                 if( *(++prog) == 'h' ){
-                    fillBuff(*prog);
-                    symbolType = HEX;
+                    symbolType = HEX_CONST;
                     ++prog;
                     state = F;
                 } else{
-                    fillBuff(*prog++);
-                    while ( ! isspace(*prog) ) fillBuff(*prog++);
-                    closeBuff();
-                    compilerror(ERR_INVALID_HEX_CONST,buffchr);
+                    compilerror(ERR_INVALID_HEX_CONST,NULL);
                 }
                 break;
             case Q7:
-                fillBuff(*prog);
                 if( isdigit(*(++prog)) ){
                     state = Q8;
                 } else if( *prog == 'h' ){
-                    fillBuff(*prog);
-                    symbolType = HEX;
+                    symbolType = HEX_CONST;
                     ++prog;
                     state = F;
                 } else{
-                    symbolType = NUMBER;
+                    symbolType = NUMBER_CONST;
                     state = F;
                 }
                 break;
             case Q8:
-                do{
-                    fillBuff(*prog);
-                }while ( isdigit(*(++prog)) );
-                symbolType = NUMBER;
+                while ( isdigit(*(++prog)) );
+                symbolType = NUMBER_CONST;
                 state = F;
                 break;
             case Q9:
-                while ( isalnum(*(++prog)) || strChr("()[]|\\%&@;,.!?*/-+_-<>=:{}\'^ ",*prog) ){
-                    fillBuff(*prog );
-                }
-
+                while ( isalnum(*(++prog)) || strChr("()[]|\\%&@;,.!?*/-+_-<>=:{}\'^ ",*prog) );
                 if( *prog == '\"'){
                     state = Q10;
                 } else if( *prog == '$' ){
@@ -227,13 +208,12 @@ PUBLIC Symbol* nextSymbol(){
                 if( *(++prog) == '\"' ){
                     compilerror(ERR_UNRECOGNIZED_SYMBOL,NULL);
                 } else{
-                    symbolType = STRING;
+                    symbolType = STRING_CONST;
                     state = F;
                 }
                 break;
             case Q11:
                 if( isalnum(*(++prog)) || strChr("()[]|\\%&@;,.!?*/-+_-<>=:{}\'^\"$ ",*prog) ){
-                    fillBuff(*prog);
                     state = Q12;
                 }
                 else{
@@ -242,16 +222,14 @@ PUBLIC Symbol* nextSymbol(){
                 break;
             case Q12:
                 if( *(++prog) == '\'' ){
-                    symbolType = CHR;
+                    symbolType = CHARACTER_CONST;
                     ++prog;
                     state = F;
                 }
                 else{
-
                     if( *(prog - 1) == '\'' )
                         compilerror(ERR_EMPYT_CHARACTER_CONST,NULL);
                     else{
-
                         while( *prog != '\n' && *(++prog) != '\'' );
                         if( *prog == '\n' )
                             compilerror(ERR_UNTERMINETED_CHARACTER_LITERAL,NULL);
@@ -264,7 +242,6 @@ PUBLIC Symbol* nextSymbol(){
                 if( *(++prog) == '*' ){
                     state = Q14;
                 } else{
-                    fillBuff(*(prog-1));
                     state = F;
                 }
                 break;
@@ -286,58 +263,47 @@ PUBLIC Symbol* nextSymbol(){
                 }
                 break;
             case Q16:
-                fillBuff(*prog);
-                if( *(++prog) == '>' ){
-                    fillBuff(*prog);
-                }
-                else if( *prog == '-' ){
-                    fillBuff(*prog);
-                }
-                else if( *prog == '=' ){
-                    fillBuff(*prog);
-                }
-                ++prog;
+                if( *(++prog) == '>' || *prog == '-' || *prog == '=' )
+                    ++prog;
                 state = F;
                 break;
             case Q17:
-                fillBuff(*prog);
                 if( *(++prog) == '=' )
-                    fillBuff(*prog++);
+                    ++prog;
                 state = F;
                 break;
-                //Estado Final
             default:
-                //Delimita o fim do lexema
-                closeBuff();
 
-                if( symbolType == IDENTIFIER ){
+                currentLexeme = buildLexeme();
 
-                    if( (symbol = symbolSearch(buffchr)) == NULL ){
+                if( symbolType == TOK_IDENTIFIER ){
+
+                    if( (symbol = symbolSearch(currentLexeme)) == NULL ){
 
                         symbol = symbolAlloc();
-                        symbol->lexeme = strAlloc(buffchr);
-                        symbol->tok = IDENTIFIER;
+                        symbol->lexeme = currentLexeme;
+                        symbol->tok = TOK_IDENTIFIER;
                         symbol->classId = NULL_CLASS;
                         symbol->dataType = NULL_DATA_TYPE;
                         symbol->arraySize = 0;
-                        symbol->addr = 0;
+                        symbol->memAddress = 0;
                         symbolAdd(symbol);
 
-                    }else{
-
-                        if( symbol->tok >= TOK_FINAL && symbol->tok < NUM_OF_TOKS )
-                            symbol->typeConst = KEYWORD;
                     }
+
 
                 } else{
 
                     symbol = symbolAlloc();
-                    symbol->lexeme = strAlloc(buffchr);
-                    symbol->tok = CONSTANT;
+                    symbol->lexeme = currentLexeme;
+                    symbol->tok = TOK_CONSTANT;
                     symbol->typeConst = symbolType;
+                    symbol->typeSize = strlen(currentLexeme);
                 }
 
-                state = END;//fim da varredura, lexema pertence a linguagem!
+                //printSymbol(symbol);
+
+                state = END;
                 break;
         }
     }
@@ -348,9 +314,12 @@ PUBLIC Symbol* nextSymbol(){
 PUBLIC bool startLex( string fileName ){
 
     //Representação string dos tokens da linguagem
-    string tokstr [] = {"final","int","char","for","if","else","do","and","or","not","to",
-                        "begin","end","then","step","readln","write","writeln","<-","=","<>",">","<",">=","<=",
-                        "+","-","*","/","%",";",",","(",")","[","]"};
+    string tokName [] = {"final","int","char","for","if","else",
+                        "do","and","or","not","to", "begin",
+                        "end","then","step","readln","write","writeln",
+                        "<-","=","<>",">","<",">=",
+                        "<=","+","-","*","/","%",
+                        ";",",","(",")","[","]"};
 
     //Verifica a extensão do código-fonte
     if( !evalFileExt(fileName) || !fileExists(fileName) ){
@@ -358,12 +327,12 @@ PUBLIC bool startLex( string fileName ){
     }
 
     //Reserva espaço para carregar o programa
-    if( ( buffp = (char*) malloc(sizeof(char)*PROGRAM_LEN_MAX ) ) == NULL ){
+    if( ( prog = (char*) malloc(sizeof(char)*PROGRAM_LEN_MAX ) ) == NULL ){
         compilerror(ERR_COULD_NOT_LOAD_PROGRAM,NULL);
     }
 
     //carrega o programa para memória principal
-    if( ! loadProgram(buffp,fileName) ){
+    if( ! loadProgram(prog,fileName) ){
         exit(1);
     }
 
@@ -375,7 +344,7 @@ PUBLIC bool startLex( string fileName ){
     int i;
     for( i = 0; i < NUM_OF_TOKS; ++i ){
         symbol = symbolAlloc();
-        symbol->lexeme = tokstr[i];
+        symbol->lexeme = strAlloc( tokName[i] );
         symbol->tok = i;
         symbolAdd(symbol);
     }
@@ -389,18 +358,31 @@ PUBLIC bool startLex( string fileName ){
 
 PUBLIC void printSymbol(Symbol* symbol){
 
-    string cType[] = { "IDENTIFIER","CONSTANT","CHR","HEX","NUMBER","STRING","KEYWORD"};
+    string typeName[] = { "IDENTIFIER","CONSTANT","CHARACTER","HEX","NUMBER","STRING"};
 
     if( symbol != NULL ) {
-        if ( symbol->tok == IDENTIFIER ) {
+        if ( symbol->tok == TOK_CONSTANT ) {
             printf("\n\tTok( "
-                           "\n\t\t addr: %p"
-                           "\n\t\t lexeme: \"%s\" ; size: %d"
-                           "\n\t\t tok: %d"
-                           "\n\t\t class: %d"
-                           "\n\t\t data type: %d"
-                           "\n\t\t arraySize: %d"
-                           "\n\t\t addr: %d\n\t);",
+                   "\n\t\t addr: %p"
+                   "\n\t\t lexeme: \"%s\" ; size: %d"
+                   "\n\t\t tok: %d"
+                   "\n\t\t constType: %s"
+                   "\n\t\t constSize %d\n\t);",
+                   symbol,
+                   symbol->lexeme,
+                   strlen(symbol->lexeme),
+                   symbol->tok,
+                   typeName[ symbol->typeConst - TOK_IDENTIFIER],
+                   symbol->typeSize);
+        } else {
+            printf("\n\tTok( "
+                   "\n\t\t addr: %p"
+                   "\n\t\t lexeme: \"%s\" ; size: %d"
+                   "\n\t\t tok: %d"
+                   "\n\t\t class: %d"
+                   "\n\t\t data type: %d"
+                   "\n\t\t arraySize: %d"
+                   "\n\t\t addr: %d\n\t);",
                    symbol,
                    symbol->lexeme,
                    strlen(symbol->lexeme),
@@ -408,19 +390,7 @@ PUBLIC void printSymbol(Symbol* symbol){
                    symbol->classId,
                    symbol->dataType,
                    symbol->arraySize,
-                   symbol->addr);
-
-        } else {
-            printf("\n\tTok( "
-                           "\n\t\t addr: %p"
-                           "\n\t\t lexeme: \"%s\" ; size: %d"
-                           "\n\t\t tok: %d"
-                           "\n\t\t constType: %s\n\t);",
-                   symbol,
-                   symbol->lexeme,
-                   strlen(symbol->lexeme),
-                   symbol->tok,
-                   cType[symbol->typeConst-IDENTIFIER]);
+                   symbol->memAddress);
         }
     }else{
         printf("\n\tTok( null );\n");
@@ -454,3 +424,16 @@ PUBLIC void printSymbolTable(){
         }
     }
 }
+
+/*
+PUBLIC int main( int argc, char* argv[] ){
+
+    startLex(argv[1]);
+
+    while ( nextSymbol() != NULL );
+
+    printSymbolTable();
+
+    return 0;
+}
+*/

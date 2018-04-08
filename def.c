@@ -1,28 +1,22 @@
 //
-// Created by Daniel on 22/03/2018.
+// Created by Daniel on 06/04/2018.
 //
 
 #include "def.h"
 
 PUBLIC string strAlloc( string str ){
 
-    if(str == NULL)
+    int length;
+    if( str == NULL || ( length = strlen(str) ) == 0 )
         return NULL;
 
-    int size = strlen(str);
-    if( size < 1 )
-        return NULL;
+    char* newStr = (char*) malloc( sizeof(char) * (strlen(str) + 1) );
 
-    string newStr = (string) malloc(sizeof(string)*size+1);
-
-    int i = 0;
-    while( i < size ){
+    int i;
+    for( i = 0; i < length; ++i )
         newStr[i] = str[i];
-        ++i;
-    }
-
-    return (newStr[i] = '\0',newStr);
-
+    newStr[i] = '\0';
+    return newStr;
 }
 
 PUBLIC bool strChr( char*str, char chr ){

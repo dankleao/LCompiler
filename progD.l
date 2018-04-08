@@ -1,6 +1,7 @@
 /* Exemplo de Programa na linguagem L */
 
 int n[3], max, i;
+char arr[100];
 
 /* Programa Principal */
 
@@ -9,9 +10,7 @@ int n[3], max, i;
     readln(n);
   end
 
-    max <- ( 8*9/10-10+300 );
-    max <- not ( 'c' <> 0AAh );
-    max <- id[(10%id[0])];
+  arr <- "Daniel Cardoso Leao - 512973; PUC Minas Ciencias da computacao. 07/04/2018 23:50 - Sabadao code and coffe hehe!";
 
   if n[0] > n[1] then begin
     if n[0] > n[2] then

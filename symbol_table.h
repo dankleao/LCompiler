@@ -1,5 +1,5 @@
 //
-// Created by Daniel on 22/03/2018.
+// Created by Daniel on 06/04/2018.
 //
 
 #ifndef LCOMPILER_SYMBOL_TABLE_H
@@ -8,35 +8,60 @@
 #include "def.h"
 #include "hash_table.h"
 
+/*
+ *  Tabela de símbolos
+ *
+ */
 PUBLIC HashTable* symbolTable;
 
+/*
+ * Tipo class representa as classes de identificadores da linguagem
+ */
 typedef enum class{
     NULL_CLASS = -1,
     VAR_CLASS,
     CONST_CLASS
 }class;
 
+/*
+ * Tipo dataType representa os tipos de dados atômicos suportados pela linguagem
+ */
 typedef enum data_type {
     NULL_DATA_TYPE = -1,
     BOOLEAN_DATA_TYPE,
     CHARACTER_DATA_TYPE,
     INTEGER_DATA_TYPE
-}dataType;
+}data_type;
 
-typedef unsigned int memoryAddress;
+typedef unsigned int memory_address;
+
+/*
+ * Tipo symbol representa uma entidade básica da tabela de símbolo
+ */
 
 typedef struct symbol{
-    string lexeme;
-    int tok;
-    union{
+
+    string lexeme;       //lexema(string)
+    int tok;             //número do token
+
+    union {
+
+        //Atributos p/ identificadores ou palavras-reservadas
         struct{
-            class classId;
-            dataType dataType;
-            int arraySize;
-            memoryAddress addr;
+            class classId;       //classe de identificador
+            data_type dataType;  //tipo de dados
+            int arraySize;       //tamanho do array, se 0 então é uma variável escalar
+            memory_address memAddress; //endereço de memoria
         };
-        int typeConst;
+
+        //Atributos p/ constantes( numéricas, hexdecimais, string, caracter )
+        struct{
+            int typeConst;
+            int typeSize;
+        };
+
     };
+
 }Symbol;
 
 /*
