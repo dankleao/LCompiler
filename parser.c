@@ -44,7 +44,6 @@ PRIVATE void decl(){
         //Declaração de constantes
         if( getTok() == TOK_FINAL ){
 
-            //printf("Constant\n");
             matchTok(TOK_FINAL);
             matchTok(TOK_IDENTIFIER);
             matchTok(TOK_EQ);

@@ -7,7 +7,7 @@ char arr[100];
 
   for i<-0 to 2 do begin
     write("Digite um numero: ");
-    readln(n);
+    readln(n[i]);
   end
 
   arr <- "Daniel Cardoso Leao - 512973; PUC Minas Ciencias da computacao. 07/04/2018 23:50 - Sabadao code and coffe hehe!";

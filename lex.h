@@ -54,6 +54,7 @@
 #define OTHERS \
         TOK_IDENTIFIER, \
         TOK_CONSTANT, \
+        TOK_OTHER, \
         CHARACTER_CONST, \
         HEX_CONST, \
         NUMBER_CONST, \

@@ -16,13 +16,8 @@
 #define ERR_LIST \
         ERR(ERR_FILE_NOT_FOUND,"arquivo nao encontrado.") \
         ERR(ERR_COULD_NOT_LOAD_PROGRAM,"nao foi possivel carregar o programa fonte.") \
-        ERR(ERR_UNRECOGNIZED_SYMBOL,"caracter nao reconhecido.") \
+        ERR(ERR_UNRECOGNIZED_SYMBOL,"caracter invalido.") \
         ERR(ERR_LEXEME_NOT_FOUND,"lexema nao identificado.") \
-        ERR(ERR_INVALID_HEX_CONST,"constante hexadecimal invalida.") \
-        ERR(ERR_UNTERMINETED_CHARACTER_LITERAL,"literal caracter nao terminado.") \
-        ERR(ERR_UNTERMINETED_STRING_LITERAL,"literal string nao terminado.") \
-        ERR(ERR_EMPYT_CHARACTER_CONST,"constante alfanumerica vazia.") \
-        ERR(ERR_MULTI_CHARACTER_CONST,"multiplos caracteres no literal caracter.") \
         ERR(ERR_EOF_NOT_EXPECTED,"fim de arquivo nao esperado.") \
         ERR(ERR_BAD_ARGUMENTS,"numero de argumentos invalido. Ex: lc nome_fonte.l nome_executavel.asm ") \
         ERR(ERR_TOK_NOT_EXPECTED,"token nao esperado.") \

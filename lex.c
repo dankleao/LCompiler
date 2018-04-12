@@ -120,7 +120,12 @@ PUBLIC Symbol* nextSymbol(){
                 else if( *prog == '\0' ){
                     return NULL;
                 }//Fim de arquivo
-                else if( strChr("+-*%[](),;=",*prog++) ){
+                else if( strChr("+-*%[](),;=",*prog) ){
+                    ++prog;
+                    state = F;
+                }else if( strchr(":.@\"^!?",*prog) ){
+                    ++prog;
+                    symbolType = TOK_OTHER;
                     state = F;
                 }//Estado de erro do automato
                 else{
@@ -153,7 +158,7 @@ PUBLIC Symbol* nextSymbol(){
                 if( (*(++prog) >= 'A' && *prog <= 'F') || isdigit(*prog) ){
                     state = Q6;
                 }else{
-                    compilerror(ERR_INVALID_HEX_CONST,NULL);
+                    compilerror(ERR_LEXEME_NOT_FOUND,buildLexeme());
                 }
                 break;
             case Q5:
@@ -172,7 +177,7 @@ PUBLIC Symbol* nextSymbol(){
                     ++prog;
                     state = F;
                 } else{
-                    compilerror(ERR_INVALID_HEX_CONST,NULL);
+                    compilerror(ERR_LEXEME_NOT_FOUND,buildLexeme());
                 }
                 break;
             case Q7:
@@ -199,9 +204,9 @@ PUBLIC Symbol* nextSymbol(){
                 } else if( *prog == '$' ){
                     compilerror(ERR_UNRECOGNIZED_SYMBOL,NULL);
                 } else if ( isspace(*prog) ){
-                    compilerror(ERR_UNTERMINETED_STRING_LITERAL,NULL);
+                    compilerror(ERR_LEXEME_NOT_FOUND,buildLexeme());
                 } else{
-                    compilerror(ERR_UNRECOGNIZED_SYMBOL,NULL);
+                    compilerror(ERR_LEXEME_NOT_FOUND,buildLexeme());
                 }
                 break;
             case Q10:
@@ -227,15 +232,7 @@ PUBLIC Symbol* nextSymbol(){
                     state = F;
                 }
                 else{
-                    if( *(prog - 1) == '\'' )
-                        compilerror(ERR_EMPYT_CHARACTER_CONST,NULL);
-                    else{
-                        while( *prog != '\n' && *(++prog) != '\'' );
-                        if( *prog == '\n' )
-                            compilerror(ERR_UNTERMINETED_CHARACTER_LITERAL,NULL);
-                        else
-                            compilerror(ERR_MULTI_CHARACTER_CONST,NULL);
-                    }
+                    compilerror(ERR_LEXEME_NOT_FOUND,buildLexeme());
                 }
                 break;
             case Q13:
@@ -296,9 +293,10 @@ PUBLIC Symbol* nextSymbol(){
 
                     symbol = symbolAlloc();
                     symbol->lexeme = currentLexeme;
-                    symbol->tok = TOK_CONSTANT;
+                    symbol->tok = symbolType == TOK_OTHER ? TOK_OTHER :TOK_CONSTANT;
                     symbol->typeConst = symbolType;
                     symbol->typeSize = strlen(currentLexeme);
+
                 }
 
                 //printSymbol(symbol);
