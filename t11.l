@@ -5,6 +5,7 @@ char nome[20];
 int i,p <- 10;
 char flag <- 0FFh;
 final MAXITER = 10;
+final t = 'c';
 
 /* Programa Principal */
 
@@ -21,7 +22,7 @@ final MAXITER = 10;
         writeln(n);
    else
         if( MAXITER ) then begin
-            for n <- 0 to MAXITER step -2 do
+            for n <- MAXITER to MAXITER step -2 do
                 writeln(10);
             readln(id);
         end

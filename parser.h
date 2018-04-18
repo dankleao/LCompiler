@@ -55,17 +55,17 @@ PRIVATE inline void matchTok( int tokExpected );
 PRIVATE void program();
 
 /*
- * DECL -> final id = [ + | - ] | (int | char) VAR
+ * DECL -> [ ( final id = [ + | - ] const | (int | char) VAR ) ; ]
  */
 PRIVATE void decl();
 
 /*
  * VAR -> id [ <- [ + | - ] const | "[" const "]" ] [ , VAR ]
  */
-PRIVATE void var();
+PRIVATE void var(data_type);
 
 /*
- * CMD -> CMDIF | CMDFOR | CMDIO | id [ "[" EXP "]" ] <- EXP; | ;
+ * CMD -> [ CMDIF | CMDFOR | CMDIO | id [  [ "[" EXP "]" ] <- EXP ] ; | ; ]
  */
 PRIVATE void cmd();
 
