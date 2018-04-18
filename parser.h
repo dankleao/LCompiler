@@ -13,16 +13,6 @@
 PRIVATE Symbol* currentSymbol;
 
 /*
- * Obtém o token do símbolo corrente
- */
-PRIVATE inline int getTok();
-
-/*
- * Obtém o lexema do símbolo corrente
- */
-PRIVATE inline string getLexeme();
-
-/*
  * Verifica a unicidade dos identificadores.
  */
 PRIVATE inline void checkUniqueness(class classId);
@@ -35,12 +25,20 @@ PRIVATE inline void checkVarDeclaration();
 /*
  * Verifica a compatibilidade de classe de identificadores.
  */
-PRIVATE inline void checkClassCompatibility();
+PRIVATE inline void checkClassCompatibility(Symbol* symbol);
 
 /*
  * Verifica o intervalo inteiro que uma variável inteira pode armazenar
+ * @return a constante inteira
  */
-PRIVATE inline bool withinLimitOfInteger(int value);
+PRIVATE inline int withinLimitOfInteger(int signal);
+
+/*
+ * Verifica o tamanho máximo do array
+ * @return o tamanho do array
+ */
+PRIVATE inline int withinArraySizeBounds();
+
 
 /*
  * Casa token
@@ -65,7 +63,7 @@ PRIVATE void decl();
 PRIVATE void var(data_type);
 
 /*
- * CMD -> [ CMDIF | CMDFOR | CMDIO | id [  [ "[" EXP "]" ] <- EXP ] ; | ; ]
+ * CMD -> [ CMDIF | CMDFOR | CMDIO | id [ "[" EXP "]" ] [ <- EXP ] ; | ; ]
  */
 PRIVATE void cmd();
 

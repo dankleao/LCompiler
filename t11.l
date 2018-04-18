@@ -1,8 +1,8 @@
 /* Exemplo de Programa na linguagem L */
 
 int n <- 9;
-char nome[20];
-int i,p <- 10;
+char nome[4096];
+int i,p,a <- 10;
 char flag <- 0FFh;
 final MAXITER = 10;
 final t = 'c';
@@ -24,10 +24,10 @@ final t = 'c';
         if( MAXITER ) then begin
             for n <- MAXITER to MAXITER step -2 do
                 writeln(10);
-            readln(id);
+            readln(n);
         end
 
-   a[a] <- 1000;
+   a[a];
 
    a[b[10/10]] <- d[(5*10)];
 

@@ -4,53 +4,71 @@
 
 #include "parser.h"
 
-PRIVATE inline int getTok(){
-    return (currentSymbol == NULL ? NULL_TOK : currentSymbol->tok);
+PUBLIC inline void checkUniqueness(class classId){
+
+    if( currentSymbol->tok == TOK_IDENTIFIER ){
+        if( currentSymbol->classId == NULL_CLASS ){
+            currentSymbol->classId = classId;
+        } else{
+            compilerror(ERR_IDENTIFIER_ALREADY_DECLARED,currentSymbol->lexeme);
+        }
+    }
 }
 
-PRIVATE inline string getLexeme(){
-    return (currentSymbol == NULL ? "" : currentSymbol->lexeme );
+PRIVATE inline void checkClassCompatibility(Symbol* symbol){
+
+    if( symbol->classId == CONST_CLASS )
+        compilerror(ERR_INCOMPATIBLE_CLASS_IDENTIFIER,symbol->lexeme);
+
+}
+
+PUBLIC inline void checkVarDeclaration(){
+    if( currentSymbol->tok == TOK_IDENTIFIER ){
+        if( currentSymbol->classId == NULL_CLASS ){
+            compilerror(ERR_UNDECLARED_IDENTIFIER,currentSymbol->lexeme);
+        }
+    }
+}
+
+PUBLIC inline int withinLimitOfInteger(int signal){
+
+    int value = atoi(currentSymbol->lexeme) * signal;
+
+    if( value < INTEGER_MIN_VALUE || value > INTEGER_MAX_VALUE )
+        compilerror(ERR_INCOMPATIBLE_TYPES,NULL);
+
+    return value;
+}
+
+PUBLIC inline int withinArraySizeBounds(){
+
+    int arraySize = atoi(currentSymbol->lexeme);
+    if( arraySize > ARRAY_SIZE_MAX )
+        compilerror(ERR_ARRAY_SIZE_BOUND_EXCEEDED,NULL);
+
+    return arraySize;
 }
 
 PRIVATE inline void matchTok( int tokExpected ){
 
-    if( getTok() == tokExpected ){
+    if ( currentSymbol != NULL && currentSymbol->tok == tokExpected ){
         //printSymbol(currentSymbol);
         currentSymbol = nextSymbol();
     } else{
 
-        if( getTok() == NULL_TOK )
+        if( currentSymbol == NULL )
             compilerror(ERR_EOF_NOT_EXPECTED,NULL);
         else
-            compilerror(ERR_TOK_NOT_EXPECTED,getLexeme());
+            compilerror(ERR_TOK_NOT_EXPECTED,currentSymbol->lexeme);
     }
 }
-
-PRIVATE inline void checkUniqueness(class classId){
-    if( getTok() == TOK_IDENTIFIER ){
-        if( currentSymbol->classId == NULL_CLASS ){
-            currentSymbol->classId = classId;
-        } else{
-            compilerror(ERR_IDENTIFIER_ALREADY_DECLARED,getLexeme());
-        }
-    }
-}
-
-PRIVATE inline void checkVarDeclaration(){
-    if( getTok() == TOK_IDENTIFIER ){
-        if( currentSymbol->classId == NULL_CLASS ){
-            compilerror(ERR_UNDECLARED_IDENTIFIER,getLexeme());
-        }
-    }
-}
-
 
 PRIVATE void program(){
 
     //Inicio da execução do parser
     currentSymbol = nextSymbol();//Obtém o primeiro símbolo do código fonte
     decl();
-    while (currentSymbol != NULL ){
+    while ( currentSymbol != NULL ){
         cmd();
     }
 }
@@ -62,7 +80,7 @@ PRIVATE void decl(){
     do{
 
         //Declaração de constantes
-        if( getTok() == TOK_FINAL ){
+        if( currentSymbol->tok == TOK_FINAL ){
 
             data_type * syntDType;
 
@@ -77,28 +95,23 @@ PRIVATE void decl(){
 
             int signal = 0;
 
-            if( getTok() == TOK_PLUS || getTok() == TOK_MINUS ){
+            if( currentSymbol->tok == TOK_PLUS || currentSymbol->tok == TOK_MINUS ){
 
-                signal = ( getTok() == TOK_PLUS ? 1 : -1 );
+                signal = ( currentSymbol->tok == TOK_PLUS ? 1 : -1 );
 
-                matchTok(getTok());
+                matchTok(currentSymbol->tok);
             }
 
-            if( getTok() == TOK_CONSTANT ){
+            if( currentSymbol->tok == TOK_CONSTANT ){
 
                 if( currentSymbol->typeConst == NUMBER_CONST ){
 
                     *syntDType = INTEGER_DATA_TYPE;
 
-                    int value;
-
                     if( ! signal )
                         signal = 1;
 
-                    value = atoi(currentSymbol->lexeme) * signal;
-
-                    if( value < INTEGER_MIN_VALUE || value > INTEGER_MAX_VALUE )
-                        compilerror(ERR_INCOMPATIBLE_TYPES,NULL);
+                    int value = withinLimitOfInteger(signal);
 
                     //GEN CODE
 
@@ -119,16 +132,16 @@ PRIVATE void decl(){
             matchTok(TOK_CONSTANT);
 
         }//Declaração das variáveis
-        else if( getTok() == TOK_INT || getTok() == TOK_CHAR ){
+        else if( currentSymbol->tok == TOK_INT || currentSymbol->tok == TOK_CHAR ){
 
             data_type inhDType;
 
-            if( getTok()== TOK_INT )
+            if( currentSymbol->tok== TOK_INT )
                 inhDType = INTEGER_DATA_TYPE;
             else
                 inhDType = CHARACTER_DATA_TYPE;
 
-            matchTok(getTok());
+            matchTok(currentSymbol->tok);
 
             var(inhDType);
 
@@ -138,32 +151,32 @@ PRIVATE void decl(){
 
         matchTok(TOK_SEMICOLON);
 
-    }while ( getTok() == TOK_FINAL || getTok() == TOK_INT || getTok() == TOK_CHAR );
+    }while ( currentSymbol->tok == TOK_FINAL || currentSymbol->tok == TOK_INT || currentSymbol->tok == TOK_CHAR );
 }
 
 PRIVATE void var(data_type inhDType ){
 
     checkUniqueness(VAR_CLASS);
 
-    Symbol* identifierPtr = currentSymbol;
+    Symbol* tmpIdentifier = currentSymbol;
 
     matchTok(TOK_IDENTIFIER);
 
     //Definição de variáveis escalares
-    if( getTok() == TOK_ASSIGN ){
+    if( currentSymbol->tok == TOK_ASSIGN ){
 
         matchTok(TOK_ASSIGN);
 
         int signal = 0;
 
-        if( getTok() == TOK_PLUS || getTok() == TOK_MINUS ){
+        if( currentSymbol->tok == TOK_PLUS || currentSymbol->tok == TOK_MINUS ){
 
-            signal = ( getTok() == TOK_PLUS ? 1 : -1 );
+            signal = ( currentSymbol->tok == TOK_PLUS ? 1 : -1 );
 
-            matchTok(getTok());
+            matchTok(currentSymbol->tok);
         }
 
-        if( getTok() == TOK_CONSTANT ){
+        if( currentSymbol->tok == TOK_CONSTANT ){
 
             switch (currentSymbol->typeConst){
 
@@ -171,17 +184,13 @@ PRIVATE void var(data_type inhDType ){
 
                     if( inhDType == INTEGER_DATA_TYPE ){
 
-                        int value;
-
                         if( ! signal )
                             signal = 1;
 
-                        value = atoi(currentSymbol->lexeme) * signal;
-
-                        if( value < INTEGER_MIN_VALUE || value > INTEGER_MAX_VALUE )
-                            compilerror(ERR_INCOMPATIBLE_TYPES,NULL);
+                        int value = withinLimitOfInteger(signal);
 
                         //GEN CODE
+
                     } else{
                         compilerror(ERR_INCOMPATIBLE_TYPES,NULL);
                     }
@@ -204,20 +213,15 @@ PRIVATE void var(data_type inhDType ){
         matchTok(TOK_CONSTANT);
 
     }//Definição de vetores unidimensionais
-    else if( getTok() == TOK_L_BRACE ) {
+    else if( currentSymbol->tok == TOK_L_BRACE ) {
 
         matchTok(TOK_L_BRACE);
 
-        if( getTok() == TOK_CONSTANT ){
+        if( currentSymbol->tok == TOK_CONSTANT ){
 
             if( currentSymbol->typeConst == NUMBER_CONST ){
 
-                int arraySize = atoi(currentSymbol->lexeme);
-
-                if( arraySize > ARRAY_SIZE_MAX )
-                    compilerror(ERR_ARRAY_SIZE_BOUND_EXCEEDED,NULL);
-
-                identifierPtr->arraySize = arraySize;
+                tmpIdentifier->arraySize = withinArraySizeBounds();
 
                 //GEN CODE
 
@@ -231,7 +235,7 @@ PRIVATE void var(data_type inhDType ){
     }
 
     //Lista de declarações de variáveis
-    if( getTok() == TOK_COMMA ){
+    if( currentSymbol->tok == TOK_COMMA ){
 
         matchTok(TOK_COMMA);
         var(inhDType);
@@ -241,46 +245,47 @@ PRIVATE void var(data_type inhDType ){
 PRIVATE void cmd(){
 
     //Comando if
-    if( getTok() == TOK_IF ){
+    if( currentSymbol->tok == TOK_IF ){
         cmdif();
     }//Comando for
-    else if( getTok() == TOK_FOR ){
+    else if( currentSymbol->tok == TOK_FOR ){
         cmdfor();
     }//Comando readln, write ou writeln
-    else if( getTok() ==  TOK_READLN || getTok() == TOK_WRITE || getTok() == TOK_WRITELN ){
+    else if( currentSymbol->tok ==  TOK_READLN || currentSymbol->tok == TOK_WRITE || currentSymbol->tok == TOK_WRITELN ){
         cmdio();
     }// Atribuições
-    else if( getTok() == TOK_IDENTIFIER ){
+    else if( currentSymbol->tok == TOK_IDENTIFIER ){
 
-        Symbol* identifierPtr = currentSymbol;
+        //Armazena o identificador para uso posterior
+        Symbol* tmpIdentifier = currentSymbol;
 
         checkVarDeclaration();
 
         matchTok(TOK_IDENTIFIER);
 
-        if( getTok() == TOK_L_BRACE ){
+        if( currentSymbol->tok == TOK_L_BRACE ){
 
             matchTok(TOK_L_BRACE);
             expression();
             matchTok(TOK_R_BRACE);
 
             //Verifica compatibilidade de classes de identificadores
-            if(identifierPtr->classId == CONST_CLASS )
-                compilerror(ERR_INCOMPATIBLE_CLASS_IDENTIFIER,identifierPtr->lexeme);
+            checkClassCompatibility(tmpIdentifier);
 
             //Verifica se identificador é do tipo arranjo
-            if( identifierPtr->arraySize == 0 )
+            if( tmpIdentifier->arraySize == 0 )
                 compilerror(ERR_INCOMPATIBLE_TYPES,NULL);
+
+            //OTHER SMTC ACTIONS
 
         }
 
-        if( getTok() == TOK_ASSIGN ){
+        if( currentSymbol->tok == TOK_ASSIGN ){
 
             matchTok(TOK_ASSIGN);
 
             //Verifica compatibilidade de classes de identificadores
-            if( identifierPtr->classId == CONST_CLASS )
-                compilerror(ERR_INCOMPATIBLE_CLASS_IDENTIFIER,identifierPtr->lexeme);
+            checkClassCompatibility(tmpIdentifier);
 
             expression();
 
@@ -302,7 +307,7 @@ PRIVATE void cmdif(){
     body();
 
     //Comando else opcional
-    if( getTok() == TOK_ELSE ){
+    if( currentSymbol->tok == TOK_ELSE ){
         matchTok(TOK_ELSE);
         body();
     }
@@ -315,10 +320,8 @@ PRIVATE void cmdfor(){
     checkVarDeclaration();
 
     //Verifica compatibilidade de classes de identificadores
-    if( getTok() == TOK_IDENTIFIER ){
-        if( currentSymbol->classId == CONST_CLASS )
-            compilerror(ERR_INCOMPATIBLE_CLASS_IDENTIFIER,getLexeme());
-    }
+    if( currentSymbol->tok == TOK_IDENTIFIER )
+        checkClassCompatibility(currentSymbol);
 
     matchTok(TOK_IDENTIFIER);
     matchTok(TOK_ASSIGN);
@@ -327,11 +330,11 @@ PRIVATE void cmdfor(){
     expression();
 
     //Instrução step opcional
-    if( getTok() == TOK_STEP ){
+    if( currentSymbol->tok == TOK_STEP ){
         matchTok(TOK_STEP);
 
-        if( getTok() == TOK_PLUS || getTok() == TOK_MINUS )
-            matchTok(getTok());
+        if( currentSymbol->tok == TOK_PLUS || currentSymbol->tok == TOK_MINUS )
+            matchTok(currentSymbol->tok);
 
         matchTok(TOK_CONSTANT);
     }
@@ -343,7 +346,7 @@ PRIVATE void cmdfor(){
 
 PRIVATE void cmdio(){
 
-    if( getTok() == TOK_READLN ){
+    if( currentSymbol->tok == TOK_READLN ){
 
         matchTok(TOK_READLN);
         matchTok(TOK_L_PAREN);
@@ -351,14 +354,13 @@ PRIVATE void cmdio(){
         checkVarDeclaration();
 
         //Verifica compatibilidade de classes de identificadores
-        if( getTok() == TOK_IDENTIFIER ){
-            if( currentSymbol->classId == CONST_CLASS )
-                compilerror(ERR_INCOMPATIBLE_CLASS_IDENTIFIER,getLexeme());
-        }
+        if( currentSymbol->tok == TOK_IDENTIFIER )
+            checkClassCompatibility(currentSymbol);
+
 
         matchTok(TOK_IDENTIFIER);
 
-        if( getTok() == TOK_L_BRACE ){
+        if( currentSymbol->tok == TOK_L_BRACE ){
             matchTok(TOK_L_BRACE);
             expression();
             matchTok(TOK_R_BRACE);
@@ -366,14 +368,14 @@ PRIVATE void cmdio(){
 
         matchTok(TOK_R_PAREN);
 
-    } else if( getTok() == TOK_WRITE || getTok() == TOK_WRITELN ){
+    } else if( currentSymbol->tok == TOK_WRITE || currentSymbol->tok == TOK_WRITELN ){
 
-        matchTok(getTok());
+        matchTok(currentSymbol->tok);
         matchTok(TOK_L_PAREN);
         expression();
 
         //Lista de argumentos opcional
-        while( getTok() == TOK_COMMA ){
+        while( currentSymbol->tok == TOK_COMMA ){
             matchTok(TOK_COMMA);
             expression();
         }
@@ -388,13 +390,13 @@ PRIVATE void cmdio(){
 
 PRIVATE void body(){
 
-    if( getTok() == TOK_BEGIN ){
+    if( currentSymbol->tok == TOK_BEGIN ){
 
         matchTok(TOK_BEGIN);
 
         do{
             cmd();
-        }while (getTok() != TOK_END );
+        }while (currentSymbol->tok != TOK_END );
 
         matchTok(TOK_END);
 
@@ -406,70 +408,73 @@ PRIVATE void body(){
 PRIVATE void expression(){
 
     term();
-    while ( getTok() == TOK_EQ || getTok() == TOK_NE || getTok() == TOK_GE || getTok() == TOK_GT || getTok() == TOK_LE || getTok() == TOK_LT ){
-        matchTok(getTok());
+    while ( currentSymbol->tok == TOK_EQ || currentSymbol->tok == TOK_NE ||
+            currentSymbol->tok == TOK_GE || currentSymbol->tok == TOK_GT ||
+            currentSymbol->tok == TOK_LE || currentSymbol->tok == TOK_LT ){
+
+        matchTok(currentSymbol->tok);
         term();
     }
 }
 
 PRIVATE void term(){
 
-    if( getTok() == TOK_PLUS || getTok() == TOK_MINUS )
-        matchTok(getTok());
+    if( currentSymbol->tok == TOK_PLUS || currentSymbol->tok == TOK_MINUS )
+        matchTok(currentSymbol->tok);
 
     factor();
 
-    while ( getTok() == TOK_PLUS || getTok() == TOK_MINUS ||getTok() == TOK_OR ){
-        matchTok(getTok());
+    while ( currentSymbol->tok == TOK_PLUS || currentSymbol->tok == TOK_MINUS ||currentSymbol->tok == TOK_OR ){
+        matchTok(currentSymbol->tok);
         factor();
     }
 }
 
 PRIVATE void factor(){
     e();
-    while ( getTok() == TOK_TIMES || getTok() == TOK_OVER || getTok() == TOK_MOD || getTok() == TOK_AND ){
-        matchTok(getTok());
+    while ( currentSymbol->tok == TOK_TIMES || currentSymbol->tok == TOK_OVER || currentSymbol->tok == TOK_MOD || currentSymbol->tok == TOK_AND ){
+        matchTok(currentSymbol->tok);
         e();
     }
 }
 
 PRIVATE void e(){
 
-    if( getTok() == TOK_L_PAREN ){
+    if( currentSymbol->tok == TOK_L_PAREN ){
 
         matchTok(TOK_L_PAREN);
         expression();
         matchTok(TOK_R_PAREN);
 
-    } else if( getTok() == TOK_NOT  ){
+    } else if( currentSymbol->tok == TOK_NOT  ){
 
         matchTok(TOK_NOT);
         e();
 
-    } else if( getTok() == TOK_CONSTANT){
+    } else if( currentSymbol->tok == TOK_CONSTANT){
 
         matchTok(TOK_CONSTANT);
 
     } else{
 
-        Symbol * identifierPtr = currentSymbol;
+        //Armazena o identificador para uso posterior
+        Symbol * tmpIdentifier = currentSymbol;
 
         checkVarDeclaration();
 
         matchTok(TOK_IDENTIFIER);
 
-        if( getTok() == TOK_L_BRACE ){
+        if( currentSymbol->tok == TOK_L_BRACE ){
 
             matchTok(TOK_L_BRACE);
             expression();
             matchTok(TOK_R_BRACE);
 
             //Verifica compatibilidade de classes de identificadores
-            if(identifierPtr->classId == CONST_CLASS )
-                compilerror(ERR_INCOMPATIBLE_CLASS_IDENTIFIER,identifierPtr->lexeme);
+            checkClassCompatibility(tmpIdentifier);
 
             //Verifica se identificador é do tipo arranjo
-            if( identifierPtr->arraySize == 0 )
+            if( tmpIdentifier->arraySize == 0 )
                 compilerror(ERR_INCOMPATIBLE_TYPES,NULL);
 
         }

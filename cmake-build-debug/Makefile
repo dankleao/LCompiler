@@ -284,6 +284,33 @@ symbol_table.c.s:
 	$(MAKE) -f CMakeFiles\LCompiler.dir\build.make CMakeFiles/LCompiler.dir/symbol_table.c.s
 .PHONY : symbol_table.c.s
 
+translator.obj: translator.c.obj
+
+.PHONY : translator.obj
+
+# target to build an object file
+translator.c.obj:
+	$(MAKE) -f CMakeFiles\LCompiler.dir\build.make CMakeFiles/LCompiler.dir/translator.c.obj
+.PHONY : translator.c.obj
+
+translator.i: translator.c.i
+
+.PHONY : translator.i
+
+# target to preprocess a source file
+translator.c.i:
+	$(MAKE) -f CMakeFiles\LCompiler.dir\build.make CMakeFiles/LCompiler.dir/translator.c.i
+.PHONY : translator.c.i
+
+translator.s: translator.c.s
+
+.PHONY : translator.s
+
+# target to generate assembly for a file
+translator.c.s:
+	$(MAKE) -f CMakeFiles\LCompiler.dir\build.make CMakeFiles/LCompiler.dir/translator.c.s
+.PHONY : translator.c.s
+
 # Help Target
 help:
 	@echo The following are some of the valid targets for this Makefile:
@@ -311,6 +338,9 @@ help:
 	@echo ... symbol_table.obj
 	@echo ... symbol_table.i
 	@echo ... symbol_table.s
+	@echo ... translator.obj
+	@echo ... translator.i
+	@echo ... translator.s
 .PHONY : help
 
 

@@ -115,6 +115,12 @@
 		<Unit filename="C:/Users/Daniel/CLionProjects/LCompiler/symbol_table.h">
 			<Option target="LCompiler"/>
 		</Unit>
+		<Unit filename="C:/Users/Daniel/CLionProjects/LCompiler/translator.c">
+			<Option target="LCompiler"/>
+		</Unit>
+		<Unit filename="C:/Users/Daniel/CLionProjects/LCompiler/translator.h">
+			<Option target="LCompiler"/>
+		</Unit>
 		<Unit filename="C:/Users/Daniel/CLionProjects/LCompiler/CMakeLists.txt">
 			<Option virtualFolder="CMake Files\"/>
 		</Unit>
