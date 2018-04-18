@@ -1,8 +1,9 @@
 /* Exemplo de Programa na linguagem L */
 
-int n;
-char nome[40];
-final MAXITER=10;
+char n <- 'c', d;
+int d;
+char nome[10];
+final MAXITER = 32767;
 
 /** Programa Principal **/
 

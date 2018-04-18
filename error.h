@@ -21,6 +21,11 @@
         ERR(ERR_EOF_NOT_EXPECTED,"fim de arquivo nao esperado.") \
         ERR(ERR_BAD_ARGUMENTS,"numero de argumentos invalido. Ex: lc nome_fonte.l nome_executavel.asm ") \
         ERR(ERR_TOK_NOT_EXPECTED,"token nao esperado.") \
+        ERR(ERR_IDENTIFIER_ALREADY_DECLARED,"identificador ja declarado.") \
+        ERR(ERR_INCOMPATIBLE_TYPES,"tipos incompativeis.") \
+        ERR(ERR_ARRAY_SIZE_BOUND_EXCEEDED,"tamanho do vetor excede o maximo permitido.") \
+        ERR(ERR_INCOMPATIBLE_CLASS_IDENTIFIER,"classe de identificador incompativel.") \
+        ERR(ERR_UNDECLARED_IDENTIFIER,"identificador nao declarado.") \
 
 enum {
 #ifdef ERR_LIST

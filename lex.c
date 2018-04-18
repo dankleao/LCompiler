@@ -89,7 +89,7 @@ PUBLIC Symbol* nextSymbol(){
 
                 ignoreWs();//Ignora espaços em branco
 
-                lexemeBegin = prog;
+                lexemeBegin = prog;//inicio de um novo padrão de token
 
                 //Reconhece palavra-reservada ou identificador -  teste ok!
                 if( *prog == '_' ){
@@ -116,17 +116,16 @@ PUBLIC Symbol* nextSymbol(){
                     state = Q16;
                 } else if( *prog == '>' ){
                     state = Q17;
-                }//Reconhece um op.aritmético, delimitadores e op.igualdade
+                }//Fim de arquivo
                 else if( *prog == '\0' ){
                     return NULL;
-                }//Fim de arquivo
+                }//Reconhece um op.aritmético, delimitadores e op.igualdade
                 else if( strChr("+-*%[](),;=",*prog) ){
                     ++prog;
                     state = F;
-                }else if( strchr(":.@\"^!?",*prog) ){
-                    ++prog;
-                    symbolType = TOK_OTHER;
-                    state = F;
+                }//Símbolos permitidos pela linguagem, mas não são tokens
+                else if( strchr(":.@^!?",*prog++) ){
+                    compilerror(ERR_LEXEME_NOT_FOUND,buildLexeme());
                 }//Estado de erro do automato
                 else{
                     compilerror(ERR_UNRECOGNIZED_SYMBOL,NULL);
@@ -139,11 +138,11 @@ PUBLIC Symbol* nextSymbol(){
                 } else{
                     compilerror(ERR_LEXEME_NOT_FOUND,buildLexeme());
                 }
-                break;
+                break;//Fim Q1
             case Q2:
                while ( isalnum(*(++prog)) || *prog == '_' );
                state = F;
-               break;
+               break;//Fim Q2
             case Q3:
                 if( *(++prog) >= 'A' && *prog <= 'F' ){
                     state = Q4;
@@ -153,14 +152,14 @@ PUBLIC Symbol* nextSymbol(){
                     symbolType = NUMBER_CONST;
                     state = F;
                 }
-                break;
+                break;//Fim Q3
             case Q4:
                 if( (*(++prog) >= 'A' && *prog <= 'F') || isdigit(*prog) ){
                     state = Q6;
                 }else{
                     compilerror(ERR_LEXEME_NOT_FOUND,buildLexeme());
                 }
-                break;
+                break;//Fim Q4
             case Q5:
                 if( *(++prog) >= 'A' && *prog <= 'F' ){
                     state = Q6;
@@ -170,7 +169,7 @@ PUBLIC Symbol* nextSymbol(){
                     symbolType = NUMBER_CONST;
                     state = F;
                 }
-                break;
+                break;//Fim Q5
             case Q6:
                 if( *(++prog) == 'h' ){
                     symbolType = HEX_CONST;
@@ -179,7 +178,7 @@ PUBLIC Symbol* nextSymbol(){
                 } else{
                     compilerror(ERR_LEXEME_NOT_FOUND,buildLexeme());
                 }
-                break;
+                break;//Fim Q6
             case Q7:
                 if( isdigit(*(++prog)) ){
                     state = Q8;
@@ -191,12 +190,12 @@ PUBLIC Symbol* nextSymbol(){
                     symbolType = NUMBER_CONST;
                     state = F;
                 }
-                break;
+                break;//Fim Q7
             case Q8:
                 while ( isdigit(*(++prog)) );
                 symbolType = NUMBER_CONST;
                 state = F;
-                break;
+                break;//Fim Q8
             case Q9:
                 while ( isalnum(*(++prog)) || strChr("()[]|\\%&@;,.!?*/-+_-<>=:{}\'^ ",*prog) );
                 if( *prog == '\"'){
@@ -208,7 +207,7 @@ PUBLIC Symbol* nextSymbol(){
                 } else{
                     compilerror(ERR_LEXEME_NOT_FOUND,buildLexeme());
                 }
-                break;
+                break;//Fim Q9
             case Q10:
                 if( *(++prog) == '\"' ){
                     compilerror(ERR_UNRECOGNIZED_SYMBOL,NULL);
@@ -216,7 +215,7 @@ PUBLIC Symbol* nextSymbol(){
                     symbolType = STRING_CONST;
                     state = F;
                 }
-                break;
+                break;//Fim Q10
             case Q11:
                 if( isalnum(*(++prog)) || strChr("()[]|\\%&@;,.!?*/-+_-<>=:{}\'^\"$ ",*prog) ){
                     state = Q12;
@@ -224,7 +223,7 @@ PUBLIC Symbol* nextSymbol(){
                 else{
                     compilerror(ERR_UNRECOGNIZED_SYMBOL,NULL);
                 }
-                break;
+                break;//Fim Q11
             case Q12:
                 if( *(++prog) == '\'' ){
                     symbolType = CHARACTER_CONST;
@@ -234,18 +233,18 @@ PUBLIC Symbol* nextSymbol(){
                 else{
                     compilerror(ERR_LEXEME_NOT_FOUND,buildLexeme());
                 }
-                break;
+                break;//Fim Q12
             case Q13:
                 if( *(++prog) == '*' ){
                     state = Q14;
                 } else{
                     state = F;
                 }
-                break;
+                break;//Fim Q13
             case Q14:;
                 while( *(++prog) != '*' );
                 state = Q15;
-                break;
+                break;//Fim Q14
             case Q15:
                 while ( *(++prog) == '*' );
                 if( *prog == '/' ){
@@ -258,18 +257,20 @@ PUBLIC Symbol* nextSymbol(){
                 else {
                     state = Q14;
                 }
-                break;
+                break;//Fim Q15
             case Q16:
                 if( *(++prog) == '>' || *prog == '-' || *prog == '=' )
                     ++prog;
                 state = F;
-                break;
+                break;//Fim Q16
             case Q17:
                 if( *(++prog) == '=' )
                     ++prog;
                 state = F;
-                break;
+                break;//Fim Q17
             default:
+
+                //Estado F(Final do automato)
 
                 currentLexeme = buildLexeme();
 
@@ -288,12 +289,11 @@ PUBLIC Symbol* nextSymbol(){
 
                     }
 
-
                 } else{
 
                     symbol = symbolAlloc();
                     symbol->lexeme = currentLexeme;
-                    symbol->tok = symbolType == TOK_OTHER ? TOK_OTHER :TOK_CONSTANT;
+                    symbol->tok = TOK_CONSTANT;
                     symbol->typeConst = symbolType;
                     symbol->typeSize = strlen(currentLexeme);
 
