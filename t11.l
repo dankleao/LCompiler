@@ -2,20 +2,24 @@
 
 int n <- 9;
 char nome[4096];
+int b[10];
 int i,p,a <- 10;
+int d[10];
 char flag <- 0FFh;
 final MAXITER = 10;
 final t = 'c';
+int k[100];
+char id;
 
 /* Programa Principal */
 
-  flag <- MAXITER;
+  i <- MAXITER;
 
   flag <- 'A';
   flag <- 09Dh;
-  flag <- "Para;";
+  flag <- 'c';
   flag <- ' ';
-  flag <- "asfdasdf.";
+  flag <- 0DDh;
   flag <- 'a';
 
    if (n = 10) then
@@ -24,14 +28,14 @@ final t = 'c';
         if( MAXITER ) then begin
             for n <- MAXITER to MAXITER step -2 do
                 writeln(10);
-            readln(n);
+            readln(nome);
         end
 
-   a[a];
+   a;
 
-   a[b[10/10]] <- d[(5*10)];
+   b[(10/10)] <- d[(5*10)];
 
-   for i <- 0DDh to (10*9) step 10 do begin
+   for i <- 10 to (10*9) step 10 do begin
         readln(a);
    end
 
@@ -45,5 +49,5 @@ final t = 'c';
             if(i <> p) then ;
        end
        readln(id);
-       writeln("Ola","hello",'c');
+       writeln(b[0],"Ola","hello",'c');
      end

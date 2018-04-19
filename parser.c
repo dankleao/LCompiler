@@ -4,8 +4,13 @@
 
 #include "parser.h"
 
-PUBLIC inline void checkUniqueness(class classId){
 
+PRIVATE inline void setSynthAttributes(SynthAttr* synthAttr, int size, data_type type ){
+    synthAttr->size = size;
+    synthAttr->type = type;
+}
+
+PUBLIC inline void checkUniqueness(class classId){
     if( currentSymbol->tok == TOK_IDENTIFIER ){
         if( currentSymbol->classId == NULL_CLASS ){
             currentSymbol->classId = classId;
@@ -16,10 +21,8 @@ PUBLIC inline void checkUniqueness(class classId){
 }
 
 PRIVATE inline void checkClassCompatibility(Symbol* symbol){
-
     if( symbol->classId == CONST_CLASS )
         compilerror(ERR_INCOMPATIBLE_CLASS_IDENTIFIER,symbol->lexeme);
-
 }
 
 PUBLIC inline void checkVarDeclaration(){
@@ -82,12 +85,11 @@ PRIVATE void decl(){
         //Declaração de constantes
         if( currentSymbol->tok == TOK_FINAL ){
 
-            data_type * syntDType;
-
             matchTok(TOK_FINAL);
 
-            syntDType = &currentSymbol->dataType;
+            Symbol* tmpIdentifier = currentSymbol;
 
+            //Checa unicidade de identificador
             checkUniqueness(CONST_CLASS);
 
             matchTok(TOK_IDENTIFIER);
@@ -106,7 +108,7 @@ PRIVATE void decl(){
 
                 if( currentSymbol->typeConst == NUMBER_CONST ){
 
-                    *syntDType = INTEGER_DATA_TYPE;
+                    tmpIdentifier->dataType = INTEGER_DATA_TYPE;
 
                     if( ! signal )
                         signal = 1;
@@ -117,13 +119,16 @@ PRIVATE void decl(){
 
 
                 } else if( currentSymbol->typeConst == CHARACTER_CONST || currentSymbol->typeConst == HEX_CONST ){
+
                     if( signal ){
                         compilerror(ERR_INCOMPATIBLE_TYPES,NULL);
                     } else{
-                        *syntDType = CHARACTER_DATA_TYPE;
+
+                        tmpIdentifier->dataType = CHARACTER_DATA_TYPE;
 
                         //GEN CODE
                     }
+
                 } else{
                     compilerror(ERR_INCOMPATIBLE_TYPES,NULL);
                 }
@@ -136,7 +141,7 @@ PRIVATE void decl(){
 
             data_type inhDType;
 
-            if( currentSymbol->tok== TOK_INT )
+            if( currentSymbol->tok == TOK_INT )
                 inhDType = INTEGER_DATA_TYPE;
             else
                 inhDType = CHARACTER_DATA_TYPE;
@@ -154,11 +159,13 @@ PRIVATE void decl(){
     }while ( currentSymbol->tok == TOK_FINAL || currentSymbol->tok == TOK_INT || currentSymbol->tok == TOK_CHAR );
 }
 
-PRIVATE void var(data_type inhDType ){
+PRIVATE void var(data_type inhDType){
 
     checkUniqueness(VAR_CLASS);
 
     Symbol* tmpIdentifier = currentSymbol;
+
+    tmpIdentifier->dataType = inhDType;
 
     matchTok(TOK_IDENTIFIER);
 
@@ -178,35 +185,34 @@ PRIVATE void var(data_type inhDType ){
 
         if( currentSymbol->tok == TOK_CONSTANT ){
 
-            switch (currentSymbol->typeConst){
+            //Constante inteira
+            if( currentSymbol->typeConst == NUMBER_CONST ){
 
-                case NUMBER_CONST:
+                if( inhDType == INTEGER_DATA_TYPE ){
 
-                    if( inhDType == INTEGER_DATA_TYPE ){
+                    if( ! signal )
+                        signal = 1;
 
-                        if( ! signal )
-                            signal = 1;
+                    int value = withinLimitOfInteger(signal);
 
-                        int value = withinLimitOfInteger(signal);
+                    //GEN CODE
 
-                        //GEN CODE
-
-                    } else{
-                        compilerror(ERR_INCOMPATIBLE_TYPES,NULL);
-                    }
-                    break;
-                case CHARACTER_CONST:
-                case HEX_CONST:
-                    if( ! signal && inhDType == CHARACTER_DATA_TYPE ){
-                        //GEN CODE
-                    } else{
-                        compilerror(ERR_INCOMPATIBLE_TYPES,NULL);
-                    }
-                    break;
-                default:
+                } else{
                     compilerror(ERR_INCOMPATIBLE_TYPES,NULL);
-                    break;
+                }
 
+            }//constante literal caracter ou hexadecimal
+            else if( currentSymbol->typeConst == CHARACTER_CONST || currentSymbol->typeConst == HEX_CONST ){
+
+                if( ! signal && inhDType == CHARACTER_DATA_TYPE ){
+                    //GEN CODE
+                } else{
+                    compilerror(ERR_INCOMPATIBLE_TYPES,NULL);
+                }
+
+            }//Constante literal string, erro!
+            else {
+                compilerror(ERR_INCOMPATIBLE_TYPES,NULL);
             }
         }
 
@@ -261,13 +267,13 @@ PRIVATE void cmd(){
 
         checkVarDeclaration();
 
+        SynthAttr lValueChild;
+
+        setSynthAttributes(&lValueChild,tmpIdentifier->arraySize,tmpIdentifier->dataType);
+
         matchTok(TOK_IDENTIFIER);
 
         if( currentSymbol->tok == TOK_L_BRACE ){
-
-            matchTok(TOK_L_BRACE);
-            expression();
-            matchTok(TOK_R_BRACE);
 
             //Verifica compatibilidade de classes de identificadores
             checkClassCompatibility(tmpIdentifier);
@@ -276,18 +282,37 @@ PRIVATE void cmd(){
             if( tmpIdentifier->arraySize == 0 )
                 compilerror(ERR_INCOMPATIBLE_TYPES,NULL);
 
+
+            matchTok(TOK_L_BRACE);
+
+            SynthAttr rValueChild = { 0, INTEGER_DATA_TYPE};
+
+            expression(&rValueChild);
+
+            if( rValueChild.type != INTEGER_DATA_TYPE )
+                compilerror(ERR_INCOMPATIBLE_TYPES,NULL);
+
+            matchTok(TOK_R_BRACE);
+
+            lValueChild.size = 0;
+
             //OTHER SMTC ACTIONS
 
         }
 
         if( currentSymbol->tok == TOK_ASSIGN ){
 
-            matchTok(TOK_ASSIGN);
-
             //Verifica compatibilidade de classes de identificadores
             checkClassCompatibility(tmpIdentifier);
 
-            expression();
+            matchTok(TOK_ASSIGN);
+
+            SynthAttr rValueChild = { 0, INTEGER_DATA_TYPE };
+
+            expression(&rValueChild);
+
+            if( lValueChild.type != rValueChild.type || ( !(lValueChild.size && rValueChild.size ) && ( lValueChild.size || rValueChild.size )  ) )
+                compilerror(ERR_INCOMPATIBLE_TYPES,NULL);
 
         }
 
@@ -302,7 +327,14 @@ PRIVATE void cmd(){
 PRIVATE void cmdif(){
 
     matchTok(TOK_IF);
-    expression();
+
+    SynthAttr lValueChild = { 0, INTEGER_DATA_TYPE };
+
+    expression(&lValueChild);
+
+    if( lValueChild.type != INTEGER_DATA_TYPE )
+        compilerror(ERR_INCOMPATIBLE_TYPES,NULL);
+
     matchTok(TOK_THEN);
     body();
 
@@ -325,16 +357,34 @@ PRIVATE void cmdfor(){
 
     matchTok(TOK_IDENTIFIER);
     matchTok(TOK_ASSIGN);
-    expression();
+
+    SynthAttr lValueChild = { 0, INTEGER_DATA_TYPE };
+
+    expression(&lValueChild);
+
+    if( lValueChild.type != INTEGER_DATA_TYPE )
+        compilerror(ERR_INCOMPATIBLE_TYPES,NULL);
+
     matchTok(TOK_TO);
-    expression();
+
+    setSynthAttributes(&lValueChild,0,INTEGER_DATA_TYPE);
+
+    expression(&lValueChild);
+
+    if( lValueChild.type != INTEGER_DATA_TYPE )
+        compilerror(ERR_INCOMPATIBLE_TYPES,NULL);
 
     //Instrução step opcional
     if( currentSymbol->tok == TOK_STEP ){
+
         matchTok(TOK_STEP);
 
         if( currentSymbol->tok == TOK_PLUS || currentSymbol->tok == TOK_MINUS )
             matchTok(currentSymbol->tok);
+
+        //Senão for constante numérica, erro!
+        if( currentSymbol->tok == TOK_CONSTANT && currentSymbol->typeConst != NUMBER_CONST )
+            compilerror(ERR_INCOMPATIBLE_TYPES,NULL);
 
         matchTok(TOK_CONSTANT);
     }
@@ -345,6 +395,8 @@ PRIVATE void cmdfor(){
 }
 
 PRIVATE void cmdio(){
+
+    SynthAttr lValueChild = { 0, INTEGER_DATA_TYPE };
 
     if( currentSymbol->tok == TOK_READLN ){
 
@@ -357,14 +409,28 @@ PRIVATE void cmdio(){
         if( currentSymbol->tok == TOK_IDENTIFIER )
             checkClassCompatibility(currentSymbol);
 
+        Symbol* tmpIdentifier = currentSymbol;
 
         matchTok(TOK_IDENTIFIER);
 
         if( currentSymbol->tok == TOK_L_BRACE ){
             matchTok(TOK_L_BRACE);
-            expression();
+
+            expression(&lValueChild);
+
+            //Se identificador não for do tipo arranjo ou índice do arranjo não for uma constante numérica
+            if( tmpIdentifier->arraySize == 0 || lValueChild.type != INTEGER_DATA_TYPE )
+                compilerror(ERR_INCOMPATIBLE_TYPES,NULL);
+
+            lValueChild.size = 1;//Marca arranjo
+
             matchTok(TOK_R_BRACE);
+
         }
+
+        //Se identificador for um arranjo de inteiros sem colchetes, erro!
+        if( tmpIdentifier->dataType == INTEGER_DATA_TYPE && tmpIdentifier->arraySize != 0 && lValueChild.size == 0 )
+            compilerror(ERR_INCOMPATIBLE_TYPES,NULL);
 
         matchTok(TOK_R_PAREN);
 
@@ -372,12 +438,23 @@ PRIVATE void cmdio(){
 
         matchTok(currentSymbol->tok);
         matchTok(TOK_L_PAREN);
-        expression();
+
+        expression(&lValueChild);
+
+        if( lValueChild.type == INTEGER_DATA_TYPE && lValueChild.size != 0 )
+            compilerror(ERR_INCOMPATIBLE_TYPES,NULL);
 
         //Lista de argumentos opcional
         while( currentSymbol->tok == TOK_COMMA ){
             matchTok(TOK_COMMA);
-            expression();
+
+            SynthAttr rValueChild = { 0, INTEGER_DATA_TYPE };
+
+            expression(&rValueChild);
+
+            if( rValueChild.type == INTEGER_DATA_TYPE && rValueChild.size != 0 )
+                compilerror(ERR_INCOMPATIBLE_TYPES,NULL);
+
         }
 
         matchTok(TOK_R_PAREN);
@@ -405,53 +482,149 @@ PRIVATE void body(){
     }
 }
 
-PRIVATE void expression(){
+PRIVATE void expression(SynthAttr* lValueRoot){
 
-    term();
+    SynthAttr lValueChild = { 0, INTEGER_DATA_TYPE};
+    SynthAttr rValueChild = { 0, INTEGER_DATA_TYPE};
+    int operator;
+
+    term(&lValueChild);
+
+    setSynthAttributes(lValueRoot,lValueChild.size,lValueChild.type);
+
     while ( currentSymbol->tok == TOK_EQ || currentSymbol->tok == TOK_NE ||
             currentSymbol->tok == TOK_GE || currentSymbol->tok == TOK_GT ||
             currentSymbol->tok == TOK_LE || currentSymbol->tok == TOK_LT ){
 
+        //salva o operador binário
+        operator = currentSymbol->tok;
+
         matchTok(currentSymbol->tok);
-        term();
+
+        term(&rValueChild);
+
+        //Se rValue.tipo == CHAR
+        if( rValueChild.type == CHARACTER_DATA_TYPE ){
+
+            //Se rValue.size == 0 ( ESCALAR )
+            if( rValueChild.size == 0 ){
+
+                if( lValueChild.type != CHARACTER_DATA_TYPE || lValueChild.size != 0 )
+                    compilerror(ERR_INCOMPATIBLE_TYPES,NULL);
+
+                //GEN CODE
+
+            }//Senão, rValue != 0 ( ARRANJO )
+            else{
+
+                if ( ( lValueChild.type != CHARACTER_DATA_TYPE || lValueChild.size != 1 ) && operator != TOK_EQ || operator != TOK_NE )
+                    compilerror(ERR_INCOMPATIBLE_TYPES,NULL);
+
+                //GEN CODE
+            }
+
+        }//Senão, rValue == INTEGER
+        else{
+
+            //Se rValue.size == 0 ( ESCALAR )
+            if( rValueChild.size == 0 ){
+
+                if( lValueChild.type != INTEGER_DATA_TYPE || lValueChild.size != 0 )
+                    compilerror(ERR_INCOMPATIBLE_TYPES,NULL);
+
+                //GEN CODE
+
+            }//Senão, rValue != 0 ( ARRANJO )
+            else{
+                compilerror(ERR_INCOMPATIBLE_TYPES,NULL);
+            }
+
+        }
+
     }
 }
 
-PRIVATE void term(){
+PRIVATE void term(SynthAttr* lValueRoot){
+
+    SynthAttr lValueChild = { 0, INTEGER_DATA_TYPE};
+    SynthAttr rValueChild = { 0, INTEGER_DATA_TYPE};
 
     if( currentSymbol->tok == TOK_PLUS || currentSymbol->tok == TOK_MINUS )
         matchTok(currentSymbol->tok);
 
-    factor();
+    factor(&lValueChild);
+
+    setSynthAttributes(lValueRoot,lValueChild.size,lValueChild.type);
 
     while ( currentSymbol->tok == TOK_PLUS || currentSymbol->tok == TOK_MINUS ||currentSymbol->tok == TOK_OR ){
+
         matchTok(currentSymbol->tok);
-        factor();
+
+        factor(&rValueChild);
+
+        if( ( !lValueChild.type || lValueChild.size) || ( !rValueChild.type || rValueChild.size ) )
+            compilerror(ERR_INCOMPATIBLE_TYPES,NULL);
+
     }
 }
 
-PRIVATE void factor(){
-    e();
+PRIVATE void factor(SynthAttr* lValueRoot){
+
+    SynthAttr lValueChild = { 0, INTEGER_DATA_TYPE};
+    SynthAttr rValueChild = { 0, INTEGER_DATA_TYPE};
+
+    e(&lValueChild);
+
+    setSynthAttributes(lValueRoot,lValueChild.size,lValueChild.type);
+
     while ( currentSymbol->tok == TOK_TIMES || currentSymbol->tok == TOK_OVER || currentSymbol->tok == TOK_MOD || currentSymbol->tok == TOK_AND ){
+
         matchTok(currentSymbol->tok);
-        e();
+
+        e(&rValueChild);
+
+        if( ( !lValueChild.type || lValueChild.size) || ( !rValueChild.type || rValueChild.size ) )
+            compilerror(ERR_INCOMPATIBLE_TYPES,NULL);
+
     }
 }
 
-PRIVATE void e(){
+PRIVATE void e(SynthAttr* lValueRoot){
+
+    SynthAttr lValueChild = { 0, INTEGER_DATA_TYPE };
 
     if( currentSymbol->tok == TOK_L_PAREN ){
 
         matchTok(TOK_L_PAREN);
-        expression();
+
+        expression(&lValueChild);
+
+        setSynthAttributes(lValueRoot,lValueChild.size,lValueChild.type);
+
         matchTok(TOK_R_PAREN);
 
     } else if( currentSymbol->tok == TOK_NOT  ){
 
         matchTok(TOK_NOT);
-        e();
 
-    } else if( currentSymbol->tok == TOK_CONSTANT){
+        e(&lValueChild);
+
+        if( lValueChild.type != INTEGER_DATA_TYPE )
+            compilerror(ERR_INCOMPATIBLE_TYPES,NULL);
+
+        setSynthAttributes(lValueRoot,lValueChild.size,lValueChild.type);
+
+
+    } else if( currentSymbol->tok == TOK_CONSTANT ){
+
+        if( currentSymbol->typeConst == NUMBER_CONST ){
+            lValueRoot->type = INTEGER_DATA_TYPE;
+        } else if( currentSymbol->typeConst == CHARACTER_CONST || currentSymbol->typeConst == HEX_CONST ){
+            lValueRoot->type = CHARACTER_DATA_TYPE;
+        } else{
+            lValueRoot->type = CHARACTER_DATA_TYPE;
+            lValueRoot->size = strlen( currentSymbol->lexeme );//Aceita string vazia.
+        }
 
         matchTok(TOK_CONSTANT);
 
@@ -462,22 +635,30 @@ PRIVATE void e(){
 
         checkVarDeclaration();
 
+        setSynthAttributes(lValueRoot,tmpIdentifier->arraySize,tmpIdentifier->dataType);
+
         matchTok(TOK_IDENTIFIER);
 
         if( currentSymbol->tok == TOK_L_BRACE ){
 
-            matchTok(TOK_L_BRACE);
-            expression();
-            matchTok(TOK_R_BRACE);
-
             //Verifica compatibilidade de classes de identificadores
             checkClassCompatibility(tmpIdentifier);
 
-            //Verifica se identificador é do tipo arranjo
+            //Se identificador é do tipo array
             if( tmpIdentifier->arraySize == 0 )
                 compilerror(ERR_INCOMPATIBLE_TYPES,NULL);
 
+            matchTok(TOK_L_BRACE);
+            expression(&lValueChild);
+            matchTok(TOK_R_BRACE);
+
+            if( lValueChild.type != INTEGER_DATA_TYPE )
+                compilerror(ERR_INCOMPATIBLE_TYPES,NULL);
+
+            lValueRoot->size = 0;
+
         }
+
     }
 }
 

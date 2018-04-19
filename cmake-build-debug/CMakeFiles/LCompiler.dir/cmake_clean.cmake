@@ -5,7 +5,6 @@ file(REMOVE_RECURSE
   "CMakeFiles/LCompiler.dir/hash_table.c.obj"
   "CMakeFiles/LCompiler.dir/symbol_table.c.obj"
   "CMakeFiles/LCompiler.dir/parser.c.obj"
-  "CMakeFiles/LCompiler.dir/translator.c.obj"
   "LCompiler.pdb"
   "LCompiler.exe"
   "LCompiler.exe.manifest"

@@ -9,11 +9,27 @@
 
 #define NULL_TOK (-1)
 
+typedef struct synthesizedAttributes {
+
+    int size;
+    data_type type;
+
+}SynthAttr;
+
 //Variável que armazena o símbolo corrente
 PRIVATE Symbol* currentSymbol;
 
 /*
+ * Configura campos dos atributos sintetizados.
+ * @param synthAttr referencia do atributo sintetizado.
+ * @param size tamanho do arranjo. Se 0, então variável do tipo escalar senão variável do tipo arranjo.
+ * @param type tipo de dados.( INTEGER - inteiro, CHAR - caracter ).
+ */
+PRIVATE inline void setSynthAttributes(SynthAttr* synthAttr, int size, data_type type );
+
+/*
  * Verifica a unicidade dos identificadores.
+ * @param classe de identificador
  */
 PRIVATE inline void checkUniqueness(class classId);
 
@@ -24,6 +40,7 @@ PRIVATE inline void checkVarDeclaration();
 
 /*
  * Verifica a compatibilidade de classe de identificadores.
+ * @param symbol símbolo identificador
  */
 PRIVATE inline void checkClassCompatibility(Symbol* symbol);
 
@@ -38,7 +55,6 @@ PRIVATE inline int withinLimitOfInteger(int signal);
  * @return o tamanho do array
  */
 PRIVATE inline int withinArraySizeBounds();
-
 
 /*
  * Casa token
@@ -90,22 +106,22 @@ PRIVATE void body();
 /*
  * EXP -> TERM [ ( = | < | > | <= | >= | <> ) TERM ]
  */
-PRIVATE void expression();
+PRIVATE void expression(SynthAttr*);
 
 /*
  * TERM -> [ + | - ] FACTOR { ( + | - | or ) FACTOR }
  */
-PRIVATE void term();
+PRIVATE void term(SynthAttr*);
 
 /*
  * FACTOR -> E { ( * | / | % | and ) E }
  */
-PRIVATE void factor();
+PRIVATE void factor(SynthAttr*);
 
 /*
  * E -> "(" EXP ")" | not E | const | id [ "[" EXP "]" ]
  */
-PRIVATE void e();
+PRIVATE void e(SynthAttr*);
 
 
 #endif //LCOMP_PARSER_H

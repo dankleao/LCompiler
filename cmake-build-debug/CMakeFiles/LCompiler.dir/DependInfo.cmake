@@ -10,7 +10,6 @@ set(CMAKE_DEPENDS_CHECK_C
   "C:/Users/Daniel/CLionProjects/LCompiler/lex.c" "C:/Users/Daniel/CLionProjects/LCompiler/cmake-build-debug/CMakeFiles/LCompiler.dir/lex.c.obj"
   "C:/Users/Daniel/CLionProjects/LCompiler/parser.c" "C:/Users/Daniel/CLionProjects/LCompiler/cmake-build-debug/CMakeFiles/LCompiler.dir/parser.c.obj"
   "C:/Users/Daniel/CLionProjects/LCompiler/symbol_table.c" "C:/Users/Daniel/CLionProjects/LCompiler/cmake-build-debug/CMakeFiles/LCompiler.dir/symbol_table.c.obj"
-  "C:/Users/Daniel/CLionProjects/LCompiler/translator.c" "C:/Users/Daniel/CLionProjects/LCompiler/cmake-build-debug/CMakeFiles/LCompiler.dir/translator.c.obj"
   )
 set(CMAKE_C_COMPILER_ID "GNU")
 
