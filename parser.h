@@ -7,23 +7,12 @@
 
 #include "lex.h"
 
-#define NULL_TOK (-1)
-
 //Variável que armazena o símbolo corrente
 PRIVATE Symbol* currentSymbol;
 
 /*
- * Obtém o token do símbolo corrente
- */
-PRIVATE inline int getTok();
-
-/*
- * Obtém o lexema do símbolo corrente
- */
-PRIVATE inline string getLexeme();
-
-/*
  * Verifica a unicidade dos identificadores.
+ * @param classe de identificador
  */
 PRIVATE inline void checkUniqueness(class classId);
 
@@ -34,13 +23,29 @@ PRIVATE inline void checkVarDeclaration();
 
 /*
  * Verifica a compatibilidade de classe de identificadores.
+ * @param symbol símbolo identificador
  */
-PRIVATE inline void checkClassCompatibility();
+PRIVATE inline void checkClassCompatibility(Symbol* symbol);
 
 /*
  * Verifica o intervalo inteiro que uma variável inteira pode armazenar
+ * @return a constante inteira
  */
-PRIVATE inline bool withinLimitOfInteger(int value);
+PRIVATE inline int withinLimitOfInteger(int signal);
+
+/*
+ * Verifica o tamanho máximo do array
+ * @return o tamanho do array
+ */
+PRIVATE inline int withinArraySizeBounds();
+
+/*
+ * Verifica se tipos de dados são iguais, caso não seja
+ * interrompe a execução e emite uma messagem de erro
+ * @param dt1 tipos de dados fonte
+ * @param dt2 tipos de dados alvo
+ */
+PRIVATE inline void checkDataTypes( data_type dt1, data_type dt2  );
 
 /*
  * Casa token
@@ -65,7 +70,7 @@ PRIVATE void decl();
 PRIVATE void var(data_type);
 
 /*
- * CMD -> [ CMDIF | CMDFOR | CMDIO | id [  [ "[" EXP "]" ] <- EXP ] ; | ; ]
+ * CMD -> [ CMDIF | CMDFOR | CMDIO | id [ "[" EXP "]" ] [ <- EXP ] ; | ; ]
  */
 PRIVATE void cmd();
 
@@ -92,22 +97,22 @@ PRIVATE void body();
 /*
  * EXP -> TERM [ ( = | < | > | <= | >= | <> ) TERM ]
  */
-PRIVATE void expression();
+PRIVATE void expression(int*,data_type*);
 
 /*
  * TERM -> [ + | - ] FACTOR { ( + | - | or ) FACTOR }
  */
-PRIVATE void term();
+PRIVATE void term(int*,data_type*);
 
 /*
  * FACTOR -> E { ( * | / | % | and ) E }
  */
-PRIVATE void factor();
+PRIVATE void factor(int*,data_type*);
 
 /*
  * E -> "(" EXP ")" | not E | const | id [ "[" EXP "]" ]
  */
-PRIVATE void e();
+PRIVATE void e(int*,data_type*);
 
 
 #endif //LCOMP_PARSER_H
