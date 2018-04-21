@@ -26,26 +26,44 @@
       <file leaf-file-name="parser.h" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/parser.h">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="630">
-              <caret line="50" column="46" selection-start-line="50" selection-start-column="46" selection-end-line="50" selection-end-column="46" />
+            <state relative-caret-position="-1438">
+              <caret line="8" lean-forward="true" selection-start-line="8" selection-end-line="8" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="parser.c" pinned="false" current-in-tab="true">
+      <file leaf-file-name="parser.c" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/parser.c">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="94">
-              <caret line="375" column="4" selection-start-line="375" selection-start-column="4" selection-end-line="375" selection-end-column="4" />
+            <state relative-caret-position="2558">
+              <caret line="651" column="9" selection-start-line="651" selection-start-column="9" selection-end-line="651" selection-end-column="9" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="t10.l" pinned="false" current-in-tab="false">
+      <file leaf-file-name="t13.l" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/t13.l">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="180">
+              <caret line="10" column="5" selection-start-line="10" selection-start-column="5" selection-end-line="10" selection-end-column="5" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="t3.l" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/t3.l">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="126">
+              <caret line="7" lean-forward="true" selection-start-line="7" selection-end-line="7" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="t10.l" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/t10.l">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="360">
-              <caret line="20" column="22" lean-forward="true" selection-start-line="20" selection-start-column="22" selection-end-line="20" selection-end-column="22" />
+            <state relative-caret-position="115">
+              <caret line="50" column="13" selection-start-line="50" selection-start-column="13" selection-end-line="50" selection-end-column="13" />
             </state>
           </provider>
         </entry>
@@ -53,15 +71,19 @@
       <file leaf-file-name="t11.l" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/t11.l">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="189">
-              <caret line="40" lean-forward="true" selection-start-line="40" selection-end-line="40" />
+            <state relative-caret-position="720">
+              <caret line="40" selection-start-line="40" selection-end-line="40" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="t9.l" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/t9.l">
-          <provider selected="true" editor-type-id="text-editor" />
+      <file leaf-file-name="symbol_table.h" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/symbol_table.h">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="558">
+              <caret line="31" column="21" selection-start-line="31" selection-start-column="21" selection-end-line="31" selection-end-column="21" />
+            </state>
+          </provider>
         </entry>
       </file>
     </leaf>
@@ -107,14 +129,14 @@
         <option value="$PROJECT_DIR$/lex.c" />
         <option value="$PROJECT_DIR$/error.h" />
         <option value="$PROJECT_DIR$/t12.l" />
-        <option value="$PROJECT_DIR$/t10.l" />
         <option value="$PROJECT_DIR$/translator.c" />
         <option value="$PROJECT_DIR$/translator.h" />
         <option value="$PROJECT_DIR$/symbol_table.h" />
-        <option value="$PROJECT_DIR$/t3.l" />
-        <option value="$PROJECT_DIR$/parser.h" />
         <option value="$PROJECT_DIR$/t11.l" />
+        <option value="$PROJECT_DIR$/parser.h" />
+        <option value="$PROJECT_DIR$/t3.l" />
         <option value="$PROJECT_DIR$/parser.c" />
+        <option value="$PROJECT_DIR$/t10.l" />
       </list>
     </option>
   </component>
@@ -208,12 +230,13 @@
       <workItem from="1523494932363" duration="1863000" />
       <workItem from="1523973870036" duration="24977000" />
       <workItem from="1524096955948" duration="9870000" />
-      <workItem from="1524144542356" duration="12429000" />
+      <workItem from="1524144542356" duration="23861000" />
+      <workItem from="1524273840981" duration="7713000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="126845000" />
+    <option name="totallyTimeSpent" value="145990000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1616" height="876" extended-state="6" />
@@ -223,11 +246,10 @@
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="CMake" order="7" weight="0.32985657" />
       <window_info anchor="bottom" id="Event Log" order="7" sideWeight="0.50125" side_tool="true" weight="0.27900913" />
-      <window_info anchor="bottom" id="Find" order="1" weight="0.3298292" />
       <window_info anchor="bottom" id="Version Control" order="7" />
       <window_info anchor="bottom" id="Run" order="2" weight="0.32724902" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="7" sideWeight="0.49875" visible="true" weight="0.29303548" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="7" sideWeight="0.49875" visible="true" weight="0.2720105" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.39243808" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -237,25 +259,26 @@
       <window_info anchor="bottom" id="Messages" order="7" weight="0.58670145" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.3298292" />
     </layout>
     <layout-to-restore>
-      <window_info anchor="bottom" id="CMake" order="11" weight="0.32985657" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
-      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.125625" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="bottom" id="Version Control" order="10" />
       <window_info anchor="bottom" id="Run" order="2" weight="0.32769832" />
-      <window_info anchor="bottom" id="Find" order="1" />
+      <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info anchor="bottom" id="Messages" order="7" weight="0.5877763" />
       <window_info active="true" anchor="bottom" id="Terminal" order="8" visible="true" weight="0.27900913" />
       <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" weight="0.32985657" />
-      <window_info anchor="bottom" id="Version Control" order="10" />
-      <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Messages" order="7" weight="0.5877763" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Find" order="1" />
+      <window_info anchor="bottom" id="CMake" order="11" weight="0.32985657" />
       <window_info id="Favorites" order="2" side_tool="true" />
     </layout-to-restore>
   </component>
@@ -271,6 +294,13 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/parser.c">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="9468">
+          <caret line="526" column="43" selection-start-line="526" selection-start-column="43" selection-end-line="526" selection-end-column="43" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/parser.h">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="740">
@@ -497,20 +527,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/t13.l">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret line="10" column="5" selection-start-line="10" selection-start-column="5" selection-end-line="10" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/t3.l">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="198">
-          <caret line="11" column="5" selection-start-line="11" selection-start-column="5" selection-end-line="11" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/lex.c">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="5634">
@@ -535,41 +551,52 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/symbol_table.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="144">
-          <caret line="29" column="24" lean-forward="true" selection-start-line="29" selection-start-column="24" selection-end-line="29" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/t9.l">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/t10.l">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="360">
-          <caret line="20" column="22" lean-forward="true" selection-start-line="20" selection-start-column="22" selection-end-line="20" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/parser.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="630">
-          <caret line="50" column="46" selection-start-line="50" selection-start-column="46" selection-end-line="50" selection-end-column="46" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/t11.l">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="189">
-          <caret line="40" lean-forward="true" selection-start-line="40" selection-end-line="40" />
+        <state relative-caret-position="720">
+          <caret line="40" selection-start-line="40" selection-end-line="40" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/symbol_table.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="558">
+          <caret line="31" column="21" selection-start-line="31" selection-start-column="21" selection-end-line="31" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/t3.l">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="126">
+          <caret line="7" lean-forward="true" selection-start-line="7" selection-end-line="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/t13.l">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="180">
+          <caret line="10" column="5" selection-start-line="10" selection-start-column="5" selection-end-line="10" selection-end-column="5" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/parser.c">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="94">
-          <caret line="375" column="4" selection-start-line="375" selection-start-column="4" selection-end-line="375" selection-end-column="4" />
+        <state relative-caret-position="2558">
+          <caret line="651" column="9" selection-start-line="651" selection-start-column="9" selection-end-line="651" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/parser.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1438">
+          <caret line="8" lean-forward="true" selection-start-line="8" selection-end-line="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/t10.l">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="115">
+          <caret line="50" column="13" selection-start-line="50" selection-start-column="13" selection-end-line="50" selection-end-column="13" />
         </state>
       </provider>
     </entry>

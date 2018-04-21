@@ -4,12 +4,6 @@
 
 #include "parser.h"
 
-
-PRIVATE inline void setSynthAttributes(SynthAttr* synthAttr, int size, data_type type ){
-    synthAttr->size = size;
-    synthAttr->type = type;
-}
-
 PUBLIC inline void checkUniqueness(class classId){
     if( currentSymbol->tok == TOK_IDENTIFIER ){
         if( currentSymbol->classId == NULL_CLASS ){
@@ -267,9 +261,8 @@ PRIVATE void cmd(){
 
         checkVarDeclaration();
 
-        SynthAttr lValueChild;
-
-        setSynthAttributes(&lValueChild,tmpIdentifier->arraySize,tmpIdentifier->dataType);
+        //Atributos sintetizados
+        int s = tmpIdentifier->arraySize; data_type t = tmpIdentifier->dataType;
 
         matchTok(TOK_IDENTIFIER);
 
@@ -278,23 +271,24 @@ PRIVATE void cmd(){
             //Verifica compatibilidade de classes de identificadores
             checkClassCompatibility(tmpIdentifier);
 
+
             //Verifica se identificador é do tipo arranjo
             if( tmpIdentifier->arraySize == 0 )
                 compilerror(ERR_INCOMPATIBLE_TYPES,NULL);
 
-
             matchTok(TOK_L_BRACE);
 
-            SynthAttr rValueChild = { 0, INTEGER_DATA_TYPE};
+            //Atributos sintetizados
+            int s1 = 0; data_type t1 = INTEGER_DATA_TYPE;
 
-            expression(&rValueChild);
+            expression(&s1,&t1);
 
-            if( rValueChild.type != INTEGER_DATA_TYPE )
+            if( t1 != INTEGER_DATA_TYPE )
                 compilerror(ERR_INCOMPATIBLE_TYPES,NULL);
 
             matchTok(TOK_R_BRACE);
 
-            lValueChild.size = 0;
+            s = 0;
 
             //OTHER SMTC ACTIONS
 
@@ -307,11 +301,12 @@ PRIVATE void cmd(){
 
             matchTok(TOK_ASSIGN);
 
-            SynthAttr rValueChild = { 0, INTEGER_DATA_TYPE };
+            //Atributos sintetizados
+            int s1 = 0; data_type t1 = INTEGER_DATA_TYPE;
 
-            expression(&rValueChild);
+            expression(&s1,&t1);
 
-            if( lValueChild.type != rValueChild.type || ( !(lValueChild.size && rValueChild.size ) && ( lValueChild.size || rValueChild.size )  ) )
+            if( t != t1 || ( !( s && s1 ) && ( s || s1 )  ) )
                 compilerror(ERR_INCOMPATIBLE_TYPES,NULL);
 
         }
@@ -328,11 +323,12 @@ PRIVATE void cmdif(){
 
     matchTok(TOK_IF);
 
-    SynthAttr lValueChild = { 0, INTEGER_DATA_TYPE };
+    //Atributos sintetizados
+    int s = 0; data_type t = INTEGER_DATA_TYPE;
 
-    expression(&lValueChild);
+    expression(&s,&t);
 
-    if( lValueChild.type != INTEGER_DATA_TYPE )
+    if( t != INTEGER_DATA_TYPE )
         compilerror(ERR_INCOMPATIBLE_TYPES,NULL);
 
     matchTok(TOK_THEN);
@@ -352,26 +348,34 @@ PRIVATE void cmdfor(){
     checkVarDeclaration();
 
     //Verifica compatibilidade de classes de identificadores
-    if( currentSymbol->tok == TOK_IDENTIFIER )
+    if( currentSymbol->tok == TOK_IDENTIFIER ){
         checkClassCompatibility(currentSymbol);
+
+        //Se o tipo do identificador for diferente de inteiro, erro!
+        if( currentSymbol->dataType != INTEGER_DATA_TYPE || currentSymbol->arraySize != 0 )
+            compilerror(ERR_INCOMPATIBLE_TYPES,NULL);
+
+    }
 
     matchTok(TOK_IDENTIFIER);
     matchTok(TOK_ASSIGN);
 
-    SynthAttr lValueChild = { 0, INTEGER_DATA_TYPE };
+    //Atributos sintetizados
+    int s = 0; data_type t = INTEGER_DATA_TYPE;
 
-    expression(&lValueChild);
+    expression(&s,&t);
 
-    if( lValueChild.type != INTEGER_DATA_TYPE )
+    if( t != INTEGER_DATA_TYPE || s != 0 )
         compilerror(ERR_INCOMPATIBLE_TYPES,NULL);
 
     matchTok(TOK_TO);
 
-    setSynthAttributes(&lValueChild,0,INTEGER_DATA_TYPE);
+    s = 0;
+    t = INTEGER_DATA_TYPE;
 
-    expression(&lValueChild);
+    expression(&s,&t);
 
-    if( lValueChild.type != INTEGER_DATA_TYPE )
+    if( t != INTEGER_DATA_TYPE || s != 0 )
         compilerror(ERR_INCOMPATIBLE_TYPES,NULL);
 
     //Instrução step opcional
@@ -396,7 +400,8 @@ PRIVATE void cmdfor(){
 
 PRIVATE void cmdio(){
 
-    SynthAttr lValueChild = { 0, INTEGER_DATA_TYPE };
+    //Atributos sintetizados
+    int s = 0; data_type t = INTEGER_DATA_TYPE;
 
     if( currentSymbol->tok == TOK_READLN ){
 
@@ -416,20 +421,20 @@ PRIVATE void cmdio(){
         if( currentSymbol->tok == TOK_L_BRACE ){
             matchTok(TOK_L_BRACE);
 
-            expression(&lValueChild);
+            expression(&s,&t);
 
             //Se identificador não for do tipo arranjo ou índice do arranjo não for uma constante numérica
-            if( tmpIdentifier->arraySize == 0 || lValueChild.type != INTEGER_DATA_TYPE )
+            if( tmpIdentifier->arraySize == 0 || t != INTEGER_DATA_TYPE )
                 compilerror(ERR_INCOMPATIBLE_TYPES,NULL);
 
-            lValueChild.size = 1;//Marca arranjo
+            s = 1;//Marca arranjo
 
             matchTok(TOK_R_BRACE);
 
         }
 
         //Se identificador for um arranjo de inteiros sem colchetes, erro!
-        if( tmpIdentifier->dataType == INTEGER_DATA_TYPE && tmpIdentifier->arraySize != 0 && lValueChild.size == 0 )
+        if( tmpIdentifier->dataType == INTEGER_DATA_TYPE && tmpIdentifier->arraySize != 0 && s == 0 )
             compilerror(ERR_INCOMPATIBLE_TYPES,NULL);
 
         matchTok(TOK_R_PAREN);
@@ -439,20 +444,21 @@ PRIVATE void cmdio(){
         matchTok(currentSymbol->tok);
         matchTok(TOK_L_PAREN);
 
-        expression(&lValueChild);
+        expression(&s,&t);
 
-        if( lValueChild.type == INTEGER_DATA_TYPE && lValueChild.size != 0 )
+        if( t == INTEGER_DATA_TYPE && s != 0 )
             compilerror(ERR_INCOMPATIBLE_TYPES,NULL);
 
         //Lista de argumentos opcional
         while( currentSymbol->tok == TOK_COMMA ){
             matchTok(TOK_COMMA);
 
-            SynthAttr rValueChild = { 0, INTEGER_DATA_TYPE };
+            s = 0;
+            t = INTEGER_DATA_TYPE;
 
-            expression(&rValueChild);
+            expression(&s,&t);
 
-            if( rValueChild.type == INTEGER_DATA_TYPE && rValueChild.size != 0 )
+            if( t == INTEGER_DATA_TYPE && s != 0 )
                 compilerror(ERR_INCOMPATIBLE_TYPES,NULL);
 
         }
@@ -482,15 +488,18 @@ PRIVATE void body(){
     }
 }
 
-PRIVATE void expression(SynthAttr* lValueRoot){
+PRIVATE void expression(int* s , data_type* t ){
 
-    SynthAttr lValueChild = { 0, INTEGER_DATA_TYPE};
-    SynthAttr rValueChild = { 0, INTEGER_DATA_TYPE};
+    //Atributos sintetizados
+    int s1 = 0; data_type t1 = INTEGER_DATA_TYPE;
+    int s2 = 0; data_type t2 = INTEGER_DATA_TYPE;
+
     int operator;
 
-    term(&lValueChild);
+    term(&s1,&t1);
 
-    setSynthAttributes(lValueRoot,lValueChild.size,lValueChild.type);
+    *s = s1;
+    *t = t1;
 
     while ( currentSymbol->tok == TOK_EQ || currentSymbol->tok == TOK_NE ||
             currentSymbol->tok == TOK_GE || currentSymbol->tok == TOK_GT ||
@@ -501,105 +510,85 @@ PRIVATE void expression(SynthAttr* lValueRoot){
 
         matchTok(currentSymbol->tok);
 
-        term(&rValueChild);
+        term(&s2,&t2);
 
-        //Se rValue.tipo == CHAR
-        if( rValueChild.type == CHARACTER_DATA_TYPE ){
-
-            //Se rValue.size == 0 ( ESCALAR )
-            if( rValueChild.size == 0 ){
-
-                if( lValueChild.type != CHARACTER_DATA_TYPE || lValueChild.size != 0 )
-                    compilerror(ERR_INCOMPATIBLE_TYPES,NULL);
-
-                //GEN CODE
-
-            }//Senão, rValue != 0 ( ARRANJO )
-            else{
-
-                if ( ( lValueChild.type != CHARACTER_DATA_TYPE || lValueChild.size != 1 ) && operator != TOK_EQ || operator != TOK_NE )
-                    compilerror(ERR_INCOMPATIBLE_TYPES,NULL);
-
-                //GEN CODE
-            }
-
-        }//Senão, rValue == INTEGER
-        else{
-
-            //Se rValue.size == 0 ( ESCALAR )
-            if( rValueChild.size == 0 ){
-
-                if( lValueChild.type != INTEGER_DATA_TYPE || lValueChild.size != 0 )
-                    compilerror(ERR_INCOMPATIBLE_TYPES,NULL);
-
-                //GEN CODE
-
-            }//Senão, rValue != 0 ( ARRANJO )
-            else{
+        if( (!( s1 && s2 ) && ( s1 || s2 ) ) || // term.size xor term1.size or
+            (!( t1 && t2 ) && ( t1 || t2 ) ) || // term.tipo xor term1.tipo or
+            ( s1 && t1 ) || // term.size == 1 (ARRAY) and term.tipo == INTEGER or
+            ( ( !t1 && s1 ) && ( operator != TOK_EQ && operator != TOK_NE ) ) ) //caracter and array and op != EQ and op != NE
                 compilerror(ERR_INCOMPATIBLE_TYPES,NULL);
-            }
 
-        }
+
+        //Operadores relacionais geram tipos lógicos(implicitos) = INTEIROS
+        *s = 0;
+        *t = INTEGER_DATA_TYPE;
 
     }
 }
 
-PRIVATE void term(SynthAttr* lValueRoot){
+PRIVATE void term(int* s, data_type* t){
 
-    SynthAttr lValueChild = { 0, INTEGER_DATA_TYPE};
-    SynthAttr rValueChild = { 0, INTEGER_DATA_TYPE};
+    //Atributos sintetizados
+    int s1 = 0; data_type t1 = INTEGER_DATA_TYPE;
+    int s2 = 0; data_type t2 = INTEGER_DATA_TYPE;
 
     if( currentSymbol->tok == TOK_PLUS || currentSymbol->tok == TOK_MINUS )
         matchTok(currentSymbol->tok);
 
-    factor(&lValueChild);
+    factor(&s1,&t1);
 
-    setSynthAttributes(lValueRoot,lValueChild.size,lValueChild.type);
+    *s = s1;
+    *t = t1;
 
     while ( currentSymbol->tok == TOK_PLUS || currentSymbol->tok == TOK_MINUS ||currentSymbol->tok == TOK_OR ){
 
         matchTok(currentSymbol->tok);
 
-        factor(&rValueChild);
+        factor(&s2,&t2);
 
-        if( ( !lValueChild.type || lValueChild.size) || ( !rValueChild.type || rValueChild.size ) )
+        //Se o tipos de dado(INTEIRO) ou tipos( escalar ou arranjo ) dos operandos forem diferentes, erro!
+        if( ( !t1 || s1 ) || ( !t2 || s2 ) )
             compilerror(ERR_INCOMPATIBLE_TYPES,NULL);
 
     }
 }
 
-PRIVATE void factor(SynthAttr* lValueRoot){
+PRIVATE void factor(int* s, data_type* t){
 
-    SynthAttr lValueChild = { 0, INTEGER_DATA_TYPE};
-    SynthAttr rValueChild = { 0, INTEGER_DATA_TYPE};
+    //Atributos sintetizados
+    int s1 = 0; data_type t1 = INTEGER_DATA_TYPE;
+    int s2 = 0; data_type t2 = INTEGER_DATA_TYPE;
 
-    e(&lValueChild);
+    e(&s1,&t1);
 
-    setSynthAttributes(lValueRoot,lValueChild.size,lValueChild.type);
+    *s = s1;
+    *t = t1;
 
     while ( currentSymbol->tok == TOK_TIMES || currentSymbol->tok == TOK_OVER || currentSymbol->tok == TOK_MOD || currentSymbol->tok == TOK_AND ){
 
         matchTok(currentSymbol->tok);
 
-        e(&rValueChild);
+        e(&s2,&t2);
 
-        if( ( !lValueChild.type || lValueChild.size) || ( !rValueChild.type || rValueChild.size ) )
+        if( ( !t1 || s1 ) || ( !t2 || s2 ) )
             compilerror(ERR_INCOMPATIBLE_TYPES,NULL);
 
     }
 }
 
-PRIVATE void e(SynthAttr* lValueRoot){
+PRIVATE void e(int* s, data_type* t){
 
-    SynthAttr lValueChild = { 0, INTEGER_DATA_TYPE };
+    //Atributos sintetizados
+    int s1 = 0; data_type t1 = INTEGER_DATA_TYPE;
 
     if( currentSymbol->tok == TOK_L_PAREN ){
 
         matchTok(TOK_L_PAREN);
 
-        expression(&lValueChild);
+        expression(&s1,&t1);
 
-        setSynthAttributes(lValueRoot,lValueChild.size,lValueChild.type);
+        *s = s1;
+        *t = t1;
 
         matchTok(TOK_R_PAREN);
 
@@ -607,23 +596,23 @@ PRIVATE void e(SynthAttr* lValueRoot){
 
         matchTok(TOK_NOT);
 
-        e(&lValueChild);
+        e(&s1,&t1);
 
-        if( lValueChild.type != INTEGER_DATA_TYPE )
+        if( t1 != INTEGER_DATA_TYPE )
             compilerror(ERR_INCOMPATIBLE_TYPES,NULL);
 
-        setSynthAttributes(lValueRoot,lValueChild.size,lValueChild.type);
-
+        *s = s1;
+        *t = t1;
 
     } else if( currentSymbol->tok == TOK_CONSTANT ){
 
         if( currentSymbol->typeConst == NUMBER_CONST ){
-            lValueRoot->type = INTEGER_DATA_TYPE;
+            *t = INTEGER_DATA_TYPE;
         } else if( currentSymbol->typeConst == CHARACTER_CONST || currentSymbol->typeConst == HEX_CONST ){
-            lValueRoot->type = CHARACTER_DATA_TYPE;
+            *t = CHARACTER_DATA_TYPE;
         } else{
-            lValueRoot->type = CHARACTER_DATA_TYPE;
-            lValueRoot->size = strlen( currentSymbol->lexeme );//Aceita string vazia.
+            *t = CHARACTER_DATA_TYPE;
+            *s = strlen( currentSymbol->lexeme );//Aceita string vazia.
         }
 
         matchTok(TOK_CONSTANT);
@@ -633,29 +622,32 @@ PRIVATE void e(SynthAttr* lValueRoot){
         //Armazena o identificador para uso posterior
         Symbol * tmpIdentifier = currentSymbol;
 
+        //Se identificador não foi declarado, erro!
         checkVarDeclaration();
 
-        setSynthAttributes(lValueRoot,tmpIdentifier->arraySize,tmpIdentifier->dataType);
+        *s = tmpIdentifier->arraySize;
+        *t = tmpIdentifier->dataType;
 
         matchTok(TOK_IDENTIFIER);
 
         if( currentSymbol->tok == TOK_L_BRACE ){
 
-            //Verifica compatibilidade de classes de identificadores
+            //Se identificador for da classe constante, erro!
             checkClassCompatibility(tmpIdentifier);
 
-            //Se identificador é do tipo array
+            //Se identificador for escalar, erro!
             if( tmpIdentifier->arraySize == 0 )
                 compilerror(ERR_INCOMPATIBLE_TYPES,NULL);
 
             matchTok(TOK_L_BRACE);
-            expression(&lValueChild);
+            expression(&s1,&t1);
             matchTok(TOK_R_BRACE);
 
-            if( lValueChild.type != INTEGER_DATA_TYPE )
+            //Se expressão for diferente do tipo inteiro, erro!
+            if( t1 != INTEGER_DATA_TYPE )
                 compilerror(ERR_INCOMPATIBLE_TYPES,NULL);
 
-            lValueRoot->size = 0;
+            *s = 0;
 
         }
 

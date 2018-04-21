@@ -10,19 +10,19 @@ final MAXITER = 10;
 final k = 'k';
 final x = 0DDh;
 int vet[4096];
+int m[100], o[10];
 
 
 /* Programa Principal */
 
   flag <- 'A';
   flag <- 09Dh;
-  flag <- "Para;";
   flag <- ' ';
-  flag <- "asfdasdf.";
+  flag <- ' ';
   flag <- 'a';
 
    if (n = 10) then
-        writeln(n);
+        writeln(vet[1]);
    else
         if( MAXITER ) then begin
             for n <- 0 to MAXITER step -2 do
@@ -30,10 +30,10 @@ int vet[4096];
             readln(id);
         end
 
-   if a = 'c' or b = 'd' then;
-   if a = 'c' and b = 'd' then;
-   if a = 'c' or b = 100 then;
-   if a = 0AAh or b = 100 then;
+   if a = 1 or b = 10 then;
+   if (k = 'c') or (x = 'd') then;
+   if (k = 'c') or (b = 100) then;
+   if (k = 0AAh) or (b = 100) and ( a = 1 ) then;
    if n > a then;
    if n < a then;
    if n >= a then;
@@ -46,11 +46,11 @@ int vet[4096];
    a <- 20*10;
    a <- 20%10;
 
-   a[10] <- 1000;
+   a <- 1000;
 
-   a[b[10/10]] <- d[(5*10)];
+   m[10] <- o[(5*10)];
 
-   for i <- 0DDh to (10*9) step 10 do begin
+   for i <- 10 to (10*9) step 10 do begin
         readln(a);
    end
 
