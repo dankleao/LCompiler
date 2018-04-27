@@ -1,14 +1,21 @@
 /* Exemplo de Programa na linguagem L */
 
 int n[10];
-char nome[40];
-final MAXITER=00001;
+char nome[4096];
+final MAXITER = 10;
 char flag[10];
-int k;
+int k <- 500;
+char t <- 'c';
+
+;;;;;;
+;;;
+
+
+;;;;
 
 /* Programa Principal */
 
-  flag <- "";
+  flag <- "Daniel Cardoso Leao - 512973";
 
   n[1] <- 10;
 

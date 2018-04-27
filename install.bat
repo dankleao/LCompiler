@@ -1,0 +1,1 @@
+gcc parser.c lex.c symbol_table.c hash_table.c code_generator.c error.c def.c -o lc

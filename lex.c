@@ -5,18 +5,6 @@
 #include "lex.h"
 #include "symbol_table.h"
 
-PRIVATE bool evalFileExt(string fileName){
-
-    int length = strlen(fileName);
-    if( length < 3 )
-        return FALSE;
-    return ( fileName[length-1] == 'l' && fileName[length-2] == '.' ? TRUE : FALSE );
-}
-
-PRIVATE inline bool fileExists(string fileName){
-    return (access( fileName, F_OK ) != -1 ? TRUE : FALSE);
-}
-
 PRIVATE inline void ignoreWs(){
     while ( isspace(*prog) && *prog ){
         if( *prog == '\n' ) ++lineCounter;
@@ -203,9 +191,9 @@ PUBLIC Symbol* nextSymbol(){
                 } else if( *prog == '$' ){
                     compilerror(ERR_UNRECOGNIZED_SYMBOL,NULL);
                 } else if ( isspace(*prog) ){
-                    compilerror(ERR_LEXEME_NOT_FOUND,buildLexeme());
+                    compilerror(ERR_UNRECOGNIZED_SYMBOL,NULL);
                 } else{
-                    compilerror(ERR_LEXEME_NOT_FOUND,buildLexeme());
+                    compilerror(ERR_UNRECOGNIZED_SYMBOL,NULL);
                 }
                 break;//Fim Q9
             case Q10:
@@ -294,8 +282,8 @@ PUBLIC Symbol* nextSymbol(){
                     symbol = symbolAlloc();
                     symbol->lexeme = currentLexeme;
                     symbol->tok = TOK_CONSTANT;
-                    symbol->typeConst = symbolType;
-                    symbol->typeSize = strlen(currentLexeme);
+                    symbol->type = symbolType;
+                    symbol->size = strlen(currentLexeme);
 
                 }
 
@@ -320,7 +308,7 @@ PUBLIC bool startLex( string fileName ){
                         ";",",","(",")","[","]"};
 
     //Verifica a extensão do código-fonte
-    if( !evalFileExt(fileName) || !fileExists(fileName) ){
+    if( !fileExists(fileName) ){
         compilerror(ERR_FILE_NOT_FOUND,NULL);
     }
 
@@ -356,10 +344,12 @@ PUBLIC bool startLex( string fileName ){
 
 PUBLIC void printSymbol(Symbol* symbol){
 
-    string typeName[] = { "IDENTIFIER","CONSTANT","CHARACTER","HEX","NUMBER","STRING"};
-
     if( symbol != NULL ) {
+
         if ( symbol->tok == TOK_CONSTANT ) {
+
+            static string typeNames[] = { "CHARACTER","HEX","NUMBER","STRING"};
+
             printf("\n\tTok( "
                    "\n\t\t addr: %p"
                    "\n\t\t lexeme: \"%s\" ; size: %d"
@@ -370,25 +360,37 @@ PUBLIC void printSymbol(Symbol* symbol){
                    symbol->lexeme,
                    strlen(symbol->lexeme),
                    symbol->tok,
-                   typeName[ symbol->typeConst - TOK_IDENTIFIER],
-                   symbol->typeSize);
+                   typeNames[ symbol->type - CHARACTER_CONST],
+                   symbol->size);
         } else {
-            printf("\n\tTok( "
-                   "\n\t\t addr: %p"
-                   "\n\t\t lexeme: \"%s\" ; size: %d"
-                   "\n\t\t tok: %d"
-                   "\n\t\t class: %d"
-                   "\n\t\t data type: %d"
-                   "\n\t\t arraySize: %d"
-                   "\n\t\t addr: %d\n\t);",
-                   symbol,
-                   symbol->lexeme,
-                   strlen(symbol->lexeme),
-                   symbol->tok,
-                   symbol->classId,
-                   symbol->dataType,
-                   symbol->arraySize,
-                   symbol->memAddress);
+            if( symbol->tok == TOK_IDENTIFIER ){
+                printf("\n\tTok( "
+                       "\n\t\t addr: %p"
+                       "\n\t\t lexeme: \"%s\" ; size: %d"
+                       "\n\t\t tok: %d"
+                       "\n\t\t class: %s"
+                       "\n\t\t data type: %s"
+                       "\n\t\t arraySize: %s"
+                       "\n\t\t addr: %d\n\t);",
+                       symbol,
+                       symbol->lexeme,
+                       strlen(symbol->lexeme),
+                       symbol->tok,
+                       ( symbol->classId == CONST_CLASS ? "CONST_CLASS" : "VAR_CLASS"  ),
+                       ( symbol->dataType == CHARACTER_DATA_TYPE ? "CHAR" : "INTEGER"  ),
+                       ( symbol->arraySize == 0 ? "SINGLE" : "ARRAY" ),
+                       symbol->memAddress);
+            }
+            else{
+                printf("\n\tTok( "
+                       "\n\t\t addr: %p"
+                       "\n\t\t lexeme: \"%s\" ; size: %d"
+                       "\n\t\t tok: %d\n\t);",
+                       symbol,
+                       symbol->lexeme,
+                       strlen(symbol->lexeme),
+                       symbol->tok);
+            }
         }
     }else{
         printf("\n\tTok( null );\n");
@@ -422,16 +424,3 @@ PUBLIC void printSymbolTable(){
         }
     }
 }
-
-/*
-PUBLIC int main( int argc, char* argv[] ){
-
-    startLex(argv[1]);
-
-    while ( nextSymbol() != NULL );
-
-    printSymbolTable();
-
-    return 0;
-}
-*/

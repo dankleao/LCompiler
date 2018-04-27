@@ -122,6 +122,33 @@ LCompiler/fast:
 	$(MAKE) -f CMakeFiles\LCompiler.dir\build.make CMakeFiles/LCompiler.dir/build
 .PHONY : LCompiler/fast
 
+code_generator.obj: code_generator.c.obj
+
+.PHONY : code_generator.obj
+
+# target to build an object file
+code_generator.c.obj:
+	$(MAKE) -f CMakeFiles\LCompiler.dir\build.make CMakeFiles/LCompiler.dir/code_generator.c.obj
+.PHONY : code_generator.c.obj
+
+code_generator.i: code_generator.c.i
+
+.PHONY : code_generator.i
+
+# target to preprocess a source file
+code_generator.c.i:
+	$(MAKE) -f CMakeFiles\LCompiler.dir\build.make CMakeFiles/LCompiler.dir/code_generator.c.i
+.PHONY : code_generator.c.i
+
+code_generator.s: code_generator.c.s
+
+.PHONY : code_generator.s
+
+# target to generate assembly for a file
+code_generator.c.s:
+	$(MAKE) -f CMakeFiles\LCompiler.dir\build.make CMakeFiles/LCompiler.dir/code_generator.c.s
+.PHONY : code_generator.c.s
+
 def.obj: def.c.obj
 
 .PHONY : def.obj
@@ -293,6 +320,9 @@ help:
 	@echo ... LCompiler
 	@echo ... edit_cache
 	@echo ... rebuild_cache
+	@echo ... code_generator.obj
+	@echo ... code_generator.i
+	@echo ... code_generator.s
 	@echo ... def.obj
 	@echo ... def.i
 	@echo ... def.s

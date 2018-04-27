@@ -64,10 +64,22 @@ PRIVATE void program(){
 
     //Inicio da execução do parser
     currentSymbol = nextSymbol();//Obtém o primeiro símbolo do código fonte
+
+    //Seg de pilha
+    startStackSeg();//inicio
+    endStackSeg();//fim
+
+    //Seg de dados
+    startDataSeg();//inicio
     decl();
-    while ( currentSymbol != NULL ){
+    endDataSeg();//fim
+
+    //Seg de código
+    startCodeSeg();//inicio
+    while ( currentSymbol != NULL )
         cmd();
-    }
+    endCodeSeg();//fim
+
 }
 
 PRIVATE void decl(){
@@ -100,7 +112,7 @@ PRIVATE void decl(){
 
             if( currentSymbol->tok == TOK_CONSTANT ){
 
-                if( currentSymbol->typeConst == NUMBER_CONST ){
+                if( currentSymbol->type == NUMBER_CONST ){
 
                     tmpIdentifier->dataType = INTEGER_DATA_TYPE;
 
@@ -109,10 +121,12 @@ PRIVATE void decl(){
 
                     int value = withinLimitOfInteger(signal);
 
+                    value += value;
+
                     //GEN CODE
 
 
-                } else if( currentSymbol->typeConst == CHARACTER_CONST || currentSymbol->typeConst == HEX_CONST ){
+                } else if( currentSymbol->type == CHARACTER_CONST || currentSymbol->type == HEX_CONST ){
 
                     if( signal ){
                         compilerror(ERR_INCOMPATIBLE_TYPES,NULL);
@@ -180,7 +194,7 @@ PRIVATE void var(data_type inhDType){
         if( currentSymbol->tok == TOK_CONSTANT ){
 
             //Constante inteira
-            if( currentSymbol->typeConst == NUMBER_CONST ){
+            if( currentSymbol->type == NUMBER_CONST ){
 
                 if( inhDType == INTEGER_DATA_TYPE ){
 
@@ -196,7 +210,7 @@ PRIVATE void var(data_type inhDType){
                 }
 
             }//constante literal caracter ou hexadecimal
-            else if( currentSymbol->typeConst == CHARACTER_CONST || currentSymbol->typeConst == HEX_CONST ){
+            else if( currentSymbol->type == CHARACTER_CONST || currentSymbol->type == HEX_CONST ){
 
                 if( ! signal && inhDType == CHARACTER_DATA_TYPE ){
                     //GEN CODE
@@ -219,7 +233,7 @@ PRIVATE void var(data_type inhDType){
 
         if( currentSymbol->tok == TOK_CONSTANT ){
 
-            if( currentSymbol->typeConst == NUMBER_CONST ){
+            if( currentSymbol->type == NUMBER_CONST ){
 
                 tmpIdentifier->arraySize = withinArraySizeBounds();
 
@@ -387,7 +401,7 @@ PRIVATE void cmdfor(){
             matchTok(currentSymbol->tok);
 
         //Senão for constante numérica, erro!
-        if( currentSymbol->tok == TOK_CONSTANT && currentSymbol->typeConst != NUMBER_CONST )
+        if( currentSymbol->tok == TOK_CONSTANT && currentSymbol->type != NUMBER_CONST )
             compilerror(ERR_INCOMPATIBLE_TYPES,NULL);
 
         matchTok(TOK_CONSTANT);
@@ -531,6 +545,7 @@ PRIVATE void term(int* s, data_type* t){
     //Atributos sintetizados
     int s1 = 0; data_type t1 = INTEGER_DATA_TYPE;
     int s2 = 0; data_type t2 = INTEGER_DATA_TYPE;
+    int operator;
 
     if( currentSymbol->tok == TOK_PLUS || currentSymbol->tok == TOK_MINUS )
         matchTok(currentSymbol->tok);
@@ -541,6 +556,8 @@ PRIVATE void term(int* s, data_type* t){
     *t = t1;
 
     while ( currentSymbol->tok == TOK_PLUS || currentSymbol->tok == TOK_MINUS ||currentSymbol->tok == TOK_OR ){
+
+        operator = currentSymbol->tok;
 
         matchTok(currentSymbol->tok);
 
@@ -558,6 +575,7 @@ PRIVATE void factor(int* s, data_type* t){
     //Atributos sintetizados
     int s1 = 0; data_type t1 = INTEGER_DATA_TYPE;
     int s2 = 0; data_type t2 = INTEGER_DATA_TYPE;
+    int operator;
 
     e(&s1,&t1);
 
@@ -565,6 +583,8 @@ PRIVATE void factor(int* s, data_type* t){
     *t = t1;
 
     while ( currentSymbol->tok == TOK_TIMES || currentSymbol->tok == TOK_OVER || currentSymbol->tok == TOK_MOD || currentSymbol->tok == TOK_AND ){
+
+        operator = currentSymbol->tok;
 
         matchTok(currentSymbol->tok);
 
@@ -575,6 +595,7 @@ PRIVATE void factor(int* s, data_type* t){
 
     }
 }
+
 
 PRIVATE void e(int* s, data_type* t){
 
@@ -606,13 +627,13 @@ PRIVATE void e(int* s, data_type* t){
 
     } else if( currentSymbol->tok == TOK_CONSTANT ){
 
-        if( currentSymbol->typeConst == NUMBER_CONST ){
+        if( currentSymbol->type == NUMBER_CONST ){
             *t = INTEGER_DATA_TYPE;
-        } else if( currentSymbol->typeConst == CHARACTER_CONST || currentSymbol->typeConst == HEX_CONST ){
+        } else if( currentSymbol->type == CHARACTER_CONST || currentSymbol->type == HEX_CONST ){
             *t = CHARACTER_DATA_TYPE;
         } else{
             *t = CHARACTER_DATA_TYPE;
-            *s = strlen( currentSymbol->lexeme );//Aceita string vazia.
+            *s = currentSymbol->size;//Aceita string vazia.
         }
 
         matchTok(TOK_CONSTANT);
@@ -666,7 +687,19 @@ PUBLIC int main( int argc, char* argv[] ){
     //inicializa o analisador sintatico
     program();
 
-    //printSymbolTable();
+    //Se usuário não fornecer o nome do arquivo intermediário, ex: nome_arquivo.asm,
+    //criar um arquivo: a.asm como padrão
+    if( argc == 2 ) {
+        generateCode("a.asm");//salva as instruções no arquivo a.asm
+    }
+    //Senão, verificar o nome completamente qualificado do arquivo intermediário
+    else{
+
+        if( ! evalFileExt(argv[2],".asm") )
+            compilerror(ERR_COULD_NOT_CREATE_INTERMEDIATE_CODE_FILE,NULL);
+
+        generateCode(argv[2]);//salva as instruções no arquivo fornecido pelo usuario
+    }
 
     return 0;
 }

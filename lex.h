@@ -108,22 +108,6 @@ PUBLIC bool startLex( string fileName );
 PRIVATE string buildLexeme();
 
 /*
- * Avalia a extensão do arquivo de código fonte que obrigatoriamente tem que terminar com .l
- * @param fileName nome completamente qualificado do arquivo fonte
- * @return TRUE caso a extensão seja válida, senão retorna FALSE
- *
- */
-PRIVATE bool evalFileExt(string fileName);
-
-/*
- * Verifica se arquivo existe
- * @param fileName nome completamente qualificado do arquivo fonte
- * @return TRUE caso o arquivo exista, senão retorna FALSE
- */
-
-PRIVATE inline bool fileExists(string fileName);
-
-/*
  * Ignora espaços em branco
  *
  * */
