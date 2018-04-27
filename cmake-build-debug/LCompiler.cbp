@@ -76,6 +76,12 @@
 				</MakeCommands>
 			</Target>
 		</Build>
+		<Unit filename="C:/Users/Daniel/CLionProjects/LCompiler/code_generator.c">
+			<Option target="LCompiler"/>
+		</Unit>
+		<Unit filename="C:/Users/Daniel/CLionProjects/LCompiler/code_generator.h">
+			<Option target="LCompiler"/>
+		</Unit>
 		<Unit filename="C:/Users/Daniel/CLionProjects/LCompiler/config.h">
 			<Option target="LCompiler"/>
 		</Unit>

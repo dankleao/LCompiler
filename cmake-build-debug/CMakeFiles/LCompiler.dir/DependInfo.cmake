@@ -4,6 +4,7 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_C
+  "C:/Users/Daniel/CLionProjects/LCompiler/code_generator.c" "C:/Users/Daniel/CLionProjects/LCompiler/cmake-build-debug/CMakeFiles/LCompiler.dir/code_generator.c.obj"
   "C:/Users/Daniel/CLionProjects/LCompiler/def.c" "C:/Users/Daniel/CLionProjects/LCompiler/cmake-build-debug/CMakeFiles/LCompiler.dir/def.c.obj"
   "C:/Users/Daniel/CLionProjects/LCompiler/error.c" "C:/Users/Daniel/CLionProjects/LCompiler/cmake-build-debug/CMakeFiles/LCompiler.dir/error.c.obj"
   "C:/Users/Daniel/CLionProjects/LCompiler/hash_table.c" "C:/Users/Daniel/CLionProjects/LCompiler/cmake-build-debug/CMakeFiles/LCompiler.dir/hash_table.c.obj"

@@ -10,7 +10,8 @@ final MAXITER = 10;
 final k = 'k';
 final x = 0DDh;
 int vet[4096];
-int m[100], o[10];
+int m[100], o[1];
+
 
 
 /* Programa Principal */
@@ -63,6 +64,6 @@ int m[100], o[10];
        if(n < 10) then begin
             if(i <> p) then ;
        end
-       readln(id);
+       readln(vet[0]);
        writeln("Ola","hello",'c');
      end

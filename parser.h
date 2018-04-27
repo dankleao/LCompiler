@@ -6,6 +6,7 @@
 #define LCOMPILER_PARSER_H
 
 #include "lex.h"
+#include "code_generator.h"
 
 //Variável que armazena o símbolo corrente
 PRIVATE Symbol* currentSymbol;

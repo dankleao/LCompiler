@@ -55,8 +55,8 @@ typedef struct symbol{
 
         //Atributos p/ constantes( numéricas, hexdecimais, string, caracter )
         struct{
-            int typeConst;
-            int typeSize;
+            int type;
+            int size;
         };
 
     };
