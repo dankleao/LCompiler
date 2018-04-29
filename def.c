@@ -7,6 +7,14 @@
 #include <stdio.h>
 #include "def.h"
 
+PUBLIC string int2str(int value){
+
+    char buffer[11];// 11 = max int com sinal
+
+    return itoa(value,buffer,10), strAlloc(buffer);
+
+}
+
 PUBLIC string strAlloc( string str ){
 
     int length;
@@ -91,4 +99,8 @@ PUBLIC bool evalFileExt(string fileName,string ext){
 
     return ( state == F ? TRUE: FALSE );
 
+}
+
+PUBLIC bool compareStrings(string strA, string strB){
+    return ( ! strcmp(strA,strB) ? TRUE : FALSE );
 }

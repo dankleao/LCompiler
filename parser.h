@@ -11,6 +11,9 @@
 //Variável que armazena o símbolo corrente
 PRIVATE Symbol* currentSymbol;
 
+//Buffer que armazena uma instrução ASM
+PRIVATE char instructionBuffer[128] = {"\0"};
+
 /*
  * Verifica a unicidade dos identificadores.
  * @param classe de identificador
