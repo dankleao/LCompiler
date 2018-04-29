@@ -22,6 +22,15 @@ typedef enum boolean{
 }bool;
 
 /*
+ * Converte um inteiro em sua representação string
+ * @param value inteiro que será convertido
+ * @return uma representação string do valor inteiro armazenado no parametro
+ */
+
+PUBLIC string int2str(int value);
+
+
+/*
  * Clona uma string
  * @param str string que será clonada
  * @return nova string
@@ -53,5 +62,12 @@ PUBLIC bool fileExists(string fileName);
  */
 PUBLIC bool evalFileExt(string fileName,string ext);
 
+/*
+ * Compara leftStr com rightStr
+ * @param leftStr string A
+ * @param rightStr string B
+ * @return TRUE se string A for igual string B, senão FALSE
+ */
+PUBLIC bool compareStrings(string leftStr, string rightStr);
 
 #endif //LCOMPILER_DEF_H

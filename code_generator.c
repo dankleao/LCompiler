@@ -4,7 +4,18 @@
 
 #include "code_generator.h"
 
-PRIVATE inline void writeInstruction(string instruction){
+PUBLIC void memAlloc( Symbol* identifier, int size ){
+
+    identifier->memAddress = memStartPos;
+    memStartPos += size;
+}
+
+PUBLIC string newLabel(){
+    static int i = 0;
+    return strcat( "R", int2str(i++) );
+}
+
+PUBLIC void writeInstruction(string instruction){
 
     int instructionLength = strlen(instruction);
 

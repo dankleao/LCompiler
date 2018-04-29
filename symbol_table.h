@@ -32,8 +32,6 @@ typedef enum data_type {
     INTEGER_DATA_TYPE
 }data_type;
 
-typedef unsigned int memory_address;
-
 /*
  * Tipo symbol representa uma entidade básica da tabela de símbolo
  */
@@ -50,7 +48,7 @@ typedef struct symbol{
             class classId;       //classe de identificador
             data_type dataType;  //tipo de dados
             int arraySize;       //tamanho do array, se 0 então é uma variável escalar
-            memory_address memAddress; //endereço de memoria
+            int memAddress;      //endereço de memoria
         };
 
         //Atributos p/ constantes( numéricas, hexdecimais, string, caracter )

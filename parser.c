@@ -121,9 +121,16 @@ PRIVATE void decl(){
 
                     int value = withinLimitOfInteger(signal);
 
-                    value += value;
+                    //--------------- GEN CODE -----------------//
 
-                    //GEN CODE
+                    //Reserva memoria p/ id
+                    memAlloc(tmpIdentifier,2);
+
+                    //Format instrução
+                    sprintf(instructionBuffer,"sword %d ;const int em %d\n",value,tmpIdentifier->memAddress);
+
+                    //Escreve instrução asm
+                    writeInstruction(instructionBuffer);
 
 
                 } else if( currentSymbol->type == CHARACTER_CONST || currentSymbol->type == HEX_CONST ){
@@ -134,7 +141,16 @@ PRIVATE void decl(){
 
                         tmpIdentifier->dataType = CHARACTER_DATA_TYPE;
 
-                        //GEN CODE
+                        //--------------- GEN CODE -----------------//
+
+                        //Reserva memoria p/ id
+                        memAlloc(tmpIdentifier,1);
+
+                        //Format instrução
+                        sprintf(instructionBuffer,"byte %d ;const caract em %d\n", currentSymbol->lexeme[1] ,tmpIdentifier->memAddress);
+
+                        //Escreve instrução asm
+                        writeInstruction(instructionBuffer);
                     }
 
                 } else{
@@ -203,7 +219,17 @@ PRIVATE void var(data_type inhDType){
 
                     int value = withinLimitOfInteger(signal);
 
-                    //GEN CODE
+                    //--------------- GEN CODE -----------------//
+
+                    //Reserva memoria p/ id
+                    memAlloc(tmpIdentifier,2);
+
+                    //Format instrução
+                    sprintf(instructionBuffer,"sword %d ;var int em %d\n",value,tmpIdentifier->memAddress);
+
+                    //Escreve instrução asm
+                    writeInstruction(instructionBuffer);
+
 
                 } else{
                     compilerror(ERR_INCOMPATIBLE_TYPES,NULL);
@@ -213,7 +239,20 @@ PRIVATE void var(data_type inhDType){
             else if( currentSymbol->type == CHARACTER_CONST || currentSymbol->type == HEX_CONST ){
 
                 if( ! signal && inhDType == CHARACTER_DATA_TYPE ){
-                    //GEN CODE
+
+
+                    //--------------- GEN CODE -----------------//
+
+                    //Reserva memoria p/ id
+                    memAlloc(tmpIdentifier,1);
+
+                    //Format instrução
+                    sprintf(instructionBuffer,"byte %d ;var caract em %d\n", currentSymbol->lexeme[1] ,tmpIdentifier->memAddress);
+
+                    //Escreve instrução asm
+                    writeInstruction(instructionBuffer);
+
+
                 } else{
                     compilerror(ERR_INCOMPATIBLE_TYPES,NULL);
                 }
@@ -237,7 +276,28 @@ PRIVATE void var(data_type inhDType){
 
                 tmpIdentifier->arraySize = withinArraySizeBounds();
 
-                //GEN CODE
+                //--------------- GEN CODE -----------------//
+
+                if( tmpIdentifier->dataType == INTEGER_DATA_TYPE ){
+
+                    //Reserva memoria p/ id
+                    memAlloc(tmpIdentifier,tmpIdentifier->arraySize+tmpIdentifier->arraySize);
+
+                    //Format instrução
+                    sprintf(instructionBuffer,"sword ? DUP(?) ;var int em %d\n",tmpIdentifier->memAddress);
+
+                } else{
+
+                    //Reserva memoria p/ id
+                    memAlloc(tmpIdentifier,tmpIdentifier->arraySize);
+
+                    //Format instrução
+                    sprintf(instructionBuffer,"byte ? DUP(?) ;var caract em %d\n",tmpIdentifier->memAddress);
+
+                }
+
+                //Escreve instrução asm
+                writeInstruction(instructionBuffer);
 
             } else{
                 compilerror(ERR_INCOMPATIBLE_TYPES,NULL);
@@ -246,6 +306,32 @@ PRIVATE void var(data_type inhDType){
 
         matchTok(TOK_CONSTANT);
         matchTok(TOK_R_BRACE);
+
+    } else{
+
+        //--------------- GEN CODE -----------------//
+
+        if( tmpIdentifier->dataType == INTEGER_DATA_TYPE ){
+
+            //Reserva memoria p/ id
+            memAlloc(tmpIdentifier,2);
+
+            //Format instrução
+            sprintf(instructionBuffer,"sword ? ;var int em %d\n",tmpIdentifier->memAddress);
+
+        } else{
+
+            //Reserva memoria p/ id
+            memAlloc(tmpIdentifier,1);
+
+            //Format instrução
+            sprintf(instructionBuffer,"byte ? ;var caract em %d\n",tmpIdentifier->memAddress);
+
+        }
+
+        //Escreve instrução asm
+        writeInstruction(instructionBuffer);
+
     }
 
     //Lista de declarações de variáveis

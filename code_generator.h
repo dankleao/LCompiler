@@ -9,6 +9,11 @@
 #include "def.h"
 #include "error.h"
 #include "config.h"
+#include "symbol_table.h"
+
+
+//Endereço da posição inicial de memória do programa
+PRIVATE int memStartPos = 16384;
 
 //Buffer que armazena as sequencias de instruções traduzidas pelo compilador
 PRIVATE struct{
@@ -19,12 +24,21 @@ PRIVATE struct{
 }outputBuffer = {0,"\0"};
 
 /*
+ *  Reserva uma area de memory
+ */
+PUBLIC void memAlloc( Symbol* identifier, int size );
+
+/*
+ * Cria um novo rotulo.
+ * @return uma string que representa o rotulo. Ex: R1,R2,...,RN
+ */
+PUBLIC string newLabel();
+
+/*
  * Escreve uma instrução no buffer de saída
  * @param instruction assembler 8086
  */
-PRIVATE inline void writeInstruction(string instruction);
-
-PUBLIC void asmInstruction( int mnemonics, string value, int flag , string comment);
+PUBLIC void writeInstruction(string instruction);
 
 /*
  * Esvazia o buffer de saída em um arquivo .asm
