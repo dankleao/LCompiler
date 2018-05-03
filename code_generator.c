@@ -4,10 +4,13 @@
 
 #include "code_generator.h"
 
-PUBLIC void memAlloc( Symbol* identifier, int size ){
+PUBLIC void resetTemp(){
+    memStart[TEMP_MEMORY_REGION] = 0;
+}
 
-    identifier->memAddress = memStartPos;
-    memStartPos += size;
+PUBLIC void memAlloc( int* memAddress, int size, int region ){
+    *memAddress = memStart[region];
+    memStart[region] += size;
 }
 
 PUBLIC string newLabel(){
@@ -15,16 +18,19 @@ PUBLIC string newLabel(){
     return strcat( "R", int2str(i++) );
 }
 
-PUBLIC void writeInstruction(string instruction){
+PUBLIC void writeInstruction(string instruction,int i,...){
 
-    int instructionLength = strlen(instruction);
+    va_list v;
 
-    int i = 0;
-    while ( i < instructionLength ){
-        outputBuffer.buffer[outputBuffer.index] = instruction[i];
-        ++outputBuffer.index;
-        ++i;
-    }
+    static string pAuxBuffer = outputBuffer;
+
+    while ( *pAuxBuffer )
+        ++pAuxBuffer;
+
+    va_start(v,i);
+    vsprintf(pAuxBuffer,instruction,v);
+    va_end(v);
+
 }
 
 PUBLIC void generateCode(string fileName){
@@ -35,8 +41,8 @@ PUBLIC void generateCode(string fileName){
         compilerror(ERR_COULD_NOT_CREATE_INTERMEDIATE_CODE_FILE,NULL);
 
     int i = 0;
-    while( outputBuffer.buffer[i] ){
-        fputc(outputBuffer.buffer[i],file);
+    while( outputBuffer[i] ){
+        fputc(outputBuffer[i],file);
         ++i;
     }
 
@@ -46,32 +52,32 @@ PUBLIC void generateCode(string fileName){
 }
 
 PUBLIC void startStackSeg(){
-    writeInstruction("sseg SEGMENT STACK ;inicio seg. pilha\n");
-    writeInstruction("byte 16384 DUP(?)\n");
+    writeInstruction("sseg SEGMENT STACK ;inicio seg. pilha\n",1);
+    writeInstruction("\tbyte 16384 DUP(?)\n",1);
 }
 
 PUBLIC void endStackSeg(){
-    writeInstruction("sseg ENDS ;fim seg. pilha\n");
+    writeInstruction("sseg ENDS ;fim seg. pilha\n\n",1);
 }
 
 PUBLIC void startDataSeg(){
-    writeInstruction("dseg SEGMENT PUBLIC ;inicio seg. dados\n");
-    writeInstruction("byte 16384 DUP(?) ;temporarios\n");
+    writeInstruction("dseg SEGMENT PUBLIC ;inicio seg. dados\n",1);
+    writeInstruction("\tbyte 16384 DUP(?) ;temporarios\n",1);
 }
 
 PUBLIC void endDataSeg(){
-    writeInstruction("dseg ENDS\n");
+    writeInstruction("dseg ENDS ;fim seg. dados\n\n",1);
 }
 
 PUBLIC void startCodeSeg(){
-    writeInstruction("cseg SEGMENT PUBLIC ;inicio do seg. código\n");
-    writeInstruction("ASSUME CS:cseg, DS:dseg\n");
-    writeInstruction("strt: ; inicio do programa\n");
-    writeInstruction("mov ax, dseg\n");
-    writeInstruction("mov ds, ax\n");
+    writeInstruction("cseg SEGMENT PUBLIC ;inicio do seg. código\n",1);
+    writeInstruction("\tASSUME CS:cseg, DS:dseg\n\n",1);
+    writeInstruction("strt: ; inicio do programa\n",1);
+    writeInstruction("\tmov ax, dseg\n",1);
+    writeInstruction("\tmov ds, ax\n\n",1);
 }
 
 PUBLIC void endCodeSeg(){
-    writeInstruction("cseg ENDS ;fim seg. código\n");
-    writeInstruction("END strt\0");
+    writeInstruction("cseg ENDS ;fim seg. código\n",1);
+    writeInstruction("END strt ;fim do programa\0",1);
 }

@@ -7,17 +7,11 @@ char flag[10];
 int k <- 500;
 char t <- 'c';
 
-;;;;;;
-;;;
-
-
-;;;;
-
 /* Programa Principal */
 
-  flag <- "Daniel Cardoso Leao - 512973";
+   n[0] <- 9;
+   n[1] <- n[0];
 
-  n[1] <- 10;
 
   write("Digite seu nome: ");
   readln(nome);

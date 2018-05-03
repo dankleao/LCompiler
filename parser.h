@@ -12,7 +12,7 @@
 PRIVATE Symbol* currentSymbol;
 
 //Buffer que armazena uma instrução ASM
-PRIVATE char instructionBuffer[128] = {"\0"};
+PRIVATE char instructionBuffer[256] = {"\0"};
 
 /*
  * Verifica a unicidade dos identificadores.
@@ -101,22 +101,22 @@ PRIVATE void body();
 /*
  * EXP -> TERM [ ( = | < | > | <= | >= | <> ) TERM ]
  */
-PRIVATE void expression(int*,data_type*);
+PRIVATE void expression(int*,data_type*,int*);
 
 /*
  * TERM -> [ + | - ] FACTOR { ( + | - | or ) FACTOR }
  */
-PRIVATE void term(int*,data_type*);
+PRIVATE void term(int*,data_type*,int*);
 
 /*
  * FACTOR -> E { ( * | / | % | and ) E }
  */
-PRIVATE void factor(int*,data_type*);
+PRIVATE void factor(int*,data_type*,int*);
 
 /*
  * E -> "(" EXP ")" | not E | const | id [ "[" EXP "]" ]
  */
-PRIVATE void e(int*,data_type*);
+PRIVATE void e(int*,data_type*,int*);
 
 
 #endif //LCOMP_PARSER_H

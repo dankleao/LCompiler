@@ -6,27 +6,29 @@
 #define LCOMPILER_CODE_GENERATOR_H
 
 #include <stdio.h>
+#include <stdarg.h>
 #include "def.h"
 #include "error.h"
 #include "config.h"
 #include "symbol_table.h"
 
+#define STANDARD_MEMORY_REGION 0
+#define TEMP_MEMORY_REGION 1
 
-//Endereço da posição inicial de memória do programa
-PRIVATE int memStartPos = 16384;
+PRIVATE int memStart [2] = { 16384, 0 };
 
 //Buffer que armazena as sequencias de instruções traduzidas pelo compilador
-PRIVATE struct{
+PRIVATE char outputBuffer[PROGRAM_LEN_MAX+PROGRAM_LEN_MAX] = {'\0'};
 
-    int index;
-    char buffer[PROGRAM_LEN_MAX+PROGRAM_LEN_MAX];
-
-}outputBuffer = {0,"\0"};
+/*
+ * Reseta ponteiro dos temporários
+ */
+PUBLIC void resetTemp();
 
 /*
  *  Reserva uma area de memory
  */
-PUBLIC void memAlloc( Symbol* identifier, int size );
+PUBLIC void memAlloc( int* memAddress, int size, int region );
 
 /*
  * Cria um novo rotulo.
@@ -38,7 +40,7 @@ PUBLIC string newLabel();
  * Escreve uma instrução no buffer de saída
  * @param instruction assembler 8086
  */
-PUBLIC void writeInstruction(string instruction);
+PUBLIC void writeInstruction(string instruction,int i,...);
 
 /*
  * Esvazia o buffer de saída em um arquivo .asm

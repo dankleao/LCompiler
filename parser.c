@@ -3,6 +3,7 @@
 //
 
 #include "parser.h"
+#include "code_generator.h"
 
 PUBLIC inline void checkUniqueness(class classId){
     if( currentSymbol->tok == TOK_IDENTIFIER ){
@@ -124,13 +125,10 @@ PRIVATE void decl(){
                     //--------------- GEN CODE -----------------//
 
                     //Reserva memoria p/ id
-                    memAlloc(tmpIdentifier,2);
-
-                    //Format instrução
-                    sprintf(instructionBuffer,"sword %d ;const int em %d\n",value,tmpIdentifier->memAddress);
+                    memAlloc(&tmpIdentifier->memAddress,2,STANDARD_MEMORY_REGION);
 
                     //Escreve instrução asm
-                    writeInstruction(instructionBuffer);
+                    writeInstruction("\tsword %d ;const int em %d\n", 3, value, tmpIdentifier->memAddress);
 
 
                 } else if( currentSymbol->type == CHARACTER_CONST || currentSymbol->type == HEX_CONST ){
@@ -144,13 +142,15 @@ PRIVATE void decl(){
                         //--------------- GEN CODE -----------------//
 
                         //Reserva memoria p/ id
-                        memAlloc(tmpIdentifier,1);
+                        memAlloc(&tmpIdentifier->memAddress,1,STANDARD_MEMORY_REGION);
 
                         //Format instrução
-                        sprintf(instructionBuffer,"byte %d ;const caract em %d\n", currentSymbol->lexeme[1] ,tmpIdentifier->memAddress);
-
-                        //Escreve instrução asm
-                        writeInstruction(instructionBuffer);
+                        if( currentSymbol->type == CHARACTER_CONST ){
+                            writeInstruction("\tbyte %d ;const caract em %d\n", 3, currentSymbol->lexeme[1], tmpIdentifier->memAddress);
+                        } else{
+                            //Escreve instrução asm
+                            writeInstruction("\tbyte %d ;const caract em %d\n", 3, hex2int(substr(currentSymbol->lexeme,1,3)), tmpIdentifier->memAddress);
+                        }
                     }
 
                 } else{
@@ -221,14 +221,11 @@ PRIVATE void var(data_type inhDType){
 
                     //--------------- GEN CODE -----------------//
 
-                    //Reserva memoria p/ id
-                    memAlloc(tmpIdentifier,2);
-
-                    //Format instrução
-                    sprintf(instructionBuffer,"sword %d ;var int em %d\n",value,tmpIdentifier->memAddress);
+                    //Reserva de memoria p/ id
+                    memAlloc(&tmpIdentifier->memAddress,2,STANDARD_MEMORY_REGION);
 
                     //Escreve instrução asm
-                    writeInstruction(instructionBuffer);
+                    writeInstruction("\tsword %d ;var int em %d\n", 3, value, tmpIdentifier->memAddress);
 
 
                 } else{
@@ -244,14 +241,14 @@ PRIVATE void var(data_type inhDType){
                     //--------------- GEN CODE -----------------//
 
                     //Reserva memoria p/ id
-                    memAlloc(tmpIdentifier,1);
+                    memAlloc(&tmpIdentifier->memAddress,1,STANDARD_MEMORY_REGION);
 
                     //Format instrução
-                    sprintf(instructionBuffer,"byte %d ;var caract em %d\n", currentSymbol->lexeme[1] ,tmpIdentifier->memAddress);
-
-                    //Escreve instrução asm
-                    writeInstruction(instructionBuffer);
-
+                    if( currentSymbol->type == CHARACTER_CONST ){
+                        writeInstruction("\tbyte %d ;const caract em %d\n", 3, currentSymbol->lexeme[1], tmpIdentifier->memAddress);
+                    } else{
+                        writeInstruction("\tbyte %d ;const caract em %d\n", 3, hex2int(substr(currentSymbol->lexeme,1,3)), tmpIdentifier->memAddress);
+                    }
 
                 } else{
                     compilerror(ERR_INCOMPATIBLE_TYPES,NULL);
@@ -281,23 +278,19 @@ PRIVATE void var(data_type inhDType){
                 if( tmpIdentifier->dataType == INTEGER_DATA_TYPE ){
 
                     //Reserva memoria p/ id
-                    memAlloc(tmpIdentifier,tmpIdentifier->arraySize+tmpIdentifier->arraySize);
+                    memAlloc(&tmpIdentifier->memAddress, tmpIdentifier->arraySize + tmpIdentifier->arraySize, STANDARD_MEMORY_REGION );
 
-                    //Format instrução
-                    sprintf(instructionBuffer,"sword ? DUP(?) ;var int em %d\n",tmpIdentifier->memAddress);
+                    writeInstruction("\tsword %d DUP(?) ;var vet int em %d\n", 3, tmpIdentifier->arraySize, tmpIdentifier->memAddress);
 
                 } else{
 
                     //Reserva memoria p/ id
-                    memAlloc(tmpIdentifier,tmpIdentifier->arraySize);
+                    memAlloc(&tmpIdentifier->memAddress,tmpIdentifier->arraySize,STANDARD_MEMORY_REGION);
 
-                    //Format instrução
-                    sprintf(instructionBuffer,"byte ? DUP(?) ;var caract em %d\n",tmpIdentifier->memAddress);
+                    //Escreve instrução asm
+                    writeInstruction("\tbyte %d DUP(?) ;var vet caract em %d\n", 3, tmpIdentifier->arraySize, tmpIdentifier->memAddress);
 
                 }
-
-                //Escreve instrução asm
-                writeInstruction(instructionBuffer);
 
             } else{
                 compilerror(ERR_INCOMPATIBLE_TYPES,NULL);
@@ -314,24 +307,19 @@ PRIVATE void var(data_type inhDType){
         if( tmpIdentifier->dataType == INTEGER_DATA_TYPE ){
 
             //Reserva memoria p/ id
-            memAlloc(tmpIdentifier,2);
+            memAlloc(&tmpIdentifier->memAddress,2,STANDARD_MEMORY_REGION);
 
-            //Format instrução
-            sprintf(instructionBuffer,"sword ? ;var int em %d\n",tmpIdentifier->memAddress);
+            //Escreve instrução asm
+            writeInstruction("\tsword ? ;var int em %d\n", 2, tmpIdentifier->memAddress);
+
 
         } else{
 
             //Reserva memoria p/ id
-            memAlloc(tmpIdentifier,1);
+            memAlloc(&tmpIdentifier->memAddress,1,STANDARD_MEMORY_REGION);
 
-            //Format instrução
-            sprintf(instructionBuffer,"byte ? ;var caract em %d\n",tmpIdentifier->memAddress);
-
+            writeInstruction("\tbyte ? ;var caract em %d\n", 2, tmpIdentifier->memAddress);
         }
-
-        //Escreve instrução asm
-        writeInstruction(instructionBuffer);
-
     }
 
     //Lista de declarações de variáveis
@@ -379,9 +367,10 @@ PRIVATE void cmd(){
             matchTok(TOK_L_BRACE);
 
             //Atributos sintetizados
-            int s1 = 0; data_type t1 = INTEGER_DATA_TYPE;
+            int s1 = 0; data_type t1 = INTEGER_DATA_TYPE; int memAddress = 0;
 
-            expression(&s1,&t1);
+            resetTemp();
+            expression(&s1,&t1,&memAddress);
 
             if( t1 != INTEGER_DATA_TYPE )
                 compilerror(ERR_INCOMPATIBLE_TYPES,NULL);
@@ -402,9 +391,10 @@ PRIVATE void cmd(){
             matchTok(TOK_ASSIGN);
 
             //Atributos sintetizados
-            int s1 = 0; data_type t1 = INTEGER_DATA_TYPE;
+            int s1 = 0; data_type t1 = INTEGER_DATA_TYPE; int memAddress1 = 0;
 
-            expression(&s1,&t1);
+            resetTemp();
+            expression(&s1,&t1,&memAddress1);
 
             if( t != t1 || ( !( s && s1 ) && ( s || s1 )  ) )
                 compilerror(ERR_INCOMPATIBLE_TYPES,NULL);
@@ -424,9 +414,10 @@ PRIVATE void cmdif(){
     matchTok(TOK_IF);
 
     //Atributos sintetizados
-    int s = 0; data_type t = INTEGER_DATA_TYPE;
+    int s = 0; data_type t = INTEGER_DATA_TYPE; int memAddress = 0;
 
-    expression(&s,&t);
+    resetTemp();
+    expression(&s,&t,&memAddress);
 
     if( t != INTEGER_DATA_TYPE )
         compilerror(ERR_INCOMPATIBLE_TYPES,NULL);
@@ -461,9 +452,10 @@ PRIVATE void cmdfor(){
     matchTok(TOK_ASSIGN);
 
     //Atributos sintetizados
-    int s = 0; data_type t = INTEGER_DATA_TYPE;
+    int s = 0; data_type t = INTEGER_DATA_TYPE; int memAddress = 0;
 
-    expression(&s,&t);
+    resetTemp();
+    expression(&s,&t,&memAddress);
 
     if( t != INTEGER_DATA_TYPE || s != 0 )
         compilerror(ERR_INCOMPATIBLE_TYPES,NULL);
@@ -472,8 +464,10 @@ PRIVATE void cmdfor(){
 
     s = 0;
     t = INTEGER_DATA_TYPE;
+    memAddress = 0;
 
-    expression(&s,&t);
+    resetTemp();
+    expression(&s,&t,&memAddress);
 
     if( t != INTEGER_DATA_TYPE || s != 0 )
         compilerror(ERR_INCOMPATIBLE_TYPES,NULL);
@@ -501,7 +495,7 @@ PRIVATE void cmdfor(){
 PRIVATE void cmdio(){
 
     //Atributos sintetizados
-    int s = 0; data_type t = INTEGER_DATA_TYPE;
+    int s = 0; data_type t = INTEGER_DATA_TYPE; int memAddress = 0;
 
     if( currentSymbol->tok == TOK_READLN ){
 
@@ -521,7 +515,8 @@ PRIVATE void cmdio(){
         if( currentSymbol->tok == TOK_L_BRACE ){
             matchTok(TOK_L_BRACE);
 
-            expression(&s,&t);
+            resetTemp();
+            expression(&s,&t,&memAddress);
 
             //Se identificador não for do tipo arranjo ou índice do arranjo não for uma constante numérica
             if( tmpIdentifier->arraySize == 0 || t != INTEGER_DATA_TYPE )
@@ -544,7 +539,8 @@ PRIVATE void cmdio(){
         matchTok(currentSymbol->tok);
         matchTok(TOK_L_PAREN);
 
-        expression(&s,&t);
+        resetTemp();
+        expression(&s,&t,&memAddress);
 
         if( t == INTEGER_DATA_TYPE && s != 0 )
             compilerror(ERR_INCOMPATIBLE_TYPES,NULL);
@@ -555,8 +551,10 @@ PRIVATE void cmdio(){
 
             s = 0;
             t = INTEGER_DATA_TYPE;
+            memAddress = 0;
 
-            expression(&s,&t);
+            resetTemp();
+            expression(&s,&t,&memAddress);
 
             if( t == INTEGER_DATA_TYPE && s != 0 )
                 compilerror(ERR_INCOMPATIBLE_TYPES,NULL);
@@ -588,18 +586,18 @@ PRIVATE void body(){
     }
 }
 
-PRIVATE void expression(int* s , data_type* t ){
+PRIVATE void expression(int* s , data_type* t, int* memAddress ){
 
     //Atributos sintetizados
-    int s1 = 0; data_type t1 = INTEGER_DATA_TYPE;
-    int s2 = 0; data_type t2 = INTEGER_DATA_TYPE;
-
+    int s1 = 0; data_type t1 = INTEGER_DATA_TYPE; int memAddress1 = 0;
+    int s2 = 0; data_type t2 = INTEGER_DATA_TYPE; int memAddress2 = 0;
     int operator;
 
-    term(&s1,&t1);
+    term(&s1,&t1,&memAddress1);
 
     *s = s1;
     *t = t1;
+    *memAddress = memAddress1;
 
     while ( currentSymbol->tok == TOK_EQ || currentSymbol->tok == TOK_NE ||
             currentSymbol->tok == TOK_GE || currentSymbol->tok == TOK_GT ||
@@ -610,7 +608,7 @@ PRIVATE void expression(int* s , data_type* t ){
 
         matchTok(currentSymbol->tok);
 
-        term(&s2,&t2);
+        term(&s2,&t2,&memAddress2);
 
         if( (!( s1 && s2 ) && ( s1 || s2 ) ) || // term.size xor term1.size or
             (!( t1 && t2 ) && ( t1 || t2 ) ) || // term.tipo xor term1.tipo or
@@ -626,20 +624,22 @@ PRIVATE void expression(int* s , data_type* t ){
     }
 }
 
-PRIVATE void term(int* s, data_type* t){
+PRIVATE void term(int* s, data_type* t,int* memAddress){
 
     //Atributos sintetizados
-    int s1 = 0; data_type t1 = INTEGER_DATA_TYPE;
-    int s2 = 0; data_type t2 = INTEGER_DATA_TYPE;
+    //Atributos sintetizados
+    int s1 = 0; data_type t1 = INTEGER_DATA_TYPE; int memAddress1 = 0;
+    int s2 = 0; data_type t2 = INTEGER_DATA_TYPE; int memAddress2 = 0;
     int operator;
 
     if( currentSymbol->tok == TOK_PLUS || currentSymbol->tok == TOK_MINUS )
         matchTok(currentSymbol->tok);
 
-    factor(&s1,&t1);
+    factor(&s1,&t1,&memAddress1);
 
     *s = s1;
     *t = t1;
+    *memAddress = memAddress1;
 
     while ( currentSymbol->tok == TOK_PLUS || currentSymbol->tok == TOK_MINUS ||currentSymbol->tok == TOK_OR ){
 
@@ -647,26 +647,51 @@ PRIVATE void term(int* s, data_type* t){
 
         matchTok(currentSymbol->tok);
 
-        factor(&s2,&t2);
+        factor(&s2,&t2,&memAddress2);
 
         //Se o tipos de dado(INTEIRO) ou tipos( escalar ou arranjo ) dos operandos forem diferentes, erro!
         if( ( !t1 || s1 ) || ( !t2 || s2 ) )
             compilerror(ERR_INCOMPATIBLE_TYPES,NULL);
 
+        //Reg A
+        writeInstruction("\tmov ax, DS:[%d]\n", 2, memAddress1);
+
+        //Reg B
+        writeInstruction("\tmov bx, DS:[%d]\n", 2, memAddress2);
+
+        //Novo temporário de 2 bytes
+        memAlloc(memAddress,2,TEMP_MEMORY_REGION);
+
+        switch (operator){
+
+            case TOK_PLUS:
+            case TOK_OR:
+                writeInstruction("\tadd ax, bx\n", 1);
+                break;
+            case TOK_MINUS:
+                writeInstruction("\tneg bx\n", 1);
+                writeInstruction("\tadd ax, bx\n", 1);
+                break;
+            default:
+                break;
+        }
+
+        writeInstruction("\tmov DS:[%d], ax\n\n", 2, *memAddress);
     }
 }
 
-PRIVATE void factor(int* s, data_type* t){
+PRIVATE void factor(int* s, data_type* t,int* memAddress){
 
     //Atributos sintetizados
-    int s1 = 0; data_type t1 = INTEGER_DATA_TYPE;
-    int s2 = 0; data_type t2 = INTEGER_DATA_TYPE;
+    int s1 = 0; data_type t1 = INTEGER_DATA_TYPE; int memAddress1 = 0;
+    int s2 = 0; data_type t2 = INTEGER_DATA_TYPE; int memAddress2 = 0;
     int operator;
 
-    e(&s1,&t1);
+    e(&s1,&t1,&memAddress1);
 
     *s = s1;
     *t = t1;
+    *memAddress = memAddress1;
 
     while ( currentSymbol->tok == TOK_TIMES || currentSymbol->tok == TOK_OVER || currentSymbol->tok == TOK_MOD || currentSymbol->tok == TOK_AND ){
 
@@ -674,28 +699,60 @@ PRIVATE void factor(int* s, data_type* t){
 
         matchTok(currentSymbol->tok);
 
-        e(&s2,&t2);
+        e(&s2,&t2,&memAddress2);
 
         if( ( !t1 || s1 ) || ( !t2 || s2 ) )
             compilerror(ERR_INCOMPATIBLE_TYPES,NULL);
 
+        //Reg A
+        writeInstruction("\tmov ax, DS:[%d]\n", 2, memAddress1);
+
+        //Reg B
+        writeInstruction("\tmov bx, DS:[%d]\n", 2, memAddress2);
+
+        //Novo temporário de 2 bytes
+        memAlloc(memAddress,2,TEMP_MEMORY_REGION);
+
+        switch (operator){
+
+            case TOK_TIMES:
+            case TOK_AND:
+                writeInstruction("\timul bx\n", 1);
+                writeInstruction("\tmov DS:[%d], ax\n", 2, *memAddress);
+                break;
+            case TOK_OVER:
+                writeInstruction("\tidiv bx\n", 1);
+                writeInstruction("\tmov DS:[%d], ax\n", 2, *memAddress);
+                break;
+            case TOK_MOD:
+                writeInstruction("\tidiv bx\n", 1);
+                writeInstruction("\tmov DS:[%d], dx\n", 2, *memAddress);
+                break;
+            default:
+                break;
+        }
+
+        writeInstruction("\n",1);
+
     }
 }
 
-
-PRIVATE void e(int* s, data_type* t){
+PRIVATE void e(int* s, data_type* t,int* memAddress){
 
     //Atributos sintetizados
-    int s1 = 0; data_type t1 = INTEGER_DATA_TYPE;
+    int s1 = 0;
+    data_type t1 = INTEGER_DATA_TYPE;
+    int memAddress1 = 0;
 
     if( currentSymbol->tok == TOK_L_PAREN ){
 
         matchTok(TOK_L_PAREN);
 
-        expression(&s1,&t1);
+        expression(&s1,&t1,&memAddress1);
 
         *s = s1;
         *t = t1;
+        *memAddress = memAddress1;
 
         matchTok(TOK_R_PAREN);
 
@@ -703,10 +760,18 @@ PRIVATE void e(int* s, data_type* t){
 
         matchTok(TOK_NOT);
 
-        e(&s1,&t1);
+        e(&s1,&t1,&memAddress1);
 
         if( t1 != INTEGER_DATA_TYPE )
             compilerror(ERR_INCOMPATIBLE_TYPES,NULL);
+
+        memAlloc(memAddress,1,TEMP_MEMORY_REGION);
+
+        writeInstruction(";OP NOT\n", 1);
+        writeInstruction("\tmov ax, DS:[%d]\n", 2, memAddress1);
+        writeInstruction("\tneg ax\n", 1);
+        writeInstruction("\tadd ax, 1\n", 1);
+        writeInstruction("\tmov DS[%d], ax\n\n", 2, *memAddress);
 
         *s = s1;
         *t = t1;
@@ -715,11 +780,53 @@ PRIVATE void e(int* s, data_type* t){
 
         if( currentSymbol->type == NUMBER_CONST ){
             *t = INTEGER_DATA_TYPE;
+
+            memAlloc(memAddress,1,TEMP_MEMORY_REGION);
+
+            writeInstruction("\t;TEMP CONST INT em %d\n", 2, *memAddress);
+
+            int constValue = atoi(currentSymbol->lexeme);
+
+            writeInstruction("\tmov ax, %d\n", 2,constValue);
+            writeInstruction("\tmov DS:[%d], ax\n\n", 2,*memAddress);
+
+
         } else if( currentSymbol->type == CHARACTER_CONST || currentSymbol->type == HEX_CONST ){
             *t = CHARACTER_DATA_TYPE;
+
+            memAlloc(memAddress,1,TEMP_MEMORY_REGION);
+
+            writeInstruction("\t;TEMP CONST CARACT em %d\n", 2, *memAddress);
+
+            int constValue = 0;
+            if( currentSymbol->type == CHARACTER_CONST )
+                constValue = currentSymbol->lexeme[1];
+            else
+                constValue = hex2int(substr(currentSymbol->lexeme,1,3));
+
+            writeInstruction("\tmov al, %d\n", 2, constValue);
+            writeInstruction("\tmov DS:[%d], al\n\n", 2, *memAddress);
+
         } else{
+
             *t = CHARACTER_DATA_TYPE;
-            *s = currentSymbol->size;//Aceita string vazia.
+            *s = (currentSymbol->size - 1);//Aceita string vazia.
+
+            //--------------- GEN CODE -----------------//
+
+            //Reserva memória na area de dados p/ um literal string
+            memAlloc(memAddress,*s,STANDARD_MEMORY_REGION);
+
+            //Adiciona o caracter fim de string '$'
+            string newStr = strInject(currentSymbol->lexeme,"$", *s );
+            free(currentSymbol->lexeme);
+            currentSymbol->lexeme = newStr;
+
+            //Declara literal string na area de dados
+            writeInstruction("dseg SEGMENT PUBLIC ; inicio seg. dados\n", 1);
+            writeInstruction("\tbyte %s ;const string em %d\n", 3, currentSymbol->lexeme, *memAddress);
+            writeInstruction("dseg ENDS ;fim seg. dados\n\n", 1);
+
         }
 
         matchTok(TOK_CONSTANT);
@@ -734,6 +841,7 @@ PRIVATE void e(int* s, data_type* t){
 
         *s = tmpIdentifier->arraySize;
         *t = tmpIdentifier->dataType;
+        *memAddress = tmpIdentifier->memAddress;
 
         matchTok(TOK_IDENTIFIER);
 
@@ -747,12 +855,26 @@ PRIVATE void e(int* s, data_type* t){
                 compilerror(ERR_INCOMPATIBLE_TYPES,NULL);
 
             matchTok(TOK_L_BRACE);
-            expression(&s1,&t1);
+            expression(&s1,&t1,&memAddress1);
             matchTok(TOK_R_BRACE);
 
             //Se expressão for diferente do tipo inteiro, erro!
             if( t1 != INTEGER_DATA_TYPE )
                 compilerror(ERR_INCOMPATIBLE_TYPES,NULL);
+
+            writeInstruction("\tmov ax, DS:[%d]\n", 2, memAddress1);
+
+            if( *t == INTEGER_DATA_TYPE ){
+                memAlloc(memAddress,2,TEMP_MEMORY_REGION);
+                writeInstruction("\tadd ax, ax\n", 1);
+            } else{
+                memAlloc(memAddress,1,TEMP_MEMORY_REGION);
+            }
+
+            writeInstruction("\tadd ax, %d\n", 2, tmpIdentifier->memAddress);
+            writeInstruction("\tmov bx, ax\n", 1);
+            writeInstruction("\tmov ax, DS:[bx]\n", 1);
+            writeInstruction("\tmov DS:[%d], ax\n\n", 2, *memAddress);
 
             *s = 0;
 

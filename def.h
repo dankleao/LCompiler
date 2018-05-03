@@ -10,7 +10,6 @@
 
 #define PUBLIC
 #define PRIVATE static
-#define CONCAT(a,b) a##b
 
 //Define o tipo string
 typedef char* string;
@@ -69,5 +68,28 @@ PUBLIC bool evalFileExt(string fileName,string ext);
  * @return TRUE se string A for igual string B, senão FALSE
  */
 PUBLIC bool compareStrings(string leftStr, string rightStr);
+
+/*
+ * Converte um literal hexadecimal representado
+ * por uma string em um valor decimal inteiro
+ * @param hex literal string hexadecimal
+ * @return um valor decimal(inteiro) equivalente ao valor hexadecimal(string)
+ */
+PUBLIC int hex2int(string hex);
+
+/*
+ * Injeta uma substring code na string source na posição pos.
+ * Ex: source: "smile", code = "@!", pos: 2 => new source: "sm@!ile"
+ * @param source string afetada
+ * @param code string inserido na string source
+ * @param pos code inserido a partir da posição definida em pos
+ * @return string source acrescida da substring code
+ */
+PUBLIC string strInject( string source, string code, int pos );
+
+/*
+ * Retorna uma nova string formada pela substring de str.
+ */
+PUBLIC string substr(string str, int beginIndex, int endIndex);
 
 #endif //LCOMPILER_DEF_H
