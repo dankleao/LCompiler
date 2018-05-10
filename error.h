@@ -24,8 +24,9 @@
         ERR(ERR_IDENTIFIER_ALREADY_DECLARED,"identificador ja declarado.") \
         ERR(ERR_INCOMPATIBLE_TYPES,"tipos incompativeis.") \
         ERR(ERR_ARRAY_SIZE_BOUND_EXCEEDED,"tamanho do vetor excede o maximo permitido.") \
-        ERR(ERR_INCOMPATIBLE_CLASS_IDENTIFIER,"classe de identificador incompativel.") \
+        ERR(ERR_INCOMPATIBLE_CLASS_IDENTIFIER,"classe de identificador incom,pativel.") \
         ERR(ERR_UNDECLARED_IDENTIFIER,"identificador nao declarado.") \
+        ERR(ERR_COULD_NOT_CREATE_INTERMEDIATE_CODE_FILE,"nao foi possivel criar o arquivo de codigo intermediario.") \
 
 enum {
 #ifdef ERR_LIST

@@ -28,12 +28,9 @@ typedef enum class{
  */
 typedef enum data_type {
     NULL_DATA_TYPE = -1,
-    BOOLEAN_DATA_TYPE,
     CHARACTER_DATA_TYPE,
     INTEGER_DATA_TYPE
 }data_type;
-
-typedef unsigned int memory_address;
 
 /*
  * Tipo symbol representa uma entidade básica da tabela de símbolo
@@ -51,13 +48,13 @@ typedef struct symbol{
             class classId;       //classe de identificador
             data_type dataType;  //tipo de dados
             int arraySize;       //tamanho do array, se 0 então é uma variável escalar
-            memory_address memAddress; //endereço de memoria
+            int memAddress;      //endereço de memoria
         };
 
         //Atributos p/ constantes( numéricas, hexdecimais, string, caracter )
         struct{
-            int typeConst;
-            int typeSize;
+            int type;
+            int size;
         };
 
     };
