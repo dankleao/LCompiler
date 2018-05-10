@@ -4,7 +4,7 @@
 
 #include "code_generator.h"
 
-PUBLIC void resetTemp(){
+PUBLIC void resetTempMemRegion(){
     memStart[TEMP_MEMORY_REGION] = 0;
 }
 
@@ -15,7 +15,7 @@ PUBLIC void memAlloc( int* memAddress, int size, int region ){
 
 PUBLIC string newLabel(){
     static int i = 0;
-    return strcat( "R", int2str(i++) );
+    return strcat( strAlloc("R"), int2str(i++) );
 }
 
 PUBLIC void writeInstruction(string instruction,int i,...){
@@ -27,6 +27,7 @@ PUBLIC void writeInstruction(string instruction,int i,...){
     while ( *pAuxBuffer )
         ++pAuxBuffer;
 
+    i += 1;
     va_start(v,i);
     vsprintf(pAuxBuffer,instruction,v);
     va_end(v);
@@ -78,6 +79,9 @@ PUBLIC void startCodeSeg(){
 }
 
 PUBLIC void endCodeSeg(){
+    writeInstruction("\n;Fim do programa\n",1);
+    writeInstruction("\tmov ah, 4Ch\n",1);
+    writeInstruction("\tint 21h\n\n",1);
     writeInstruction("cseg ENDS ;fim seg. código\n",1);
     writeInstruction("END strt ;fim do programa\0",1);
 }

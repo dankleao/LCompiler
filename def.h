@@ -5,8 +5,12 @@
 #ifndef LCOMPILER_DEF_H
 #define LCOMPILER_DEF_H
 
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <io.h>
+#include <ctype.h>
+#include <math.h>
 
 #define PUBLIC
 #define PRIVATE static

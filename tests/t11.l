@@ -5,11 +5,9 @@ char nome[4096];
 int b[10];
 int i,p,a <- 10;
 int d[10];
-char flag2 <- 'a';
 char flag <- 0FFh;
 final MAXITER = 10;
 final t = 'c';
-final e = 0AAh;
 int k[100];
 char id;
 

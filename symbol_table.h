@@ -48,7 +48,7 @@ typedef struct symbol{
             class classId;       //classe de identificador
             data_type dataType;  //tipo de dados
             int arraySize;       //tamanho do array, se 0 então é uma variável escalar
-            int memAddress;      //endereço de memoria
+            int address;         //endereço de memoria
         };
 
         //Atributos p/ constantes( numéricas, hexdecimais, string, caracter )
@@ -60,6 +60,8 @@ typedef struct symbol{
     };
 
 }Symbol;
+
+PUBLIC Symbol NullSymbol;
 
 /*
  * Compara um lexema com uma cadeia de caracteres qualquer

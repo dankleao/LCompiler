@@ -3,7 +3,6 @@
 //
 
 #include "lex.h"
-#include "symbol_table.h"
 
 PRIVATE inline void ignoreWs(){
     while ( isspace(*prog) && *prog ){
@@ -59,13 +58,13 @@ PRIVATE bool loadProgram( string buff, string fileName ){
 
 PUBLIC Symbol* nextSymbol(){
 
-    Symbol* symbol = NULL;
+    Symbol* symbol = &NullSymbol;
     int symbolType = TOK_IDENTIFIER;
     string currentLexeme = NULL;
 
     //Verifica se arquivo chegou ao fim
     if( *prog == '\0' )
-        return NULL;
+        return symbol;
 
     int state = Q0;//inicia o automato sempre para o estado inicial na chamada da função
 
@@ -106,7 +105,7 @@ PUBLIC Symbol* nextSymbol(){
                     state = Q17;
                 }//Fim de arquivo
                 else if( *prog == '\0' ){
-                    return NULL;
+                    return symbol;
                 }//Reconhece um op.aritmético, delimitadores e op.igualdade
                 else if( strChr("+-*%[](),;=",*prog) ){
                     ++prog;
@@ -128,9 +127,9 @@ PUBLIC Symbol* nextSymbol(){
                 }
                 break;//Fim Q1
             case Q2:
-               while ( isalnum(*(++prog)) || *prog == '_' );
-               state = F;
-               break;//Fim Q2
+                while ( isalnum(*(++prog)) || *prog == '_' );
+                state = F;
+                break;//Fim Q2
             case Q3:
                 if( *(++prog) >= 'A' && *prog <= 'F' ){
                     state = Q4;
@@ -224,13 +223,23 @@ PUBLIC Symbol* nextSymbol(){
                 break;//Fim Q12
             case Q13:
                 if( *(++prog) == '*' ){
+                    ++prog;
                     state = Q14;
                 } else{
                     state = F;
                 }
                 break;//Fim Q13
             case Q14:;
-                while( *(++prog) != '*' );
+                while( *prog && *prog != '*' ){
+                    if( *prog == '\n' ){
+                        ++lineCounter;
+                    }
+                    ++prog;
+                }
+                //detecta erro lexíco de comentário sem fechamento
+                if( *prog == '\0' ){
+                    compilerror(ERR_EOF_NOT_EXPECTED,NULL);
+                }
                 state = Q15;
                 break;//Fim Q14
             case Q15:
@@ -272,7 +281,7 @@ PUBLIC Symbol* nextSymbol(){
                         symbol->classId = NULL_CLASS;
                         symbol->dataType = NULL_DATA_TYPE;
                         symbol->arraySize = 0;
-                        symbol->memAddress = 0;
+                        symbol->address = 0;
                         symbolAdd(symbol);
 
                     }
@@ -301,11 +310,11 @@ PUBLIC bool startLex( string fileName ){
 
     //Representação string dos tokens da linguagem
     string tokName [] = {"final","int","char","for","if","else",
-                        "do","and","or","not","to", "begin",
-                        "end","then","step","readln","write","writeln",
-                        "<-","=","<>",">","<",">=",
-                        "<=","+","-","*","/","%",
-                        ";",",","(",")","[","]"};
+                         "do","and","or","not","to", "begin",
+                         "end","then","step","readln","write","writeln",
+                         "<-","=","<>",">","<",">=",
+                         "<=","+","-","*","/","%",
+                         ";",",","(",")","[","]"};
 
     //Verifica a extensão do código-fonte
     if( !fileExists(fileName) ){
@@ -335,6 +344,13 @@ PUBLIC bool startLex( string fileName ){
         symbolAdd(symbol);
     }
 
+    NullSymbol.lexeme = "null symbol";
+    NullSymbol.tok = -1;
+    NullSymbol.classId = NULL_CLASS;
+    NullSymbol.dataType = NULL_DATA_TYPE;
+    NullSymbol.arraySize = 0;
+    NullSymbol.address = 0;
+
     //inicializa o contador de linhas
     lineCounter = 1;
 
@@ -345,7 +361,6 @@ PUBLIC bool startLex( string fileName ){
 PUBLIC void printSymbol(Symbol* symbol){
 
     if( symbol != NULL ) {
-
         if ( symbol->tok == TOK_CONSTANT ) {
 
             static string typeNames[] = { "CHARACTER","HEX","NUMBER","STRING"};
@@ -370,7 +385,7 @@ PUBLIC void printSymbol(Symbol* symbol){
                        "\n\t\t tok: %d"
                        "\n\t\t class: %s"
                        "\n\t\t data type: %s"
-                       "\n\t\t arraySize: %s"
+                       "\n\t\t arraySize: %d"
                        "\n\t\t addr: %d\n\t);",
                        symbol,
                        symbol->lexeme,
@@ -378,8 +393,8 @@ PUBLIC void printSymbol(Symbol* symbol){
                        symbol->tok,
                        ( symbol->classId == CONST_CLASS ? "CONST_CLASS" : "VAR_CLASS"  ),
                        ( symbol->dataType == CHARACTER_DATA_TYPE ? "CHAR" : "INTEGER"  ),
-                       ( symbol->arraySize == 0 ? "SINGLE" : "ARRAY" ),
-                       symbol->memAddress);
+                       ( symbol->arraySize  ),
+                       symbol->address);
             }
             else{
                 printf("\n\tTok( "

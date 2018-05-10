@@ -1,11 +1,6 @@
 //
 // Created by Daniel on 06/04/2018.
 //
-
-#include <io.h>
-#include <ctype.h>
-#include <stdio.h>
-#include <math.h>
 #include "def.h"
 
 PUBLIC string int2str(int value){
@@ -58,7 +53,6 @@ PUBLIC bool evalFileExt(string fileName,string ext){
 
         if( state == Q0 ){
 
-            printf("%c",*fileNameBegin);
             if( isalnum(*fileNameBegin) || !strChr("\\/|<>*:\"",*fileNameBegin) ){
                 ++fileNameBegin;
                 state = Q1;

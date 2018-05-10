@@ -6,35 +6,59 @@
 
 #IncludeRegexTransform: 
 
-C:/Users/Daniel/CLionProjects/LCompiler/config.h
+C:/Users/Daniel/Downloads/LCompiler-master/code_generator.c
+code_generator.h
+C:/Users/Daniel/Downloads/LCompiler-master/code_generator.h
 
-C:/Users/Daniel/CLionProjects/LCompiler/def.c
+C:/Users/Daniel/Downloads/LCompiler-master/code_generator.h
 stdio.h
 -
+stdarg.h
+-
 def.h
-C:/Users/Daniel/CLionProjects/LCompiler/def.h
+C:/Users/Daniel/Downloads/LCompiler-master/def.h
+error.h
+C:/Users/Daniel/Downloads/LCompiler-master/error.h
+config.h
+C:/Users/Daniel/Downloads/LCompiler-master/config.h
+symbol_table.h
+C:/Users/Daniel/Downloads/LCompiler-master/symbol_table.h
 
-C:/Users/Daniel/CLionProjects/LCompiler/def.h
+C:/Users/Daniel/Downloads/LCompiler-master/config.h
+
+C:/Users/Daniel/Downloads/LCompiler-master/def.c
+def.h
+C:/Users/Daniel/Downloads/LCompiler-master/def.h
+
+C:/Users/Daniel/Downloads/LCompiler-master/def.h
+stdio.h
+-
 stdlib.h
 -
 string.h
 -
+io.h
+-
+ctype.h
+-
+math.h
+-
 
-C:/Users/Daniel/CLionProjects/LCompiler/error.c
+C:/Users/Daniel/Downloads/LCompiler-master/error.c
 error.h
-C:/Users/Daniel/CLionProjects/LCompiler/error.h
+C:/Users/Daniel/Downloads/LCompiler-master/error.h
 
-C:/Users/Daniel/CLionProjects/LCompiler/error.h
+C:/Users/Daniel/Downloads/LCompiler-master/error.h
 stdio.h
 -
 def.h
-C:/Users/Daniel/CLionProjects/LCompiler/def.h
+C:/Users/Daniel/Downloads/LCompiler-master/def.h
 
-C:/Users/Daniel/CLionProjects/LCompiler/hash_table.c
+C:/Users/Daniel/Downloads/LCompiler-master/hash_table.c
 hash_table.h
-C:/Users/Daniel/CLionProjects/LCompiler/hash_table.h
+C:/Users/Daniel/Downloads/LCompiler-master/hash_table.h
 
-C:/Users/Daniel/CLionProjects/LCompiler/hash_table.h
+C:/Users/Daniel/Downloads/LCompiler-master/hash_table.h
 stdio.h
 -
 stdlib.h
@@ -42,45 +66,45 @@ stdlib.h
 time.h
 -
 def.h
-C:/Users/Daniel/CLionProjects/LCompiler/def.h
+C:/Users/Daniel/Downloads/LCompiler-master/def.h
 config.h
-C:/Users/Daniel/CLionProjects/LCompiler/config.h
+C:/Users/Daniel/Downloads/LCompiler-master/config.h
 
-C:/Users/Daniel/CLionProjects/LCompiler/lex.c
+C:/Users/Daniel/Downloads/LCompiler-master/lex.c
 lex.h
-C:/Users/Daniel/CLionProjects/LCompiler/lex.h
-symbol_table.h
-C:/Users/Daniel/CLionProjects/LCompiler/symbol_table.h
+C:/Users/Daniel/Downloads/LCompiler-master/lex.h
 
-C:/Users/Daniel/CLionProjects/LCompiler/lex.h
+C:/Users/Daniel/Downloads/LCompiler-master/lex.h
 ctype.h
 -
 io.h
 -
 def.h
-C:/Users/Daniel/CLionProjects/LCompiler/def.h
+C:/Users/Daniel/Downloads/LCompiler-master/def.h
 error.h
-C:/Users/Daniel/CLionProjects/LCompiler/error.h
+C:/Users/Daniel/Downloads/LCompiler-master/error.h
 config.h
-C:/Users/Daniel/CLionProjects/LCompiler/config.h
+C:/Users/Daniel/Downloads/LCompiler-master/config.h
 symbol_table.h
-C:/Users/Daniel/CLionProjects/LCompiler/symbol_table.h
+C:/Users/Daniel/Downloads/LCompiler-master/symbol_table.h
 
-C:/Users/Daniel/CLionProjects/LCompiler/parser.c
+C:/Users/Daniel/Downloads/LCompiler-master/parser.c
 parser.h
-C:/Users/Daniel/CLionProjects/LCompiler/parser.h
+C:/Users/Daniel/Downloads/LCompiler-master/parser.h
 
-C:/Users/Daniel/CLionProjects/LCompiler/parser.h
+C:/Users/Daniel/Downloads/LCompiler-master/parser.h
 lex.h
-C:/Users/Daniel/CLionProjects/LCompiler/lex.h
+C:/Users/Daniel/Downloads/LCompiler-master/lex.h
+code_generator.h
+C:/Users/Daniel/Downloads/LCompiler-master/code_generator.h
 
-C:/Users/Daniel/CLionProjects/LCompiler/symbol_table.c
+C:/Users/Daniel/Downloads/LCompiler-master/symbol_table.c
 symbol_table.h
-C:/Users/Daniel/CLionProjects/LCompiler/symbol_table.h
+C:/Users/Daniel/Downloads/LCompiler-master/symbol_table.h
 
-C:/Users/Daniel/CLionProjects/LCompiler/symbol_table.h
+C:/Users/Daniel/Downloads/LCompiler-master/symbol_table.h
 def.h
-C:/Users/Daniel/CLionProjects/LCompiler/def.h
+C:/Users/Daniel/Downloads/LCompiler-master/def.h
 hash_table.h
-C:/Users/Daniel/CLionProjects/LCompiler/hash_table.h
+C:/Users/Daniel/Downloads/LCompiler-master/hash_table.h
 

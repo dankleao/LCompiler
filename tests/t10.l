@@ -12,8 +12,6 @@ final x = 0DDh;
 int vet[4096];
 int m[100], o[1];
 
-
-
 /* Programa Principal */
 
   flag <- 'A';
@@ -26,7 +24,7 @@ int m[100], o[1];
         writeln(vet[1]);
    else
         if( MAXITER ) then begin
-            for n <- 0 to MAXITER step -2 do
+            for n <- 0 to MAXITER step 1 do
                 writeln(10);
             readln(id);
         end
@@ -64,6 +62,6 @@ int m[100], o[1];
        if(n < 10) then begin
             if(i <> p) then ;
        end
-       readln(vet[0]);
+
        writeln("Ola","hello",'c');
      end

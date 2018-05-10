@@ -14,6 +14,8 @@
 
 #define STANDARD_MEMORY_REGION 0
 #define TEMP_MEMORY_REGION 1
+#define BYTE 1
+#define SWORD 2
 
 PRIVATE int memStart [2] = { 16384, 0 };
 
@@ -23,7 +25,7 @@ PRIVATE char outputBuffer[PROGRAM_LEN_MAX+PROGRAM_LEN_MAX] = {'\0'};
 /*
  * Reseta ponteiro dos temporários
  */
-PUBLIC void resetTemp();
+PUBLIC void resetTempMemRegion();
 
 /*
  *  Reserva uma area de memory
@@ -65,6 +67,5 @@ PUBLIC void endDataSeg();
  */
 PUBLIC void startCodeSeg();
 PUBLIC void endCodeSeg();
-
 
 #endif //LCOMPILER_CODE_GENERATOR_H
