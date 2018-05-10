@@ -53,7 +53,7 @@ PUBLIC bool evalFileExt(string fileName,string ext){
 
         if( state == Q0 ){
 
-            if( isalnum(*fileNameBegin) || !strChr("\\/|<>*:\"",*fileNameBegin) ){
+            if( isalnum(*fileNameBegin) || !strChr("./|<>*:\"",*fileNameBegin) ){
                 ++fileNameBegin;
                 state = Q1;
             }
@@ -63,7 +63,7 @@ PUBLIC bool evalFileExt(string fileName,string ext){
 
         } else if ( state == Q1 ){
 
-            while( isalnum(*fileNameBegin) )
+            while( isalnum(*fileNameBegin) || !strChr("./|<>*:\"",*fileNameBegin) )
                 ++fileNameBegin;
 
             if( *fileNameBegin == '.' )

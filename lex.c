@@ -314,10 +314,10 @@ PUBLIC bool startLex( string fileName ){
                          "end","then","step","readln","write","writeln",
                          "<-","=","<>",">","<",">=",
                          "<=","+","-","*","/","%",
-                         ";",",","(",")","[","]"};
+                         ";",",","(",")","[","]"} ;
 
     //Verifica a extensão do código-fonte
-    if( !fileExists(fileName) ){
+    if( !fileExists(fileName) || !evalFileExt(fileName,".l") ){
         compilerror(ERR_FILE_NOT_FOUND,NULL);
     }
 

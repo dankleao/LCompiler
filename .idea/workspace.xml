@@ -23,24 +23,11 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="CMakeBuildProfile:Debug" />
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="parser.c" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/parser.c">
+      <file leaf-file-name="t3.l" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/tests/t3.l">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="468">
-              <caret line="58" column="47" lean-forward="true" selection-start-line="58" selection-start-column="47" selection-end-line="58" selection-end-column="47" />
-              <folding>
-                <element signature="e#71#374#0" />
-                <element signature="e#383#550#0" />
-                <element signature="e#559#785#0" />
-                <element signature="e#794#1030#0" />
-                <element signature="e#1039#1243#0" />
-                <element signature="e#1653#2070#0" />
-                <element signature="e#2079#5113#0" />
-                <element signature="e#5122#9576#0" />
-                <element signature="e#9585#13428#0" />
-                <element signature="e#13437#14302#0" />
-                <element signature="e#14311#16900#0" />
-              </folding>
+            <state>
+              <caret column="5" lean-forward="true" selection-start-column="5" selection-end-column="5" />
             </state>
           </provider>
         </entry>
@@ -48,8 +35,62 @@
       <file leaf-file-name="a.asm" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/a.asm">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-4910">
-              <caret line="16" column="42" lean-forward="true" selection-start-line="16" selection-start-column="42" selection-end-line="16" selection-end-column="42" />
+            <state relative-caret-position="378">
+              <caret line="21" column="22" selection-start-line="21" selection-start-column="22" selection-end-line="21" selection-end-column="22" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="max.l" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/tests/max.l">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="324">
+              <caret line="18" column="36" lean-forward="true" selection-start-line="18" selection-start-column="36" selection-end-line="18" selection-end-column="36" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="isPalindrome.l" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/tests/isPalindrome.l">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-198" />
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="parser.c" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/parser.c">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="166">
+              <caret line="1347" column="5" lean-forward="true" selection-start-line="1347" selection-start-column="5" selection-end-line="1347" selection-end-column="5" />
+              <folding>
+                <element signature="e#71#374#0" />
+                <element signature="e#383#550#0" />
+                <element signature="e#559#785#0" />
+                <element signature="e#794#1030#0" />
+                <element signature="e#1039#1243#0" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="lex.c" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/lex.c">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="181">
+              <caret line="319" column="63" lean-forward="true" selection-start-line="319" selection-start-column="63" selection-end-line="319" selection-end-column="63" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="def.c" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/def.c">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="34">
+              <caret line="40" column="51" selection-start-line="40" selection-start-column="51" selection-end-line="40" selection-end-column="51" />
+              <folding>
+                <element signature="e#673#768#0" />
+                <element signature="e#777#1961#0" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -67,7 +108,7 @@
       <find>syn</find>
       <find>TEMP_MEMORY_REGION</find>
       <find>pop</find>
-      <find />
+      <find>imul %d</find>
       <find>DS:</find>
       <find>prin</find>
       <find>=</find>
@@ -112,14 +153,15 @@
         <option value="$PROJECT_DIR$/code_generator.c" />
         <option value="$PROJECT_DIR$/code_generator.h" />
         <option value="$PROJECT_DIR$/t7.l" />
-        <option value="$PROJECT_DIR$/def.c" />
         <option value="$PROJECT_DIR$/config.h" />
         <option value="$PROJECT_DIR$/t10.l" />
-        <option value="$PROJECT_DIR$/lex.c" />
         <option value="$PROJECT_DIR$/t3.l" />
-        <option value="$PROJECT_DIR$/a.asm" />
         <option value="$PROJECT_DIR$/t13.l" />
         <option value="$PROJECT_DIR$/parser.c" />
+        <option value="$PROJECT_DIR$/tests/isPalindrome" />
+        <option value="$PROJECT_DIR$/lex.c" />
+        <option value="$PROJECT_DIR$/def.c" />
+        <option value="$PROJECT_DIR$/a.asm" />
       </list>
     </option>
   </component>
@@ -130,7 +172,7 @@
     <sorting>DEFINITION_ORDER</sorting>
   </component>
   <component name="OCFindUsagesOptions" text="true" ivars="false" properties="true" derivedClasses="false" />
-  <component name="ProjectFrameBounds" extendedState="7">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="874" />
     <option name="width" value="962" />
     <option name="height" value="858" />
@@ -147,6 +189,11 @@
             <path>
               <item name="LCompiler" type="b2602c69:ProjectViewProjectNode" />
               <item name="LCompiler" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="LCompiler" type="b2602c69:ProjectViewProjectNode" />
+              <item name="LCompiler" type="462c0819:PsiDirectoryNode" />
+              <item name="tests" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -228,12 +275,13 @@
       <workItem from="1525905619814" duration="19085000" />
       <workItem from="1525926671353" duration="159000" />
       <workItem from="1525926954844" duration="3691000" />
-      <workItem from="1525930884865" duration="795000" />
+      <workItem from="1525930884865" duration="1103000" />
+      <workItem from="1525965616533" duration="3783000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="232897000" />
+    <option name="totallyTimeSpent" value="236988000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1616" height="876" extended-state="6" />
@@ -243,12 +291,12 @@
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="CMake" order="11" weight="0.32985657" />
       <window_info anchor="bottom" id="Event Log" order="7" sideWeight="0.501875" side_tool="true" weight="0.22946545" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.32724902" />
       <window_info anchor="bottom" id="Version Control" order="9" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.32724902" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info anchor="bottom" id="Terminal" order="8" sideWeight="0.498125" visible="true" weight="0.18383312" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.39243808" />
+      <window_info anchor="bottom" id="Terminal" order="8" sideWeight="0.498125" visible="true" weight="0.31812257" />
       <window_info id="Favorites" order="2" side_tool="true" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.39243808" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
@@ -271,47 +319,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/code_generator.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="399">
-          <caret line="19" column="40" lean-forward="true" selection-start-line="19" selection-start-column="40" selection-end-line="19" selection-end-column="40" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/parser.c">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2625">
-          <caret line="125" column="12" selection-start-line="125" selection-start-column="12" selection-end-line="125" selection-end-column="12" />
-          <folding>
-            <element signature="e#71#374#0" />
-            <element signature="e#383#550#0" />
-            <element signature="e#559#785#0" />
-            <element signature="e#794#1030#0" />
-            <element signature="e#1039#1243#0" />
-            <element signature="e#1653#2070#0" />
-            <element signature="e#2079#5113#0" />
-            <element signature="e#5122#9576#0" />
-            <element signature="e#9585#13428#0" />
-            <element signature="e#13437#14302#0" />
-            <element signature="e#14311#16900#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/lex.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="935">
-          <caret line="55" column="21" selection-start-line="55" selection-start-column="21" selection-end-line="55" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/symbol_table.c">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="408">
-          <caret line="24" column="1" selection-start-line="24" selection-start-column="1" selection-end-line="24" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/parse.c" />
     <entry file="file://$PROJECT_DIR$/error.c">
       <provider selected="true" editor-type-id="text-editor">
@@ -466,13 +473,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/def.c">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="228">
-          <caret line="34" column="1" selection-start-line="34" selection-start-column="1" selection-end-line="34" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/error.c">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="252">
@@ -487,13 +487,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/lex.c">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="181">
-          <caret line="417" column="9" selection-start-line="417" selection-start-column="4" selection-end-line="417" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/symbol_table.c">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="341">
@@ -501,30 +494,68 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/lex.c">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="181">
+          <caret line="319" column="63" lean-forward="true" selection-start-line="319" selection-start-column="63" selection-end-line="319" selection-end-column="63" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/def.c">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="34">
+          <caret line="40" column="51" selection-start-line="40" selection-start-column="51" selection-end-line="40" selection-end-column="51" />
+          <folding>
+            <element signature="e#673#768#0" />
+            <element signature="e#777#1961#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tests/isPalindrome">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="459">
+          <caret line="39" column="6" lean-forward="true" selection-end-line="39" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tests/t3.l">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="5" lean-forward="true" selection-start-column="5" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tests/max.l">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="324">
+          <caret line="18" column="36" lean-forward="true" selection-start-line="18" selection-start-column="36" selection-end-line="18" selection-end-column="36" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tests/isPalindrome.l">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-198" />
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/parser.c">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="468">
-          <caret line="58" column="47" lean-forward="true" selection-start-line="58" selection-start-column="47" selection-end-line="58" selection-end-column="47" />
+        <state relative-caret-position="166">
+          <caret line="1347" column="5" lean-forward="true" selection-start-line="1347" selection-start-column="5" selection-end-line="1347" selection-end-column="5" />
           <folding>
             <element signature="e#71#374#0" />
             <element signature="e#383#550#0" />
             <element signature="e#559#785#0" />
             <element signature="e#794#1030#0" />
             <element signature="e#1039#1243#0" />
-            <element signature="e#1653#2070#0" />
-            <element signature="e#2079#5113#0" />
-            <element signature="e#5122#9576#0" />
-            <element signature="e#9585#13428#0" />
-            <element signature="e#13437#14302#0" />
-            <element signature="e#14311#16900#0" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/a.asm">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-4910">
-          <caret line="16" column="42" lean-forward="true" selection-start-line="16" selection-start-column="42" selection-end-line="16" selection-end-column="42" />
+        <state relative-caret-position="378">
+          <caret line="21" column="22" selection-start-line="21" selection-start-column="22" selection-end-line="21" selection-end-column="22" />
         </state>
       </provider>
     </entry>
