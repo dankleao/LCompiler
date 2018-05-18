@@ -26,7 +26,7 @@ int isPalindrome;
     end
 
     if( isPalindrome ) then
-        writeln(word,"is a palindrome");
+        write(word," is a palindrome");
     else
-        writeln(word,"is not a palindrome");
+        write(word," is not a palindrome");
 

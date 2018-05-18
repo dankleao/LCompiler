@@ -12,6 +12,7 @@
 #include "config.h"
 #include "symbol_table.h"
 
+
 #define STANDARD_MEMORY_REGION 0
 #define TEMP_MEMORY_REGION 1
 #define BYTE 1
@@ -20,7 +21,7 @@
 PRIVATE int memStart [2] = { 16384, 0 };
 
 //Buffer que armazena as sequencias de instruções traduzidas pelo compilador
-PRIVATE char outputBuffer[PROGRAM_LEN_MAX+PROGRAM_LEN_MAX] = {'\0'};
+PRIVATE char outputBuffer[OUTPUT_BUFFER_MAX] = {'\0'};
 
 /*
  * Reseta ponteiro dos temporários

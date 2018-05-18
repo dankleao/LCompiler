@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="BookmarkManager">
+    <bookmark url="file://$PROJECT_DIR$/code_generator.h" line="23" />
+  </component>
   <component name="CMakeRunConfigurationManager" shouldGenerate="true" shouldDeleteObsolete="true" buildAllGenerated="true">
     <generated>
       <config projectName="LCompiler" targetName="LCompiler" />
@@ -21,76 +24,96 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="ExecutionTargetManager" SELECTED_TARGET="CMakeBuildProfile:Debug" />
+  <component name="FavoritesManager">
+    <favorites_list name="LCompiler-master" />
+  </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="t3.l" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/tests/t3.l">
+      <file leaf-file-name="parser.h" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/parser.h">
           <provider selected="true" editor-type-id="text-editor">
-            <state>
-              <caret column="5" lean-forward="true" selection-start-column="5" selection-end-column="5" />
+            <state relative-caret-position="1424">
+              <caret line="89" selection-start-line="89" selection-end-line="89" />
+              <folding>
+                <element signature="e#98#114#0" expanded="true" />
+              </folding>
             </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="a.asm" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/a.asm">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="378">
-              <caret line="21" column="22" selection-start-line="21" selection-start-column="22" selection-end-line="21" selection-end-column="22" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="max.l" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/tests/max.l">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="324">
-              <caret line="18" column="36" lean-forward="true" selection-start-line="18" selection-start-column="36" selection-end-line="18" selection-end-column="36" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="isPalindrome.l" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/tests/isPalindrome.l">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-198" />
           </provider>
         </entry>
       </file>
       <file leaf-file-name="parser.c" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/parser.c">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="166">
-              <caret line="1347" column="5" lean-forward="true" selection-start-line="1347" selection-start-column="5" selection-end-line="1347" selection-end-column="5" />
+            <state relative-caret-position="9232">
+              <caret line="577" column="31" selection-start-line="577" selection-start-column="31" selection-end-line="577" selection-end-column="31" />
               <folding>
                 <element signature="e#71#374#0" />
                 <element signature="e#383#550#0" />
                 <element signature="e#559#785#0" />
                 <element signature="e#794#1030#0" />
                 <element signature="e#1039#1243#0" />
+                <element signature="e#1252#1632#0" />
+                <element signature="e#1641#2051#0" />
+                <element signature="e#2061#5099#0" />
+                <element signature="e#5108#9567#0" />
+                <element signature="e#9353#11318#0" />
+                <element signature="e#11327#11710#0" />
+                <element signature="e#13580#17805#0" />
+                <element signature="e#14835#15067#0" />
+                <element signature="e#27283#31287#0" />
+                <element signature="e#16250#16982#0" />
+                <element signature="e#16991#17637#0" />
+                <element signature="e#18464#23728#0" />
+                <element signature="e#19668#20492#0" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="lex.c" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/lex.c">
+      <file leaf-file-name="t2.l" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/tests/t2.l">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="181">
-              <caret line="319" column="63" lean-forward="true" selection-start-line="319" selection-start-column="63" selection-end-line="319" selection-end-column="63" />
+            <state relative-caret-position="208">
+              <caret line="13" selection-start-line="13" selection-end-line="13" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="def.c" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/def.c">
+      <file leaf-file-name="BubbleSort.l" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/tests/BubbleSort.l">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="34">
-              <caret line="40" column="51" selection-start-line="40" selection-start-column="51" selection-end-line="40" selection-end-column="51" />
+            <state relative-caret-position="400">
+              <caret line="25" column="29" selection-start-line="25" selection-start-column="29" selection-end-line="25" selection-end-column="29" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="a.asm" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/a.asm">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="11280">
+              <caret line="705" selection-start-line="705" selection-end-line="705" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="code_generator.h" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/code_generator.h">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="416">
+              <caret line="26" column="34" selection-start-line="26" selection-start-column="34" selection-end-line="26" selection-end-column="34" />
               <folding>
-                <element signature="e#673#768#0" />
-                <element signature="e#777#1961#0" />
+                <element signature="e#114#132#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="config.h" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/config.h">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="272">
+              <caret line="17" lean-forward="true" selection-start-line="17" selection-end-line="17" />
             </state>
           </provider>
         </entry>
@@ -106,14 +129,6 @@
       <find>identifierPTR</find>
       <find>tmpIdentifier</find>
       <find>syn</find>
-      <find>TEMP_MEMORY_REGION</find>
-      <find>pop</find>
-      <find>imul %d</find>
-      <find>DS:</find>
-      <find>prin</find>
-      <find>=</find>
-      <find>printf</find>
-      <find>print</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -134,34 +149,33 @@
         <option value="$PROJECT_DIR$/progC.l" />
         <option value="$PROJECT_DIR$/symbol_table.c" />
         <option value="$PROJECT_DIR$/hash_table.h" />
-        <option value="$PROJECT_DIR$/CMakeLists.txt" />
         <option value="$PROJECT_DIR$/progD.l" />
         <option value="$PROJECT_DIR$/t1.l" />
         <option value="$PROJECT_DIR$/t5.l" />
-        <option value="$PROJECT_DIR$/t2.l" />
         <option value="$PROJECT_DIR$/t12.l" />
         <option value="$PROJECT_DIR$/translator.c" />
         <option value="$PROJECT_DIR$/translator.h" />
         <option value="$PROJECT_DIR$/t11.l" />
+        <option value="$PROJECT_DIR$/t3.l" />
+        <option value="$PROJECT_DIR$/t10.l" />
         <option value="$PROJECT_DIR$/lc.c" />
         <option value="$PROJECT_DIR$/install.bat" />
         <option value="$PROJECT_DIR$/lex.h" />
         <option value="$PROJECT_DIR$/error.h" />
-        <option value="$PROJECT_DIR$/def.h" />
-        <option value="$PROJECT_DIR$/symbol_table.h" />
-        <option value="$PROJECT_DIR$/parser.h" />
-        <option value="$PROJECT_DIR$/code_generator.c" />
-        <option value="$PROJECT_DIR$/code_generator.h" />
-        <option value="$PROJECT_DIR$/t7.l" />
-        <option value="$PROJECT_DIR$/config.h" />
-        <option value="$PROJECT_DIR$/t10.l" />
-        <option value="$PROJECT_DIR$/t3.l" />
-        <option value="$PROJECT_DIR$/t13.l" />
-        <option value="$PROJECT_DIR$/parser.c" />
-        <option value="$PROJECT_DIR$/tests/isPalindrome" />
+        <option value="$PROJECT_DIR$/CMakeLists.txt" />
         <option value="$PROJECT_DIR$/lex.c" />
+        <option value="$PROJECT_DIR$/symbol_table.h" />
+        <option value="$PROJECT_DIR$/code_generator.c" />
         <option value="$PROJECT_DIR$/def.c" />
+        <option value="$PROJECT_DIR$/def.h" />
+        <option value="$PROJECT_DIR$/parser.h" />
         <option value="$PROJECT_DIR$/a.asm" />
+        <option value="$PROJECT_DIR$/code_generator.h" />
+        <option value="$PROJECT_DIR$/t2.l" />
+        <option value="$PROJECT_DIR$/parser.c" />
+        <option value="$PROJECT_DIR$/tests/t2.l" />
+        <option value="$PROJECT_DIR$/tests/BubbleSort.l" />
+        <option value="$PROJECT_DIR$/config.h" />
       </list>
     </option>
   </component>
@@ -171,11 +185,11 @@
     <detection-done>true</detection-done>
     <sorting>DEFINITION_ORDER</sorting>
   </component>
-  <component name="OCFindUsagesOptions" text="true" ivars="false" properties="true" derivedClasses="false" />
-  <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="874" />
-    <option name="width" value="962" />
-    <option name="height" value="858" />
+  <component name="ProjectFrameBounds" extendedState="7">
+    <option name="x" value="-8" />
+    <option name="y" value="-8" />
+    <option name="width" value="798" />
+    <option name="height" value="518" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -188,11 +202,11 @@
           <expand>
             <path>
               <item name="LCompiler" type="b2602c69:ProjectViewProjectNode" />
-              <item name="LCompiler" type="462c0819:PsiDirectoryNode" />
+              <item name="LCompiler-master" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="LCompiler" type="b2602c69:ProjectViewProjectNode" />
-              <item name="LCompiler" type="462c0819:PsiDirectoryNode" />
+              <item name="LCompiler-master" type="462c0819:PsiDirectoryNode" />
               <item name="tests" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
@@ -206,7 +220,7 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
-    <property name="settings.editor.selected.configurable" value="editor.preferences.fonts.default" />
+    <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -223,6 +237,180 @@
   <component name="RunManager" selected="Application.Build All">
     <configuration name="Build All" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="LCompiler" RUN_TARGET_NAME="LCompiler" EXPLICIT_BUILD_TARGET_NAME="all" />
     <configuration name="LCompiler" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="LCompiler" TARGET_NAME="LCompiler" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="LCompiler" RUN_TARGET_NAME="LCompiler" />
+    <configuration default="true" type="CLion_Remote" factoryName="GDB Remote Debug" remoteCommand="" symbolFile="" sysroot="">
+      <method />
+    </configuration>
+    <configuration default="true" type="CMakeCatchTestRunConfigurationType" factoryName="Catch Test" PASS_PARENT_ENVS_2="true" TEST_MODE="SUITE_TEST">
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="true" type="CMakeGoogleTestRunConfigurationType" factoryName="Google Test" PASS_PARENT_ENVS_2="true" TEST_MODE="SUITE_TEST">
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="true" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true">
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="true" type="ChromiumRemoteDebugType" factoryName="Chromium Remote">
+      <method />
+    </configuration>
+    <configuration default="true" type="CompoundRunConfigurationType" factoryName="Compound Run Configuration">
+      <method />
+    </configuration>
+    <configuration default="true" type="FirefoxRemoteDebugType" factoryName="Firefox Remote">
+      <method />
+    </configuration>
+    <configuration default="true" type="JavaScriptTestRunnerJest" factoryName="Jest">
+      <node-interpreter value="project" />
+      <working-dir value="" />
+      <envs />
+      <scope-kind value="ALL" />
+      <method />
+    </configuration>
+    <configuration default="true" type="JavaScriptTestRunnerProtractor" factoryName="Protractor">
+      <config-file value="" />
+      <node-interpreter value="project" />
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="true" type="JavascriptDebugType" factoryName="JavaScript Debug">
+      <method />
+    </configuration>
+    <configuration default="true" type="NodeWebKit" factoryName="NW.js">
+      <method />
+    </configuration>
+    <configuration default="true" type="PythonConfigurationType" factoryName="Python">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="LCompiler" />
+      <option name="SCRIPT_NAME" value="" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <method />
+    </configuration>
+    <configuration default="true" type="ReactNative" factoryName="React Native">
+      <node-interpreter value="project" />
+      <platform value="ANDROID" />
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="true" type="Tox" factoryName="Tox">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="LCompiler" />
+      <method />
+    </configuration>
+    <configuration default="true" type="XSLT" factoryName="XSLT">
+      <option name="myOutputFile" />
+      <option name="myOpenOutputFile" value="false" />
+      <option name="myOpenInBrowser" value="false" />
+      <option name="mySmartErrorHandling" value="true" />
+      <option name="myRunnerPort" value="34873" />
+      <option name="myVmArguments" />
+      <option name="myWorkingDirectory" />
+      <option name="myModule" />
+      <option name="myJdk" />
+      <parameters />
+      <OutputType value="CONSOLE" save-to-file="false" />
+      <FileType name="XML" />
+      <JdkChoice value="FROM_MODULE" />
+      <method />
+    </configuration>
+    <configuration default="true" type="js.build_tools.npm" factoryName="npm">
+      <command value="run" />
+      <scripts />
+      <node-interpreter value="project" />
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="true" type="tests" factoryName="Doctests">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="LCompiler" />
+      <option name="SCRIPT_NAME" value="" />
+      <option name="CLASS_NAME" value="" />
+      <option name="METHOD_NAME" value="" />
+      <option name="FOLDER_NAME" value="" />
+      <option name="TEST_TYPE" value="TEST_SCRIPT" />
+      <option name="PATTERN" value="" />
+      <option name="USE_PATTERN" value="false" />
+      <method />
+    </configuration>
+    <configuration default="true" type="js.build_tools.grunt" factoryName="Grunt.js">
+      <node-interpreter value="project" />
+      <envs />
+    </configuration>
+    <configuration default="true" type="js.build_tools.gulp" factoryName="Gulp.js">
+      <node-interpreter>project</node-interpreter>
+      <node-options />
+      <gulpfile />
+      <tasks />
+      <arguments />
+      <envs />
+    </configuration>
+    <configuration default="true" type="tests" factoryName="Nosetests">
+      <module name="LCompiler" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="_new_regexPattern" value="&quot;&quot;" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;.&quot;" />
+      <option name="_new_targetType" value="&quot;PATH&quot;" />
+    </configuration>
+    <configuration default="true" type="tests" factoryName="Unittests">
+      <module name="LCompiler" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;.&quot;" />
+      <option name="_new_targetType" value="&quot;PATH&quot;" />
+    </configuration>
+    <configuration default="true" type="tests" factoryName="py.test">
+      <module name="LCompiler" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="_new_keywords" value="&quot;&quot;" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;.&quot;" />
+      <option name="_new_targetType" value="&quot;PATH&quot;" />
+    </configuration>
     <list>
       <item itemvalue="Application.Build All" />
       <item itemvalue="Application.LCompiler" />
@@ -267,45 +455,70 @@
       <workItem from="1524756055400" duration="1326000" />
       <workItem from="1524767984443" duration="16927000" />
       <workItem from="1524788932222" duration="8798000" />
-      <workItem from="1525805037661" duration="14347000" />
-      <workItem from="1525832721726" duration="6831000" />
-      <workItem from="1525883566272" duration="6818000" />
-      <workItem from="1525899078795" duration="1379000" />
-      <workItem from="1525903300105" duration="18000" />
-      <workItem from="1525905619814" duration="19085000" />
-      <workItem from="1525926671353" duration="159000" />
-      <workItem from="1525926954844" duration="3691000" />
-      <workItem from="1525930884865" duration="1103000" />
-      <workItem from="1525965616533" duration="3783000" />
+      <workItem from="1524966113471" duration="7421000" />
+      <workItem from="1525792508243" duration="3720000" />
+      <workItem from="1526482632088" duration="2457000" />
+      <workItem from="1526576782493" duration="48000" />
+      <workItem from="1526581556517" duration="19805000" />
+      <workItem from="1526620101829" duration="12000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="236988000" />
+    <option name="totallyTimeSpent" value="213237000" />
+  </component>
+  <component name="TodoView">
+    <todo-panel id="selected-file">
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+    <todo-panel id="all">
+      <are-packages-shown value="true" />
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1616" height="876" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.165" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.189375" />
       <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="bottom" id="CMake" order="11" weight="0.32985657" />
-      <window_info anchor="bottom" id="Event Log" order="7" sideWeight="0.501875" side_tool="true" weight="0.22946545" />
-      <window_info anchor="bottom" id="Version Control" order="9" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.32724902" />
+      <window_info anchor="bottom" id="CMake" order="7" weight="0.32921347" />
+      <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" weight="0.32985657" />
+      <window_info anchor="bottom" id="Version Control" order="7" />
+      <window_info anchor="bottom" id="Run" order="2" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info anchor="bottom" id="Terminal" order="8" sideWeight="0.498125" visible="true" weight="0.31812257" />
+      <window_info anchor="bottom" id="Terminal" order="7" weight="0.44021025" />
       <window_info id="Favorites" order="2" side_tool="true" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.39243808" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
-      <window_info anchor="bottom" id="Messages" order="10" weight="0.58670145" />
+      <window_info anchor="right" id="Data View" order="3" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
-      <window_info anchor="bottom" id="Find" order="1" weight="0.3298292" />
+      <window_info anchor="bottom" id="Find" order="1" />
     </layout>
+    <layout-to-restore>
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.189375" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="right" id="Data View" order="3" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info anchor="right" id="Commander" order="0" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="bottom" id="Version Control" order="9" />
+      <window_info anchor="bottom" id="Run" order="2" />
+      <window_info anchor="bottom" id="Find" order="1" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info anchor="bottom" id="Terminal" order="7" visible="true" weight="0.3285528" />
+      <window_info anchor="bottom" id="Event Log" order="8" side_tool="true" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="CMake" order="10" weight="0.32921347" />
+      <window_info id="Favorites" order="2" side_tool="true" />
+    </layout-to-restore>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
@@ -315,10 +528,55 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="32" />
+      <option name="time" value="20" />
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/tests/t2.l">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="208">
+          <caret line="13" selection-start-line="13" selection-end-line="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tests/BubbleSort.l">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="400">
+          <caret line="25" column="29" lean-forward="true" selection-start-line="25" selection-start-column="29" selection-end-line="25" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/a.asm">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="11280">
+          <caret line="705" selection-start-line="705" selection-end-line="705" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/code_generator.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="416">
+          <caret line="26" column="34" selection-start-line="26" selection-start-column="34" selection-end-line="26" selection-end-column="34" />
+          <folding>
+            <element signature="e#114#132#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="128">
+          <caret line="8" column="78" lean-forward="true" selection-start-line="8" selection-start-column="78" selection-end-line="8" selection-end-column="78" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/symbol_table.c">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="408">
+          <caret line="24" column="1" selection-start-line="24" selection-start-column="1" selection-end-line="24" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/parse.c" />
     <entry file="file://$PROJECT_DIR$/error.c">
       <provider selected="true" editor-type-id="text-editor">
@@ -376,43 +634,27 @@
     <entry file="file://$PROJECT_DIR$/sourceA" />
     <entry file="file://$PROJECT_DIR$/parse.h" />
     <entry file="file://$PROJECT_DIR$/parse.c" />
-    <entry file="file://$PROJECT_DIR$/CMakeLists.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="100">
-          <caret line="5" column="148" selection-start-line="5" selection-start-column="148" selection-end-line="5" selection-end-column="148" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/t5.l" />
+    <entry file="file://$PROJECT_DIR$/t1.l" />
+    <entry file="file://$PROJECT_DIR$/t6.l" />
     <entry file="file://$PROJECT_DIR$/translator.h" />
     <entry file="file://$PROJECT_DIR$/translator.c" />
+    <entry file="file://$PROJECT_DIR$/error.c">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="280">
+          <caret line="14" lean-forward="true" selection-start-line="14" selection-end-line="14" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/hash_table.c">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="676">
+          <caret line="135" selection-start-line="135" selection-end-line="135" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/t4.l" />
     <entry file="file://$PROJECT_DIR$/lc.c" />
-    <entry file="file://$PROJECT_DIR$/install.bat">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="83" selection-start-column="83" selection-end-column="83" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/a2.asm" />
-    <entry file="file://$PROJECT_DIR$/t2.l" />
-    <entry file="file://$PROJECT_DIR$/symbol_table.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="935">
-          <caret line="52" selection-start-line="52" selection-end-line="52" />
-          <folding>
-            <element signature="e#110#126#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/error.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="486">
-          <caret line="28" column="110" selection-start-line="28" selection-start-column="110" selection-end-line="28" selection-end-column="110" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/hash_table.h">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="90">
@@ -420,142 +662,145 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/t1.l" />
-    <entry file="file://$PROJECT_DIR$/parser.h">
+    <entry file="file://$PROJECT_DIR$/install.bat" />
+    <entry file="file://$PROJECT_DIR$/symbol_table.c">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="212">
-          <caret line="73" column="66" selection-start-line="73" selection-start-column="66" selection-end-line="73" selection-end-column="66" />
-          <folding>
-            <element signature="e#98#114#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="450">
+          <caret line="25" column="1" selection-start-line="25" selection-start-column="1" selection-end-line="25" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/error.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="360">
+          <caret line="28" column="110" selection-start-line="28" selection-start-column="110" selection-end-line="28" selection-end-column="110" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/lex.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="198">
-          <caret line="11" column="18" selection-start-line="11" selection-start-column="18" selection-end-line="11" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/config.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-7">
-          <caret line="17" column="23" selection-start-line="17" selection-start-column="8" selection-end-line="17" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/t11.l" />
-    <entry file="file://$PROJECT_DIR$/t6.l" />
-    <entry file="file://$PROJECT_DIR$/t4.l" />
-    <entry file="file://$PROJECT_DIR$/t12.l" />
-    <entry file="file://$PROJECT_DIR$/t10.l" />
-    <entry file="file://$PROJECT_DIR$/t3.l" />
-    <entry file="file://$PROJECT_DIR$/t13.l" />
-    <entry file="file://$PROJECT_DIR$/def.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="18">
-          <caret line="5" column="23" selection-start-line="5" selection-start-column="23" selection-end-line="5" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/code_generator.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="18">
-          <caret line="19" column="40" selection-start-line="19" selection-start-column="40" selection-end-line="19" selection-end-column="40" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/code_generator.c">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="181">
-          <caret line="51" column="12" selection-start-line="51" selection-start-column="6" selection-end-line="51" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/error.c">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="252">
           <caret line="14" lean-forward="true" selection-start-line="14" selection-end-line="14" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/hash_table.c">
+    <entry file="file://$PROJECT_DIR$/a2.asm" />
+    <entry file="file://$PROJECT_DIR$/CMakeLists.txt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="181">
-          <caret line="134" column="10" selection-start-line="134" selection-start-column="4" selection-end-line="134" selection-end-column="10" />
+        <state relative-caret-position="80">
+          <caret line="5" column="134" selection-start-line="5" selection-start-column="134" selection-end-line="5" selection-end-column="134" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/symbol_table.c">
+    <entry file="file://$PROJECT_DIR$/code_generator.c">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="341">
-          <caret line="19" selection-start-line="19" selection-end-line="19" />
+        <state relative-caret-position="64">
+          <caret line="4" column="27" selection-start-line="4" selection-start-column="27" selection-end-line="4" selection-end-column="27" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/lex.c">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="181">
-          <caret line="319" column="63" lean-forward="true" selection-start-line="319" selection-start-column="63" selection-end-line="319" selection-end-column="63" />
+        <state relative-caret-position="-644">
+          <caret line="342" column="24" selection-start-line="342" selection-start-column="24" selection-end-line="342" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/symbol_table.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="224">
+          <caret line="15" selection-start-line="15" selection-end-line="15" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/def.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="268">
+          <caret line="77" column="43" selection-start-line="77" selection-start-column="43" selection-end-line="77" selection-end-column="43" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/def.c">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="40" column="51" selection-start-line="40" selection-start-column="51" selection-end-line="40" selection-end-column="51" />
-          <folding>
-            <element signature="e#673#768#0" />
-            <element signature="e#777#1961#0" />
-          </folding>
+        <state relative-caret-position="2192">
+          <caret line="140" selection-start-line="140" selection-end-line="140" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/tests/isPalindrome">
+    <entry file="file://$PROJECT_DIR$/t3.l" />
+    <entry file="file://$PROJECT_DIR$/t2.l" />
+    <entry file="file://$PROJECT_DIR$/tests/t2.l">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="459">
-          <caret line="39" column="6" lean-forward="true" selection-end-line="39" selection-end-column="6" />
+        <state relative-caret-position="208">
+          <caret line="13" selection-start-line="13" selection-end-line="13" />
         </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tests/t3.l">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="5" lean-forward="true" selection-start-column="5" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tests/max.l">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="324">
-          <caret line="18" column="36" lean-forward="true" selection-start-line="18" selection-start-column="36" selection-end-line="18" selection-end-column="36" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tests/isPalindrome.l">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-198" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/parser.c">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="166">
-          <caret line="1347" column="5" lean-forward="true" selection-start-line="1347" selection-start-column="5" selection-end-line="1347" selection-end-column="5" />
+        <state relative-caret-position="9232">
+          <caret line="577" column="31" selection-start-line="577" selection-start-column="31" selection-end-line="577" selection-end-column="31" />
           <folding>
             <element signature="e#71#374#0" />
             <element signature="e#383#550#0" />
             <element signature="e#559#785#0" />
             <element signature="e#794#1030#0" />
             <element signature="e#1039#1243#0" />
+            <element signature="e#1252#1632#0" />
+            <element signature="e#1641#2051#0" />
+            <element signature="e#2061#5099#0" />
+            <element signature="e#5108#9567#0" />
+            <element signature="e#9353#11318#0" />
+            <element signature="e#11327#11710#0" />
+            <element signature="e#13580#17805#0" />
+            <element signature="e#14835#15067#0" />
+            <element signature="e#27283#31287#0" />
+            <element signature="e#16250#16982#0" />
+            <element signature="e#16991#17637#0" />
+            <element signature="e#18464#23728#0" />
+            <element signature="e#19668#20492#0" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/parser.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1424">
+          <caret line="89" selection-start-line="89" selection-end-line="89" />
+          <folding>
+            <element signature="e#98#114#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tests/BubbleSort.l">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="400">
+          <caret line="25" column="29" selection-start-line="25" selection-start-column="29" selection-end-line="25" selection-end-column="29" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/a.asm">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="378">
-          <caret line="21" column="22" selection-start-line="21" selection-start-column="22" selection-end-line="21" selection-end-column="22" />
+        <state relative-caret-position="11280">
+          <caret line="705" selection-start-line="705" selection-end-line="705" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/code_generator.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="416">
+          <caret line="26" column="34" selection-start-line="26" selection-start-column="34" selection-end-line="26" selection-end-column="34" />
+          <folding>
+            <element signature="e#114#132#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="272">
+          <caret line="17" lean-forward="true" selection-start-line="17" selection-end-line="17" />
         </state>
       </provider>
     </entry>

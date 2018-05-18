@@ -1,6 +1,10 @@
 //
 // Created by Daniel on 06/04/2018.
 //
+
+#include <io.h>
+#include <ctype.h>
+#include <stdio.h>
 #include "def.h"
 
 PUBLIC string int2str(int value){
@@ -153,5 +157,4 @@ PUBLIC string substr(string str, int beginIndex, int endIndex){
     newStr[i] = '\0';
 
     return newStr;
-
 }

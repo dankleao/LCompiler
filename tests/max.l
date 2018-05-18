@@ -14,7 +14,7 @@ char character <- 0DDh;
 
     writeln(msg);
 
-    for i<-0 to 2 do
+    for i <- 0 to 2 do
     begin
         write("Digite um numero: ");
         readln(n[i]);
@@ -32,6 +32,7 @@ char character <- 0DDh;
             max<-n[1];
         else max<-n[2];
 
-  writeln("O maior numero e ", max);
+  write("O maior numero e: ", max);
+
 
 /* Fim do programa principal */

@@ -31,7 +31,7 @@ char id;
             readln(nome);
         end
 
-   a;
+   a <- 0;
 
    b[(10/10)] <- d[(5*10)];
 
