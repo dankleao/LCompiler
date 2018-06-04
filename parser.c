@@ -372,7 +372,7 @@ PRIVATE void cmd(){
 
             expression(&s1,&t1,&address1);
 
-            if( t1 != INTEGER_DATA_TYPE )
+            if( !t1 )
                 compilerror(ERR_INCOMPATIBLE_TYPES,NULL);
 
             matchTok(TOK_R_BRACE);
@@ -457,6 +457,8 @@ PRIVATE void cmd(){
 
 PRIVATE void cmdif(){
 
+    writeInstruction("\n\t; comando if\n", 0);
+
     matchTok(TOK_IF);
 
     //Atributos sintetizados
@@ -466,7 +468,8 @@ PRIVATE void cmdif(){
 
     expression(&s,&t,&address);
 
-    if( t != INTEGER_DATA_TYPE )
+    //Se exp for diferente de inteira ou booleana, ERRO!
+    if( !t )
         compilerror(ERR_INCOMPATIBLE_TYPES,NULL);
 
     string labelFalse = newLabel();
@@ -497,6 +500,8 @@ PRIVATE void cmdif(){
 }
 
 PRIVATE void cmdfor(){
+
+    writeInstruction("\n\t; comando for\n", 0);
 
     matchTok(TOK_FOR);
 
@@ -658,7 +663,7 @@ PRIVATE void cmdio(){
         int tempIN = 0;//temporario p/ buffer de entrada
 
         //Se ponteiro
-        if( s ){
+        if( s != 0 ){
 
             if( t == INTEGER_DATA_TYPE )
                 compilerror(ERR_INCOMPATIBLE_TYPES,NULL);
@@ -801,6 +806,8 @@ PRIVATE void cmdio(){
         matchTok(TOK_R_PAREN);
 
     } else if( currentSymbol->tok == TOK_WRITE || currentSymbol->tok == TOK_WRITELN ){
+
+        writeInstruction("\n\t; escrita no prompt\n", 0);
 
         int cmd = currentSymbol->tok;
 
@@ -973,14 +980,19 @@ PRIVATE void expression(int* s , data_type* t, int* address){
         }//Escalar
         else {
 
-            //Reg A
-            writeInstruction("\tmov ax, DS:[%d]\n", 1, *address);
-            //Reg B
-            writeInstruction("\tmov bx, DS:[%d]\n", 1, address2);
-
-            //Converte reg A e reg B em inteiros
-            writeInstruction("\tmov ah, 0\n", 0);
-            writeInstruction("\tmov bh, 0\n", 0);
+            if( *t == CHARACTER_DATA_TYPE  ){
+                //Reg A
+                writeInstruction("\tmov ah, 0\n", 0);
+                writeInstruction("\tmov al, DS:[%d]\n", 1, *address);
+                //Reg B
+                writeInstruction("\tmov bh, 0\n", 0);
+                writeInstruction("\tmov bl, DS:[%d]\n", 1, address2);
+            } else{
+                //Reg A
+                writeInstruction("\tmov ax, DS:[%d]\n", 1, *address);
+                //Reg B
+                writeInstruction("\tmov bx, DS:[%d]\n", 1, address2);
+            }
 
             //Compara reg A e reg B
             writeInstruction("\tcmp ax, bx\n", 0);
@@ -1015,7 +1027,6 @@ PRIVATE void expression(int* s , data_type* t, int* address){
         //Operadores relacionais geram tipos lógicos(implicitos) = INTEIROS
         *s = 0;
         *t = INTEGER_DATA_TYPE;
-
     }
 }
 
@@ -1060,7 +1071,7 @@ PRIVATE void term(int* s, data_type* t, int* address ){
 
         //Se tipo for diferente de inteiro escalar, erro!
         if( ( !t1 || s1 ) || ( !t2 || s2 ) )
-            compilerror(ERR_INCOMPATIBLE_TYPES,"term");
+            compilerror(ERR_INCOMPATIBLE_TYPES,NULL);
 
         //Reg A
         writeInstruction("\tmov ax, DS:[%d]\n", 1, *address);
@@ -1085,8 +1096,6 @@ PRIVATE void term(int* s, data_type* t, int* address ){
         }
 
         writeInstruction("\tmov DS:[%d], ax\n", 1, *address);
-
-
     }
 }
 
@@ -1113,7 +1122,7 @@ PRIVATE void factor(int* s, data_type* t, int* address ){
 
         //Se tipo for diferente de inteiro escalar, erro!
         if( ( !t1 || s1 ) || ( !t2 || s2 ) )
-            compilerror(ERR_INCOMPATIBLE_TYPES,"factor");
+            compilerror(ERR_INCOMPATIBLE_TYPES,NULL);
 
         //Reg A
         writeInstruction("\tmov ax, DS:[%d]\n", 1, *address);
@@ -1169,8 +1178,8 @@ PRIVATE void e(int* s, data_type* t, int* address){
 
         e(&s1,&t1,&address1);
 
-        if( t1 != INTEGER_DATA_TYPE )
-            compilerror(ERR_INCOMPATIBLE_TYPES," Op.Not ");
+        if( !t1 )
+            compilerror(ERR_INCOMPATIBLE_TYPES, NULL);
 
         *s = s1;
         *t = t1;
@@ -1264,15 +1273,15 @@ PRIVATE void e(int* s, data_type* t, int* address){
 
             //Se identificador for escalar, ERRO!
             if( tempIdentifier->arraySize == 0 )
-                compilerror(ERR_INCOMPATIBLE_TYPES," Var.scalar ");
+                compilerror(ERR_INCOMPATIBLE_TYPES,NULL);
 
             matchTok(TOK_L_BRACE);
             expression(&s1,&t1,&address1);
             matchTok(TOK_R_BRACE);
 
             //Se exp for diferente do tipo inteiro
-            if( t1 != INTEGER_DATA_TYPE )
-                compilerror(ERR_INCOMPATIBLE_TYPES," No.int.type ");
+            if( !t1  )
+                compilerror(ERR_INCOMPATIBLE_TYPES,NULL);
 
             *s = 0;
 

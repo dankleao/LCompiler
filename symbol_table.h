@@ -29,7 +29,8 @@ typedef enum class{
 typedef enum data_type {
     NULL_DATA_TYPE = -1,
     CHARACTER_DATA_TYPE,
-    INTEGER_DATA_TYPE
+    INTEGER_DATA_TYPE,
+    BOOLEAN_DATA_TYPE
 }data_type;
 
 /*

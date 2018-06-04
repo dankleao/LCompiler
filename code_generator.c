@@ -4,7 +4,7 @@
 
 #include "code_generator.h"
 
-PUBLIC void resetTempMemRegion(){
+PUBLIC void resetTempMemoryRegion(){
     memStart[TEMP_MEMORY_REGION] = 0;
 }
 
@@ -48,8 +48,6 @@ PUBLIC void generateCode(string fileName){
     }
 
     fclose(file);
-
-    //printf("code successfully generated!\n");
 }
 
 PUBLIC void startStackSeg(){

@@ -12,7 +12,6 @@
 #include "config.h"
 #include "symbol_table.h"
 
-
 #define STANDARD_MEMORY_REGION 0
 #define TEMP_MEMORY_REGION 1
 #define BYTE 1
@@ -26,7 +25,7 @@ PRIVATE char outputBuffer[OUTPUT_BUFFER_MAX] = {'\0'};
 /*
  * Reseta ponteiro dos temporários
  */
-PUBLIC void resetTempMemRegion();
+PUBLIC void resetTempMemoryRegion();
 
 /*
  *  Reserva uma area de memory
